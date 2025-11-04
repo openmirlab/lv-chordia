@@ -1,0 +1,10 @@
+include README.md
+include LICENSE
+include MANIFEST.in
+include pyproject.toml
+recursive-include lv_chordia/data *
+recursive-include cache_data *.sdict
+recursive-exclude * __pycache__
+recursive-exclude * *.py[co]
+recursive-exclude * .git*
+recursive-exclude * .venv* 
