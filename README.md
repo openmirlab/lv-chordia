@@ -5,6 +5,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![PyTorch](https://img.shields.io/badge/PyTorch-1.4+-ee4c2c.svg)](https://pytorch.org/)
+[![PyPI version](https://badge.fury.io/py/lv-chordia.svg)](https://pypi.org/project/lv-chordia/)
 
 A high-quality chord recognition system capable of transcribing complex chord progressions from audio recordings using deep learning.
 
@@ -80,6 +81,8 @@ The original research addresses the challenge of recognizing a large vocabulary 
 ## 🚀 Quick Start
 
 ### Installation
+
+**📦 Available on PyPI:** [https://pypi.org/project/lv-chordia/](https://pypi.org/project/lv-chordia/)
 
 lv-chordia supports both **UV** (recommended, faster) and **pip** (traditional) installation methods.
 
