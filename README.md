@@ -731,7 +731,7 @@ Contributions are welcome! This package aims to maintain the original research q
 **MIT License**
 
 Copyright (c) 2019 Junyan Jiang, Ke Chen, Wei Li, Gus Xia (Original Research)
-Copyright (c) 2025 worzpro Development Team (Package Maintenance)
+Copyright (c) 2025 Package Maintainers (Package Maintenance)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -791,7 +791,7 @@ Special thanks to the original research team:
 
 ### Package Maintenance
 
-This package is maintained by the worzpro Development Team to ensure continued availability and compatibility with modern Python ecosystems.
+This package is maintained to ensure continued availability and compatibility with modern Python ecosystems.
 
 ### Community
 

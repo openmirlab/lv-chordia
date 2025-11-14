@@ -50,6 +50,7 @@ class NetworkBehavior(nn.Module):
 class NetworkInterface:
 
     def __init__(self, net, save_name, load_checkpoint=False, load_path='cache_data'):
+        from ..common import CACHE_DATA_PATH
         self.net=net
         if(not isinstance(self.net,NetworkBehavior)):
             raise Exception('Invalid network type')
@@ -57,8 +58,10 @@ class NetworkInterface:
             self.net.use_data_parallel=True
         self.net.init_settings(False)
         self.save_name=save_name
-        save_path=os.path.join(WORKING_PATH,load_path,'%s.sdict'%save_name)
-        cp_save_path=os.path.join(WORKING_PATH,load_path,'%s.cp.sdict'%save_name)
+        # Use CACHE_DATA_PATH if load_path is 'cache_data', otherwise use WORKING_PATH
+        self.base_path = CACHE_DATA_PATH if load_path == 'cache_data' else os.path.join(WORKING_PATH, load_path)
+        save_path=os.path.join(self.base_path,'%s.sdict'%save_name)
+        cp_save_path=os.path.join(self.base_path,'%s.cp.sdict'%save_name)
         self.finalized=False
         self.optimizer=self.net.get_optimizer()
         self.counter=0
@@ -225,7 +228,7 @@ class NetworkInterface:
                             torch.save({'net':self.net.state_dict(),
                                         'opt':self.optimizer.state_dict(),
                                         'counter':current_counter+1
-                                        },os.path.join(WORKING_PATH,'cache_data/%s.cp.sdict'%self.save_name))
+                                        },os.path.join(self.base_path,'%s.cp.sdict'%self.save_name))
                             if(self.net.use_gpu):
                                 self.net.cuda()
                             print('[%f, %.2f%% (%d/%d)] checkpoint created' %
@@ -272,7 +275,7 @@ class NetworkInterface:
                                         'net':self.net.state_dict(),
                                         'opt':self.optimizer.state_dict(),
                                         'counter':current_counter+1
-                                        },os.path.join(WORKING_PATH,'cache_data/%s.best.sdict'%self.save_name))
+                                        },os.path.join(self.base_path,'%s.best.sdict'%self.save_name))
                         else:
                             self.best_epoch_dist+=1
                         torch.save({'best_val_loss':self.best_val_loss,
@@ -280,7 +283,7 @@ class NetworkInterface:
                                     'net':self.net.state_dict(),
                                     'opt':self.optimizer.state_dict(),
                                     'counter':current_counter+1
-                                    },os.path.join(WORKING_PATH,'cache_data/%s.cp.sdict'%self.save_name))
+                                    },os.path.join(self.base_path,'%s.cp.sdict'%self.save_name))
                         if(self.net.use_gpu):
                             self.net.cuda()
                         print('[%f, %.2f%% (%d/%d)] checkpoint created' %
@@ -296,7 +299,7 @@ class NetworkInterface:
         torch.save({'net':self.net.state_dict(),
                     'opt':self.optimizer.state_dict(),
                     'counter':current_counter
-                    },os.path.join(WORKING_PATH,'cache_data/%s.sdict'%self.save_name))
+                    },os.path.join(self.base_path,'%s.sdict'%self.save_name))
         if(self.net.use_gpu):
             self.net.cuda()
 

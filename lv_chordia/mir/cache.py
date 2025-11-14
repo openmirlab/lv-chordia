@@ -1,6 +1,6 @@
 import pickle
 import os
-from .common import WORKING_PATH
+from .common import WORKING_PATH, CACHE_DATA_PATH
 import hashlib
 
 __all__=['load','save']
@@ -30,14 +30,14 @@ def loadfromfile(filename):
 
 def load(*names):
     if(len(names)==1):
-        return loadfromfile(os.path.join(WORKING_PATH,'cache_data/%s.cache'%names[0]))
+        return loadfromfile(os.path.join(CACHE_DATA_PATH,'%s.cache'%names[0]))
     result=[None]*len(names)
     for i in range(len(names)):
-        result[i]=loadfromfile(os.path.join(WORKING_PATH,'cache_data/%s.cache'%names[i]))
+        result[i]=loadfromfile(os.path.join(CACHE_DATA_PATH,'%s.cache'%names[i]))
     return result
 
 def save(obj,name,protocol=pickle.HIGHEST_PROTOCOL):
-    path=os.path.join(WORKING_PATH,'cache_data/%s.cache'%name)
+    path=os.path.join(CACHE_DATA_PATH,'%s.cache'%name)
     mkdir_for_file(path)
     dumptofile(obj,path,protocol)
 

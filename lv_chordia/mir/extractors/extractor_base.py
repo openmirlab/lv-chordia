@@ -52,11 +52,13 @@ class ExtractorBase(ABC):
         else:
             entry_name=entry.name+'.'+','.join([k+'='+str(items_entry[k]) for k in sorted(items_entry.keys())])+'.cache'
 
-        return os.path.join(WORKING_PATH, 'cache_data', folder_name, entry_name)
+        from ..common import CACHE_DATA_PATH
+        return os.path.join(CACHE_DATA_PATH, folder_name, entry_name)
 
 
     def extract_and_cache(self,entry,cache_enabled=True,**kwargs):
-        folder_name=os.path.join(WORKING_PATH, 'cache_data',self.__class__.__name__)
+        from ..common import CACHE_DATA_PATH
+        folder_name=os.path.join(CACHE_DATA_PATH,self.__class__.__name__)
         prop_cache_filename=os.path.join(folder_name,'_prop_records.cache')
         if('cached_prop_record' in self.__dict__):
             cached_prop_record=self.__dict__['cached_prop_record']

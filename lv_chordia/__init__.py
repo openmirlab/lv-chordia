@@ -12,7 +12,7 @@ for extensive chord vocabularies including complex jazz chords.
 
 __version__ = "1.0.0"
 __author__ = "Junyan Jiang, Ke Chen, Wei Li, Gus Xia"
-__maintainer__ = "worzpro Development Team"
+__maintainer__ = "Package Maintainers"
 __license__ = "MIT"
 __url__ = "https://github.com/music-x-lab/ISMIR2019-Large-Vocabulary-Chord-Recognition"
 

@@ -15,7 +15,7 @@ authors = [
     {name = "Gus Xia"}
 ]
 maintainers = [
-    {name = "worzpro Development Team"}
+    {name = "Package Maintainers"}
 ]
 keywords = [
     "music",
@@ -83,9 +83,9 @@ lv-chordia = "lv_chordia.cli:main"
 
 [tool.hatch.build.targets.wheel]
 packages = ["lv_chordia"]
+shared-data = { "cache_data" = "share/lv-chordia/cache_data" }
 include = [
     "lv_chordia/data/*",
-    "cache_data/*.sdict",
 ]
 
 [tool.hatch.build.targets.sdist]
