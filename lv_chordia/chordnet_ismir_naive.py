@@ -262,48 +262,4 @@ class ComplexChordShifter(AbstractPitchShifter):
     def pitch_shift(self,data,shift):
         return shift_complex_chord_array_list(complex_chord_chop_list(data,chord_limit),shift)
 
-if __name__ == '__main__':
-    TOTAL_SLICE_COUNT=5
-    import sys,pickle
-    from .train_eval_test_split import get_train_set_ids,get_test_set_ids,get_val_set_ids
-    slice_id=int(sys.argv[1])
-    if(slice_id>=5 or slice_id<-1):
-        raise Exception('Invalid input')
-    storage_x=FramedH5DataStorage('D:/jams_cqt')
-    storage_y=FramedH5DataStorage('D:/jams_xchord')
-    storage_x.load_meta()
-    song_count=storage_x.total_song_count
-    if(0<=slice_id and slice_id<=5):
-        print('Train on slice %d'%slice_id)
-        f=open('data/cross_subpart_weight%d.pkl'%slice_id,'rb')
-        cross_subpart_counter=pickle.load(f)
-        f.close()
-        train_indices=get_train_set_ids(slice_id)
-        val_indices=get_val_set_ids(slice_id)
-    else:
-        train_indices=np.arange(song_count)
-        val_indices=np.arange(0,1) # fake validation here
-        # todo: weight calculation for full dataset
-        f=open('data/cross_subpart_weight%d.pkl'%0,'rb')
-        cross_subpart_counter=pickle.load(f)
-        f.close()
-    train_provider=FramedDataProvider(train_sample_length=LSTM_TRAIN_LENGTH,shift_low=SHIFT_LOW,shift_high=SHIFT_HIGH,num_workers=1,average_samples_per_song=1)
-    train_provider.link(storage_x,CQTPitchShifter(SPEC_DIM,SHIFT_LOW,SHIFT_HIGH),subrange=train_indices)
-    train_provider.link(storage_y,ComplexChordShifter(),subrange=train_indices)
-
-    val_provider=FramedDataProvider(train_sample_length=-1,shift_low=0,shift_high=0,num_workers=1,average_samples_per_song=1,need_shuffle=False)
-    val_provider.link(storage_x,CQTPitchShifter(SPEC_DIM,SHIFT_LOW,SHIFT_HIGH),subrange=val_indices)
-    val_provider.link(storage_y,ComplexChordShifter(),subrange=val_indices)
-
-
-
-    trainer=NetworkInterface(ChordNet(cross_subpart_counter,triad_only=True),
-                             'joint_chord_net_ismir_v1.0_triad_only_reweight(1.0,1.0)_s%d'%slice_id,load_checkpoint=True)
-    if(slice_id==-1):
-        trainer.train_supervised(train_provider,val_provider,batch_size=12,
-                             learning_rates_dict={1e-3:35,1e-4:25,1e-5:15,1e-6:10},round_per_print=10,round_per_save=500,
-                             round_per_val=-1,early_end_epochs=100,val_batch_size=1)
-    else:
-        trainer.train_supervised(train_provider,val_provider,batch_size=12,
-                                 learning_rates_dict={1e-3:60,1e-4:30,1e-5:30,1e-6:10},round_per_print=10,round_per_save=500,
-                                 round_per_val=-1,early_end_epochs=5,val_batch_size=1)
+# Removed training code from if __name__ == '__main__' block - inference-only package
