@@ -1,3 +1,16 @@
+"""
+Complex chord representation: parsing, shifting, and the decomposed Chord type.
+
+Defines Chord (root/bass/triad/7th/9th/11th/13th decomposition) and the
+TriadTypes/SeventhTypes/.../ThirteenthTypes enums ChordNet's output heads
+are indexed against, plus pitch-shift helpers used by ChordNetCNN's data
+augmentation path and by extractors/xhmm_ismir.py's HMM decoding
+(shift_complex_chord_array, NUM_TO_ABS_SCALE). Pure data/parsing logic, no
+I/O or model code.
+
+Reads: nothing (numpy only).
+"""
+
 from __future__ import print_function
 import numpy as np
 

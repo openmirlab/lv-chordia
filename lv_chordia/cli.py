@@ -1,5 +1,12 @@
 """
-Command-line interface for lv-chordia package.
+Command-line interface for lv-chordia: parses arguments and prints chord JSON.
+
+The public entry point (`lv-chordia` console script / `python -m lv_chordia.cli`).
+Validates the input path (or URL), delegates all recognition work to
+chord_recognition(), and prints the result as JSON to stdout. Holds no
+recognition logic itself -- that lives in chord_recognition.py.
+
+Reads: chord_recognition.py, audio_utils.py
 """
 
 import argparse

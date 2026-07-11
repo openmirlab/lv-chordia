@@ -1,3 +1,15 @@
+"""
+XHMMDecoder: turns per-frame chord probabilities into chord label segments.
+
+chord_recognition.py loads a chord-dictionary template file
+(lv_chordia/data/{submission,ismir2017,full}_chord_list.txt) into an
+XHMMDecoder, then calls decode_to_chordlab() with the ensemble-averaged
+ChordNet probabilities to get final (start, end, chord_name) segments via
+Viterbi decoding over the known-chord-name transition graph.
+
+Reads: complex_chord.py
+"""
+
 import numpy as np
 from ..complex_chord import shift_complex_chord_array,Chord,NUM_TO_ABS_SCALE
 

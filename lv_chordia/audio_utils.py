@@ -1,7 +1,13 @@
 """
-Audio utility functions for lv-chordia.
+Audio input resolution: local file path or URL, both as a plain local path.
 
-Includes support for loading audio from local files and URLs.
+is_url() / get_audio_path() let chord_recognition.py and cli.py accept an
+http(s)/ftp URL wherever they accept a local path -- download_audio() fetches
+it to a temp file first. cleanup_temp_audio() removes that temp file (and its
+directory) once inference is done. No audio decoding happens here; that's
+librosa's job downstream in extractors/cqt.py.
+
+Reads: nothing (stdlib only).
 """
 
 import os
