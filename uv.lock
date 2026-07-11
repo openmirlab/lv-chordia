@@ -1190,7 +1190,6 @@ wheels = [
 
 [[package]]
 name = "lv-chordia"
-version = "1.0.0"
 source = { editable = "." }
 dependencies = [
     { name = "h5py", version = "3.11.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.9'" },

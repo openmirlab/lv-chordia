@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "lv-chordia"
-version = "1.0.0"
+dynamic = ["version"]
 description = "Large-Vocabulary Chord Transcription via Chord Structure Decomposition - ISMIR 2019"
 readme = "README.md"
 license = {file = "LICENSE"}
@@ -74,6 +74,9 @@ Documentation = "https://github.com/music-x-lab/ISMIR2019-Large-Vocabulary-Chord
 
 [project.scripts]
 lv-chordia = "lv_chordia.cli:main"
+
+[tool.hatch.version]
+path = "lv_chordia/__init__.py"
 
 [tool.hatch.build.targets.wheel]
 packages = ["lv_chordia"]
