@@ -8,8 +8,6 @@ import torch
 import numpy as np
 from .complex_chord import Chord,ChordTypeLimit,shift_complex_chord_array_list,complex_chord_chop,enum_to_dict,\
     TriadTypes,SeventhTypes,NinthTypes,EleventhTypes,ThirteenthTypes,complex_chord_chop_list
-# Training functions - only needed for training, not inference
-# from .train_eval_test_split import get_train_set_ids,get_test_set_ids,get_val_set_ids
 
 SHIFT_LOW=-5
 SHIFT_HIGH=6

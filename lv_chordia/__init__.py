@@ -16,21 +16,18 @@ __maintainer__ = "Package Maintainers"
 __license__ = "MIT"
 __url__ = "https://github.com/music-x-lab/ISMIR2019-Large-Vocabulary-Chord-Recognition"
 
-# Import main modules for easy access
-try:
-    from . import chord_recognition
-    from . import datasets
-    from . import extractors
-    from . import mir
-    # Import the main function for easy access
-    from .chord_recognition import chord_recognition
-except ImportError:
-    # Handle cases where dependencies might not be available
-    pass
+# Import main modules for easy access. This package is inference-only: no
+# training/eval modules (e.g. the former `datasets` module) are imported here,
+# and import errors are not swallowed -- a broken dependency should fail loudly.
+from . import chord_recognition
+from . import extractors
+from . import mir
+
+# Import the main function for easy access
+from .chord_recognition import chord_recognition
 
 __all__ = [
     "chord_recognition",
-    "datasets",
     "extractors",
     "mir",
     "__version__",
@@ -38,4 +35,4 @@ __all__ = [
     "__maintainer__",
     "__license__",
     "__url__",
-] 
+]
