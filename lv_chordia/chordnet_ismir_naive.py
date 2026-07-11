@@ -1,3 +1,18 @@
+"""
+ChordNet: the CNN+LSTM model architecture used by the inference ensemble.
+
+Defines the audio feature CNN (CNNFeatureExtractor), the ChordNet /
+ChordNetCNN model classes (NetworkBehavior subclasses consumed by
+mir.nn.train.NetworkInterface), and the chord-structure-decomposition output
+heads (triad/bass/7th/9th/11th/13th). Only `.inference()` is exercised by the
+live path (chord_recognition.py); `.loss()` / ReweightedLoss exist because
+NetworkBehavior expects them, but nothing in this package calls them --
+training is out of scope for this package.
+
+Reads: mir/nn/train.py, mir/nn/data_storage.py, mir/nn/data_decorator.py,
+mir/nn/data_provider.py, complex_chord.py
+"""
+
 import torch.nn as nn
 import torch.nn.functional as F
 from .mir.nn.train import NetworkBehavior,NetworkInterface

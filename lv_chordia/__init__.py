@@ -1,13 +1,15 @@
 """
-lv-chordia: Large-Vocabulary Chord Transcription via Chord Structure Decomposition
+lv-chordia package root: version metadata and the inference-only public surface.
 
-A Python package for chord recognition and transcription from audio files.
+A Python package for chord recognition and transcription from audio files,
+based on the ISMIR 2019 paper by Junyan Jiang, Ke Chen, Wei Li, and Gus Xia
+(https://archives.ismir.net/ismir2019/paper/000078.pdf). This package provides
+state-of-the-art chord recognition capabilities with support for extensive
+chord vocabularies including complex jazz chords. Inference-only: no
+training/eval module is imported here, and import errors are not swallowed
+(see chord_recognition.py for the actual entry point chain).
 
-Based on the ISMIR 2019 paper by Junyan Jiang, Ke Chen, Wei Li, and Gus Xia.
-https://archives.ismir.net/ismir2019/paper/000078.pdf
-
-This package provides state-of-the-art chord recognition capabilities with support
-for extensive chord vocabularies including complex jazz chords.
+Reads: chord_recognition.py, extractors/__init__.py, mir/__init__.py
 """
 
 __version__ = "1.0.0"

@@ -1,3 +1,16 @@
+"""
+CQT feature extraction: the mir.Extractor that turns audio into ChordNet input.
+
+CQTV2 is the extractor chord_recognition.py registers on the DataEntry
+(`entry.append_extractor(CQTV2, 'cqt')`) -- it computes a librosa
+Constant-Q Transform spectrogram at the resolution ChordNet's
+CNNFeatureExtractor expects. SimpleChordToID is a small label-to-index
+helper. NoteLevelCQT is an older/unused-by-inference CQT variant kept for
+API compatibility with the mir extractor framework.
+
+Reads: mir/extractors/extractor_base.py, mir/io/__init__.py
+"""
+
 from ..mir.extractors import ExtractorBase
 from ..mir import io
 import librosa

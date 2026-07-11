@@ -4,7 +4,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
-[![PyTorch](https://img.shields.io/badge/PyTorch-1.4+-ee4c2c.svg)](https://pytorch.org/)
+[![PyTorch](https://img.shields.io/badge/PyTorch-2.0+-ee4c2c.svg)](https://pytorch.org/)
 [![PyPI version](https://badge.fury.io/py/lv-chordia.svg)](https://pypi.org/project/lv-chordia/)
 
 A high-quality chord recognition system capable of transcribing complex chord progressions from audio recordings using deep learning.
@@ -14,6 +14,8 @@ A high-quality chord recognition system capable of transcribing complex chord pr
 ## 📌 Overview
 
 **lv-chordia** is an implementation of the research presented in the ISMIR 2019 paper "[Large-Vocabulary Chord Transcription via Chord Structure Decomposition](https://archives.ismir.net/ismir2019/paper/000078.pdf)". This package provides state-of-the-art chord recognition capabilities with support for extensive chord vocabularies including complex jazz chords.
+
+> **Scope: inference-only.** This package ships the pre-trained ensemble models and the code path needed to run chord recognition on audio (`lv_chordia.chord_recognition` / the `lv-chordia` CLI). It does not include model training or evaluation/benchmarking scripts, and it has no dependency on any training dataset or dataset-preparation tooling.
 
 ### 🎯 Key Features
 
@@ -69,6 +71,7 @@ The original research addresses the challenge of recognizing a large vocabulary 
 - Clean API with JSON output
 - Command-line interface
 - Documentation and examples
+- Inference-only scope: no training/eval code or training-dataset dependencies
 
 **What remains unchanged:**
 - All model architectures (100% original)
@@ -387,20 +390,16 @@ Chord Sequence (JSON)
 
 ### Core Dependencies
 
+All core dependencies are needed by the inference path (`lv_chordia.chord_recognition` / the CLI); none are training/eval-only.
+
 ```
-torch>=1.4.0          # Deep learning framework
-librosa>=0.7.2        # Audio processing
+torch>=2.0.0          # Deep learning framework
+librosa>=0.7.2        # Audio loading and CQT feature extraction
 numpy>=1.19.2         # Numerical computing
-scikit_learn>=0.23.2  # Machine learning utilities
-mir_eval>=0.5         # Music information retrieval evaluation
-h5py>=2.9.0           # HDF5 file format
-jams>=0.3.4           # JSON Annotated Music Specification
-pumpp>=0.5.0          # Audio feature extraction
+h5py>=2.9.0           # HDF5 file format (model checkpoint storage backend)
 pydub>=0.23.1         # Audio file manipulation
-matplotlib>=2.2.4     # Visualization
 pretty_midi>=0.2.9    # MIDI file handling
 joblib>=0.13.2        # Parallel computing
-figures>=0.3.16       # Plotting utilities
 ```
 
 ### Optional Dependencies
@@ -561,7 +560,7 @@ results = chord_recognition("input.wav")
 ## 📋 Requirements
 
 - **Python**: 3.10 or later
-- **PyTorch**: 1.4 or later (2.x recommended)
+- **PyTorch**: 2.0 or later
 - **OS**: Linux, macOS, Windows
 - **GPU**: Optional (CUDA-capable GPU recommended for faster processing)
 - **Memory**: 4GB RAM minimum, 8GB+ recommended for long audio files
@@ -674,15 +673,18 @@ twine upload --repository testpypi dist/*
 ### Running Tests
 
 ```bash
-# Run basic functionality test
-python test_chordrecog.py
-
-# Run with pytest (when test suite is available)
+# Run the test suite
 pytest tests/ -v
 
 # Run with coverage
 pytest tests/ --cov=lv_chordia
 ```
+
+The test suite includes an import smoke test (the package must not depend on
+any training/eval module), unit tests for `audio_utils`, and a regression
+test that runs the CLI against the tracked `test_data/yellow.wav` fixture and
+asserts the chord-recognition JSON output is byte-identical to a golden
+fixture -- the accuracy gate for any refactor of the inference path.
 
 ---
 
