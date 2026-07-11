@@ -12,7 +12,7 @@ training/eval module is imported here, and import errors are not swallowed
 Reads: chord_recognition.py, extractors/__init__.py, mir/__init__.py
 """
 
-__version__ = "1.0.0"
+__version__ = "1.1.0"
 __author__ = "Junyan Jiang, Ke Chen, Wei Li, Gus Xia"
 __maintainer__ = "Package Maintainers"
 __license__ = "MIT"
