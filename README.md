@@ -12,85 +12,120 @@ A high-quality chord recognition system capable of transcribing complex chord pr
 
 ---
 
-## 📌 Overview
+## Why This Exists
 
-**lv-chordia** is an implementation of the research presented in the ISMIR 2019 paper "[Large-Vocabulary Chord Transcription via Chord Structure Decomposition](https://archives.ismir.net/ismir2019/paper/000078.pdf)". This package provides state-of-the-art chord recognition capabilities with support for extensive chord vocabularies including complex jazz chords.
+**lv-chordia** is an implementation of the research presented in the ISMIR
+2019 paper "[Large-Vocabulary Chord Transcription via Chord Structure
+Decomposition](https://archives.ismir.net/ismir2019/paper/000078.pdf)" by
+Junyan Jiang, Ke Chen, Wei Li, and Gus Xia. The
+[original research code](https://github.com/music-x-lab/ISMIR2019-Large-Vocabulary-Chord-Recognition)
+is a research-lab checkout: no `pyproject.toml`, no PyPI package, no pinned
+modern dependency set, and no PyTorch 2.x compatibility -- installing and
+running it means manually cloning the repo, chasing down its original
+(now years-stale) dependency versions, and wiring up the pre-trained
+checkpoints yourself.
 
-> **Scope: inference-only.** This package ships the pre-trained ensemble models and the code path needed to run chord recognition on audio (`lv_chordia.chord_recognition` / the `lv-chordia` CLI). It does not include model training or evaluation/benchmarking scripts, and it has no dependency on any training dataset or dataset-preparation tooling.
-
-### 🎯 Key Features
-
-- **Large Vocabulary**: Supports hundreds of chord types including complex jazz chords
-- **High Accuracy**: Ensemble model with 5 pre-trained networks
-- **Multiple Chord Dictionaries**: Submission (default), ISMIR2017, and full vocabularies
-- **URL Support**: Automatically download and process audio from URLs
-- **Easy-to-Use API**: Both Python API and command-line interface
-- **JSON Output**: Structured data format for easy integration
-- **Modern PyTorch**: Compatible with PyTorch 2.x
-- **Production Ready**: Packaged for PyPI distribution
+lv-chordia reprovides that research as a pip/uv-installable package: a clean
+Python API and CLI, PyTorch 2.x compatibility, JSON output, and an
+inference-only scope with no dependency on any training dataset or
+training/eval tooling. The model architectures, weights, and recognition
+algorithm are unchanged from the original research.
 
 ---
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
-### Original Research by Junyan Jiang, Ke Chen, Wei Li, and Gus Xia
+lv-chordia is based on the research published at ISMIR 2019 by the
+[Music X Lab](https://www.musicxlab.com/) (at the time based at NYU Shanghai,
+now at MBZUAI), in collaboration with Fudan University:
 
-**lv-chordia** is based on the groundbreaking work published at ISMIR 2019 by **Junyan Jiang**, **Ke Chen**, **Wei Li**, and **Gus Xia**. Their research introduced an innovative approach to large-vocabulary chord transcription through chord structure decomposition, achieving state-of-the-art results on multiple benchmark datasets.
+- **Junyan Jiang** -- lead author, model development
+- **Ke Chen** -- algorithm design, implementation
+- **Wei Li** -- data preparation, evaluation (Fudan University)
+- **Gus Xia** -- research supervision, methodology (Music X Lab, NYU Shanghai)
+- **Source repository**: [music-x-lab/ISMIR2019-Large-Vocabulary-Chord-Recognition](https://github.com/music-x-lab/ISMIR2019-Large-Vocabulary-Chord-Recognition) -- the original research code this package repackages
+- **Weights host**: [Google Drive folder](https://drive.google.com/drive/folders/1y5-zTFaBliymPe7uY2MZfUAsvPzwmGBL) -- the original authors' additional pre-trained ensemble variants with different label-reweighting parameters, beyond the ones bundled directly in this package (see [Scope](#scope) for how this package ships its own weights)
 
-### Research Paper
+## Citation
 
-**[Large-Vocabulary Chord Transcription via Chord Structure Decomposition](https://archives.ismir.net/ismir2019/paper/000078.pdf)**
-
-Presented at the 20th International Society for Music Information Retrieval Conference (ISMIR 2019), Delft, The Netherlands, November 4-8, 2019.
-
-#### Abstract
-
-The original research addresses the challenge of recognizing a large vocabulary of chords by decomposing chord structure into root, bass, and chord type components. This decomposition allows the model to handle complex chords that rarely appear in training data by learning their structural components independently.
-
-### Citation
-
-**If you use lv-chordia in your research, please cite the original ISMIR 2019 paper:**
+If you use lv-chordia in your research, please cite the original ISMIR 2019 paper:
 
 ```bibtex
 @inproceedings{jiang2019large,
   title={Large-Vocabulary Chord Transcription via Chord Structure Decomposition},
   author={Jiang, Junyan and Chen, Ke and Li, Wei and Xia, Gus},
-  booktitle={Proceedings of the 20th International Society for Music Information Retrieval Conference (ISMIR)},
+  booktitle={Proceedings of the 20th International Society for Music Information Retrieval Conference (ISMIR 2019)},
   year={2019},
-  pages={792--798},
+  pages={644--651},
   address={Delft, The Netherlands}
 }
 ```
 
-### About This Package
+---
 
-> **Note**: This package is a modern, packaged version of the original research code, optimized for easy installation and use. It includes compatibility updates for PyTorch 2.x and modern Python packaging standards.
+## Features
 
-**What we maintain:**
-- PyTorch 2.x compatibility
-- Modern Python packaging (pyproject.toml, pip/uv installable)
-- Clean API with JSON output
-- Command-line interface
-- Documentation and examples
-- Inference-only scope: no training/eval code or training-dataset dependencies
+- **Large Vocabulary**: Supports hundreds of chord types including complex jazz chords
+- **High Accuracy**: Ensemble model with 5 pre-trained networks, decoded with an HMM for temporal smoothing
+- **Multiple Chord Dictionaries**: Submission (default), ISMIR2017, and full vocabularies
+- **URL Support**: Automatically download and process audio from URLs (HTTP, HTTPS, FTP)
+- **Easy-to-Use API**: Both Python API and command-line interface
+- **JSON Output**: Structured, time-aligned data format for easy integration
+- **Modern PyTorch**: Compatible with PyTorch 2.x
+- **GPU acceleration**: Automatic CUDA support when available
 
-**What remains unchanged:**
-- All model architectures (100% original)
-- All pre-trained model weights (100% original)
-- Chord recognition algorithms (100% original)
-- Recognition quality (100% identical to original research)
+**Model performance (as reported in the ISMIR 2019 paper):**
+- McGill Billboard: **~81% accuracy** (submission vocabulary)
+- RWC Pop: **~78% accuracy** (submission vocabulary)
+- Isophonics Beatles: **~83% accuracy** (submission vocabulary)
 
 ---
 
-## 🚀 Quick Start
+## Scope
 
-### Installation
+**In scope**: inference (forward pass) only. This package ships the
+pre-trained ensemble models and the code path needed to run chord
+recognition on audio (`lv_chordia.chord_recognition` / the `lv-chordia`
+CLI).
 
-**📦 Available on PyPI:** [https://pypi.org/project/lv-chordia/](https://pypi.org/project/lv-chordia/)
+**Out of scope, forever**: model training or evaluation/benchmarking
+scripts, and any dependency on a training dataset or dataset-preparation
+tooling.
+
+### Model weights: bundled by design (documented size-based exception)
+
+Unlike most other openmirlab inference packages, lv-chordia does **not**
+download its weights at runtime. The pre-trained ensemble (`cache_data/*.sdict`,
+5 files, ~28MB total -- 5.5MB each) is committed directly to this git
+repository and shipped inside the built wheel/sdist via `pyproject.toml`'s
+`shared-data`/`sdist` configuration, so inference runs fully offline
+immediately after `pip install lv-chordia`, with no first-run download step.
+
+This is a deliberate, documented exception to the org's default weights
+contract (constitution article 4: weights are normally downloaded at
+runtime, not committed to git). The exception is size-based: at 28MB total,
+these weights are small enough that bundling them costs little (comparable
+to, e.g., drum-classifier-infer's bundled ~7.3MB checkpoint, a similar
+documented exception for different reasons) and buys a materially simpler,
+fully-offline install with no download/caching/sha256-verification
+machinery to build or maintain. This was confirmed as an acceptable
+exception, not a defect to migrate away from, on 2026-07-12. See
+`CLAUDE.md` for the same note aimed at future contributors.
+
+If you want ensemble variants beyond the ones bundled in this package (e.g.
+different label-reweighting parameters), the original authors' additional
+checkpoints are available from the [Google Drive folder](https://drive.google.com/drive/folders/1y5-zTFaBliymPe7uY2MZfUAsvPzwmGBL) linked in
+Acknowledgments.
+
+---
+
+## Install
+
+**Available on PyPI:** [https://pypi.org/project/lv-chordia/](https://pypi.org/project/lv-chordia/)
 
 lv-chordia supports both **UV** (recommended, faster) and **pip** (traditional) installation methods.
 
-#### Option 1: UV (Recommended) ⚡
+### Option 1: UV (Recommended)
 
 [UV](https://github.com/astral-sh/uv) is a blazing-fast Python package installer and resolver.
 
@@ -110,13 +145,7 @@ uv add lv-chordia
 uv run python your_script.py
 ```
 
-**Benefits of UV:**
-- ⚡ 10-100x faster than pip
-- 🔒 Automatic virtual environment management
-- 📦 Consistent dependency resolution
-- 🎯 Works seamlessly with PyPI packages
-
-#### Option 2: pip (Traditional)
+### Option 2: pip (Traditional)
 
 ```bash
 # Install in current environment
@@ -130,14 +159,32 @@ pip install lv-chordia
 
 ---
 
-## 💻 Usage
-
-### Command Line Interface
+## Quick Start
 
 ```bash
 # Basic usage - outputs JSON to stdout
 lv-chordia input_audio.mp3
+```
 
+```python
+from lv_chordia.chord_recognition import chord_recognition
+
+results = chord_recognition(audio_path="input_audio.mp3", chord_dict_name="submission")
+print(results)
+# [
+#   {"start_time": 0.0, "end_time": 2.5, "chord": "C:maj"},
+#   {"start_time": 2.5, "end_time": 5.0, "chord": "F:maj"},
+#   ...
+# ]
+```
+
+---
+
+## Usage
+
+### Command Line Interface
+
+```bash
 # With specific chord dictionary
 lv-chordia input_audio.mp3 --chord-dict submission
 lv-chordia input_audio.mp3 --chord-dict ismir2017
@@ -176,15 +223,6 @@ results = chord_recognition(
     chord_dict_name="submission"
 )
 
-# JSON output format
-print(results)
-# [
-#   {"start_time": 0.0, "end_time": 2.5, "chord": "C:maj"},
-#   {"start_time": 2.5, "end_time": 5.0, "chord": "F:maj"},
-#   {"start_time": 5.0, "end_time": 7.5, "chord": "G:maj"},
-#   ...
-# ]
-
 # Save to file if needed
 import json
 with open("output_chords.json", "w") as f:
@@ -210,8 +248,7 @@ results = chord_recognition("https://example.com/track.flac")
 
 **Supported URL schemes**: HTTP, HTTPS, FTP
 
-**Supported audio formats** (via librosa):
-- MP3, WAV, FLAC, OGG, M4A, and more
+**Supported audio formats** (via librosa): MP3, WAV, FLAC, OGG, M4A, and more
 
 ### Batch Processing
 
@@ -220,36 +257,20 @@ from pathlib import Path
 from lv_chordia.chord_recognition import chord_recognition
 import json
 
-# Process multiple local files
 audio_files = list(Path("audio_dir/").glob("*.mp3"))
 
 for audio_file in audio_files:
     print(f"Processing: {audio_file.name}")
     results = chord_recognition(str(audio_file))
 
-    # Save results
     output_file = audio_file.with_suffix('.json')
     with open(output_file, 'w') as f:
         json.dump(results, f, indent=2)
-
-    print(f"✅ Saved: {output_file}")
-
-# Process multiple URLs
-urls = [
-    "https://example.com/song1.mp3",
-    "https://example.com/song2.mp3",
-    "https://example.com/song3.mp3"
-]
-
-for url in urls:
-    print(f"Processing: {url}")
-    results = chord_recognition(url)
-    # Process results...
 ```
 
 ---
 
-## 📊 Output Format
+## Output Format
 
 The package returns chord recognition results as structured JSON data. Each chord segment is represented as a dictionary:
 
@@ -261,19 +282,6 @@ The package returns chord recognition results as structured JSON data. Each chor
 }
 ```
 
-### Example Output
-
-```json
-[
-  {"start_time": 0.0, "end_time": 2.5, "chord": "C:maj"},
-  {"start_time": 2.5, "end_time": 5.0, "chord": "F:maj"},
-  {"start_time": 5.0, "end_time": 7.5, "chord": "G:maj"},
-  {"start_time": 7.5, "end_time": 10.0, "chord": "A:min7"},
-  {"start_time": 10.0, "end_time": 12.5, "chord": "D:7"},
-  {"start_time": 12.5, "end_time": 15.0, "chord": "G:maj"}
-]
-```
-
 ### Chord Label Format
 
 Chord labels follow the JAMS (JSON Annotated Music Specification) format:
@@ -283,20 +291,13 @@ Chord labels follow the JAMS (JSON Annotated Music Specification) format:
 - **Chord Type**: maj, min, dim, aug, 7, maj7, min7, etc.
 - **Special**: "N" indicates no chord/silence
 
-**Examples:**
-- `C:maj` - C major
-- `A:min7` - A minor 7th
-- `F#:dim` - F# diminished
-- `Bb:maj7` - B-flat major 7th
-- `N` - No chord
+**Examples:** `C:maj` (C major), `A:min7` (A minor 7th), `F#:dim` (F# diminished), `Bb:maj7` (B-flat major 7th), `N` (no chord)
 
 ---
 
-## 🎼 Chord Dictionaries
+## Chord Dictionaries
 
 lv-chordia supports three different chord vocabularies to balance accuracy and vocabulary size:
-
-### Available Dictionaries
 
 | Dictionary | Vocabulary Size | Description | Use Case |
 |-----------|----------------|-------------|----------|
@@ -304,57 +305,17 @@ lv-chordia supports three different chord vocabularies to balance accuracy and v
 | **ismir2017** | ~25 chords | MIREX/ISMIR2017 standard | Research comparison, simpler analysis |
 | **full** | ~600+ chords | Complete MARL dataset vocabulary | Jazz, complex harmony analysis |
 
-### Usage
-
 ```python
-# Use default dictionary (submission)
-results = chord_recognition("audio.mp3")
-
-# Use ISMIR2017 dictionary
-results = chord_recognition("audio.mp3", chord_dict_name="ismir2017")
-
-# Use full dictionary (experimental)
-results = chord_recognition("audio.mp3", chord_dict_name="full")
+results = chord_recognition("audio.mp3", chord_dict_name="ismir2017")  # or "submission" (default) / "full"
 ```
 
 ```bash
-# Command line
-lv-chordia audio.mp3 --chord-dict submission
 lv-chordia audio.mp3 --chord-dict ismir2017
-lv-chordia audio.mp3 --chord-dict full
 ```
 
 ---
 
-## 🎵 Features
-
-### Technical Capabilities
-
-- **Large-vocabulary chord recognition**: Supports extensive chord dictionaries
-- **Chord structure decomposition**: Root, bass, and chord type modeling
-- **Ensemble inference**: 5 pre-trained models for robust predictions
-- **Audio format support**: MP3, WAV, FLAC, and other formats via librosa
-- **URL audio processing**: Automatic download from HTTP, HTTPS, and FTP
-- **Time-aligned output**: Precise temporal boundaries for each chord
-- **GPU acceleration**: Automatic CUDA support when available
-
-### Pre-trained Models
-
-This package includes pre-trained ensemble models achieving state-of-the-art accuracy on benchmark datasets:
-
-- **Training Data**: Large-scale chord annotations from multiple datasets
-- **Model Architecture**: Deep convolutional neural networks with CQT features
-- **Ensemble Size**: 5 models with cross-validation splits
-- **Decoding**: Hidden Markov Model (HMM) for temporal smoothing
-
-**Model Performance (as reported in ISMIR 2019):**
-- McGill Billboard: **~81% accuracy** (submission vocabulary)
-- RWC Pop: **~78% accuracy** (submission vocabulary)
-- Isophonics Beatles: **~83% accuracy** (submission vocabulary)
-
----
-
-## 🧠 How It Works
+## How It Works
 
 ### Chord Structure Decomposition
 
@@ -364,32 +325,22 @@ The key innovation of this approach is decomposing chord recognition into three 
 2. **Bass Note Recognition**: Identifying the bass note (for slash chords)
 3. **Chord Type Recognition**: Classifying the chord quality (maj, min, 7, etc.)
 
-This decomposition allows the model to:
-- Handle rare chords not seen in training data
-- Learn compositional structure of chords
-- Generalize better to complex chord vocabularies
+This decomposition allows the model to handle rare chords not seen in training data, learn compositional structure of chords, and generalize better to complex chord vocabularies.
 
 ### Processing Pipeline
 
 ```
 Audio File
-    ↓
-CQT Feature Extraction (Constant-Q Transform)
-    ↓
-Deep CNN Ensemble (5 models)
-    ↓
-Probability Fusion
-    ↓
-HMM Decoding with Chord Dictionary
-    ↓
-Chord Sequence (JSON)
+    -> CQT Feature Extraction (Constant-Q Transform)
+    -> Deep CNN Ensemble (5 models)
+    -> Probability Fusion
+    -> HMM Decoding with Chord Dictionary
+    -> Chord Sequence (JSON)
 ```
 
 ---
 
-## 📦 Dependencies
-
-### Core Dependencies
+## Dependencies
 
 All core dependencies are needed by the inference path (`lv_chordia.chord_recognition` / the CLI); none are training/eval-only.
 
@@ -403,8 +354,6 @@ pretty_midi>=0.2.9    # MIDI file handling
 joblib>=1.5.3         # Parallel computing
 ```
 
-### Optional Dependencies
-
 ```bash
 # For development
 pip install lv-chordia[dev]  # Adds: pytest, black, flake8, build, twine
@@ -412,7 +361,7 @@ pip install lv-chordia[dev]  # Adds: pytest, black, flake8, build, twine
 
 ---
 
-## 🔧 Advanced Usage
+## Advanced Usage
 
 ### Custom Model Loading
 
@@ -433,9 +382,7 @@ net = NetworkInterface(ChordNet(None), model_name, load_checkpoint=False)
 ```python
 import torch
 
-# Check CUDA availability
 if torch.cuda.is_available():
-    print("GPU acceleration available!")
     print(f"Using: {torch.cuda.get_device_name(0)}")
 else:
     print("Running on CPU")
@@ -444,60 +391,27 @@ else:
 results = chord_recognition("audio.mp3")
 ```
 
-### Integration with Music Analysis
-
-```python
-from lv_chordia.chord_recognition import chord_recognition
-import pandas as pd
-
-# Recognize chords
-results = chord_recognition("song.mp3")
-
-# Convert to DataFrame for analysis
-df = pd.DataFrame(results)
-
-# Analyze chord statistics
-print(f"Total chords: {len(df)}")
-print(f"Unique chords: {df['chord'].nunique()}")
-print(f"Most common chord: {df['chord'].mode()[0]}")
-print(f"\nChord distribution:")
-print(df['chord'].value_counts().head(10))
-
-# Calculate average chord duration
-df['duration'] = df['end_time'] - df['start_time']
-print(f"\nAverage chord duration: {df['duration'].mean():.2f}s")
-```
-
 ---
 
-## 🐛 Troubleshooting
+## Troubleshooting
 
 ### ImportError: No module named 'lv_chordia'
 
-**With UV:**
 ```bash
-# Make sure you added lv-chordia to your project
+# With UV
 uv add lv-chordia
-
-# Or run with UV
 uv run python your_script.py
-```
 
-**With pip:**
-```bash
-# Make sure you installed lv-chordia
+# With pip
 pip install lv-chordia
-
-# Check installation
 python -c "import lv_chordia; print('Success!')"
 ```
 
 ### Model Files Not Found
 
-The package includes pre-trained model files. If you encounter model loading errors:
+The package includes pre-trained model files. If you encounter model loading errors, reinstall:
 
 ```bash
-# Reinstall the package
 pip uninstall lv-chordia
 pip install lv-chordia --no-cache-dir
 
@@ -511,14 +425,11 @@ uv add lv-chordia --refresh
 For very long audio files, GPU memory might be insufficient:
 
 ```python
-# Process shorter segments
-# The package handles this automatically, but for manual control:
-
-# Option 1: Use CPU instead
+# Option 1: Force CPU mode
 import torch
-torch.cuda.is_available = lambda: False  # Force CPU mode
+torch.cuda.is_available = lambda: False
 
-# Option 2: Process shorter files
+# Option 2: Process shorter segments
 from pydub import AudioSegment
 
 audio = AudioSegment.from_file("long_audio.mp3")
@@ -528,37 +439,28 @@ for i, chunk_start in enumerate(range(0, len(audio), chunk_length_ms)):
     chunk = audio[chunk_start:chunk_start + chunk_length_ms]
     chunk.export(f"chunk_{i}.mp3", format="mp3")
     results = chord_recognition(f"chunk_{i}.mp3")
-    # Process results...
 ```
 
 ### Audio File Format Issues
 
-If you encounter errors loading audio files:
-
 ```bash
 # Install ffmpeg for broader format support
-# Ubuntu/Debian:
-sudo apt-get install ffmpeg
-
-# macOS:
-brew install ffmpeg
-
-# Windows: Download from https://ffmpeg.org/
+sudo apt-get install ffmpeg   # Ubuntu/Debian
+brew install ffmpeg           # macOS
+# Windows: download from https://ffmpeg.org/
 ```
 
 ```python
-# Convert audio to WAV format first
 from pydub import AudioSegment
 
 audio = AudioSegment.from_file("input.mp3")
 audio.export("input.wav", format="wav")
-
 results = chord_recognition("input.wav")
 ```
 
 ---
 
-## 📋 Requirements
+## Requirements
 
 - **Python**: 3.10 or later
 - **PyTorch**: 2.13 or later
@@ -568,55 +470,42 @@ results = chord_recognition("input.wav")
 
 ---
 
-## 🔬 Research Applications
-
-### Music Information Retrieval
+## Research Applications
 
 ```python
 # Extract chord progressions for MIR research
 results = chord_recognition("dataset/song001.mp3")
-
-# Analyze harmonic complexity
 unique_chords = len(set(r['chord'] for r in results))
 print(f"Harmonic complexity: {unique_chords} unique chords")
 ```
 
-### Music Education
-
 ```python
-# Generate practice materials
-results = chord_recognition("practice_track.mp3")
-
-# Export for notation software
-with open("chords.txt", "w") as f:
-    for segment in results:
-        f.write(f"{segment['start_time']:.2f}\t{segment['chord']}\n")
-```
-
-### Dataset Annotation
-
-```python
+# Batch-annotate a dataset
 from pathlib import Path
 import json
 
-# Batch annotate a dataset
 dataset_path = Path("music_dataset/")
 output_path = Path("annotations/")
 output_path.mkdir(exist_ok=True)
 
 for audio_file in dataset_path.glob("*.mp3"):
-    print(f"Annotating: {audio_file.name}")
-
     results = chord_recognition(str(audio_file))
-
     output_file = output_path / f"{audio_file.stem}_chords.json"
     with open(output_file, 'w') as f:
         json.dump(results, f, indent=2)
 ```
 
+### Related Work
+
+The research builds upon and extends several prior works in chord recognition:
+
+- **MIREX Chord Recognition**: Annual evaluation campaign for chord recognition systems
+- **JAMS Format**: JSON Annotated Music Specification for music annotations
+- **CQT Features**: Constant-Q Transform for music analysis
+
 ---
 
-## 🛠 Development
+## Development
 
 ### Setting Up Development Environment
 
@@ -634,50 +523,32 @@ uv pip install -e ".[dev]"
 
 **With pip:**
 ```bash
-# Create virtual environment
 python -m venv .venv
 source .venv/bin/activate
-
-# Install in development mode with dev dependencies
 pip install -e ".[dev]"
 ```
 
 ### Building the Package
 
 ```bash
-# Build wheel and source distribution
 uv build
-
-# Or with pip/build
-python -m build
-
-# Check the dist/ directory
+# Or: python -m build
 ls -lh dist/
 ```
 
 ### Publishing to PyPI
 
 ```bash
-# Install twine (included in dev dependencies)
 uv add twine
-
-# Build the package
 uv build
-
-# Upload to PyPI (requires PyPI credentials)
 twine upload dist/*
-
-# Or upload to TestPyPI first
-twine upload --repository testpypi dist/*
+# Or to TestPyPI first: twine upload --repository testpypi dist/*
 ```
 
 ### Running Tests
 
 ```bash
-# Run the test suite
 pytest tests/ -v
-
-# Run with coverage
 pytest tests/ --cov=lv_chordia
 ```
 
@@ -689,50 +560,7 @@ fixture -- the accuracy gate for any refactor of the inference path.
 
 ---
 
-## 📚 Additional Resources
-
-### Original Research
-
-- **Paper**: [Large-Vocabulary Chord Transcription via Chord Structure Decomposition](https://archives.ismir.net/ismir2019/paper/000078.pdf)
-- **Repository**: [music-x-lab/ISMIR2019-Large-Vocabulary-Chord-Recognition](https://github.com/music-x-lab/ISMIR2019-Large-Vocabulary-Chord-Recognition)
-- **Conference**: ISMIR 2019, Delft, The Netherlands
-
-### Related Work
-
-The research builds upon and extends several prior works in chord recognition:
-
-- **MIREX Chord Recognition**: Annual evaluation campaign for chord recognition systems
-- **JAMS Format**: JSON Annotated Music Specification for music annotations
-- **CQT Features**: Constant-Q Transform for music analysis
-
-### Model Downloads
-
-Pre-trained models are included in the package. For custom models with label reweighting:
-- [Google Drive: Pre-trained Models](https://drive.google.com/drive/u/1/folders/1y5-zTFaBliymPe7uY2MZfUAsvPzwmGBL)
-
----
-
-## 🤝 Contributing
-
-Contributions are welcome! This package aims to maintain the original research quality while improving usability.
-
-### How to Contribute
-
-1. **Bug Reports**: Open an issue with details about the problem
-2. **Feature Requests**: Suggest improvements or new features
-3. **Pull Requests**: Submit PRs for bug fixes or enhancements
-4. **Documentation**: Help improve documentation and examples
-
-### Contribution Guidelines
-
-- Maintain compatibility with original research results
-- Add tests for new features
-- Update documentation for API changes
-- Follow existing code style
-
----
-
-## 📄 License
+## License
 
 **MIT License**
 
@@ -761,13 +589,24 @@ See [LICENSE](LICENSE) for full details.
 
 ---
 
-## 🆘 Support
+## Support
 
 ### Getting Help
 
 - **Documentation**: Read this README and code examples
 - **Issues**: Report bugs or ask questions on [GitHub Issues](https://github.com/music-x-lab/ISMIR2019-Large-Vocabulary-Chord-Recognition/issues)
 - **Discussions**: Join discussions about chord recognition and MIR
+
+### Contributing
+
+Contributions are welcome! This package aims to maintain the original research quality while improving usability.
+
+1. **Bug Reports**: Open an issue with details about the problem
+2. **Feature Requests**: Suggest improvements or new features
+3. **Pull Requests**: Submit PRs for bug fixes or enhancements
+4. **Documentation**: Help improve documentation and examples
+
+Please maintain compatibility with original research results, add tests for new features, and follow existing code style.
 
 ### Common Questions
 
@@ -785,29 +624,4 @@ A: Yes, the MIT license allows commercial use. Please cite the original research
 
 ---
 
-## 🌟 Acknowledgments
-
-### Research Team
-
-Special thanks to the original research team:
-- **Junyan Jiang** - Lead author, model development
-- **Ke Chen** - Algorithm design, implementation
-- **Wei Li** - Data preparation, evaluation
-- **Gus Xia** - Research supervision, methodology
-
-### Package Maintenance
-
-This package is maintained to ensure continued availability and compatibility with modern Python ecosystems.
-
-### Community
-
-Thanks to the music information retrieval (MIR) community for:
-- Dataset creation and annotation
-- MIREX evaluation campaigns
-- Open-source tools and libraries
-
----
-
-**Made with ❤️ for the music and research community**
-
-*Based on the excellent research by Junyan Jiang, Ke Chen, Wei Li, and Gus Xia (ISMIR 2019)*
+**Made for the music and research community, built on the research of Junyan Jiang, Ke Chen, Wei Li, and Gus Xia (ISMIR 2019)**

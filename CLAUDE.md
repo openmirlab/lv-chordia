@@ -14,6 +14,36 @@ dependency on any training dataset. If you find yourself adding a training
 loop, a dataset loader, or an eval/benchmark script here, stop -- that
 doesn't belong in this package.
 
+## Weights hosting: documented size-based exception to org constitution article 4
+
+Unlike most other openmirlab inference packages, this repo does **not**
+download its weights at runtime. The pre-trained ensemble
+(`cache_data/*.sdict`, 5 files, ~28MB total, 5.5MB each) is committed
+directly to git and shipped inside the built wheel/sdist via
+`pyproject.toml`'s `shared-data`/`sdist` config -- this is the package's
+pre-existing, original design, not a recent regression.
+
+This is a **deliberate, documented exception** to the org's default weights
+contract (constitution article 4: weights are normally downloaded at
+runtime, never committed to git), confirmed acceptable on 2026-07-12. The
+justification is size: 28MB total is small enough that bundling costs
+little and buys a fully-offline install with zero download/caching/sha256
+machinery -- the same size-vs-simplicity tradeoff behind
+drum-classifier-infer's bundled checkpoint (there the driver was license
+instead of size, but the org-level precedent -- bundling is fine when the
+weight is genuinely small -- is the same one applied here). This is not a
+defect to migrate away from; do not treat it as a TODO.
+
+**Still do not delete or otherwise touch `cache_data/*.sdict` or any
+git-tracked weight file casually** -- if a future change genuinely needs to
+move to runtime download (e.g. the ensemble grows well past this size, or
+the org tightens the exception threshold), build the downloader, host the
+weights (the org's usual pattern is a versioned external host + sha256
+verification, as in bs-roformer-infer/melband-roformer-infer), then update
+this note, `pyproject.toml`'s packaging config, and README's Scope section
+together -- but that is a deliberate future call, not a standing violation
+to clear.
+
 ## Entry points and the live import graph
 
 - CLI: `lv_chordia/cli.py` (`lv-chordia` console script) -> `chord_recognition()`
