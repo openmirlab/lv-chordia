@@ -4,6 +4,94 @@ All notable changes to this project are documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [Unreleased]
+
+## CI matrix + dependency floor refresh (2026-07-12, branch `fix/ci-matrix`)
+
+An org audit found this repo tested only Python 3.10, and only inside
+publish.yml's release-gate job -- there was no dedicated `test.yml` running
+on every push/PR, despite classifiers claiming 3.8-3.12 support. This change
+builds that CI and refreshes stale dependency floors, verified empirically at
+every step (org constitution article 3: "floors, not ceilings"; article 7:
+"wheel-from-sdist install smoke test"). Dependabot: 0 open alerts, reconfirmed
+via `gh api repos/openmirlab/lv-chordia/dependabot/alerts` -- no security
+fixes needed here.
+
+### Added
+- `.github/workflows/test.yml`: a `test` job running the full 24-test
+  `pytest` suite across a Python 3.10/3.11/3.12/3.13 matrix via `uv`
+  (`astral-sh/setup-uv@v4` + `uv python install` + `uv sync --extra dev`),
+  triggered on push to `master`, on every PR, and via `workflow_dispatch`.
+  All four versions verified green in fresh `uv`-managed venvs before being
+  added -- none were excluded.
+- A `build` job (`needs: [test]`) doing the wheel-from-sdist install smoke
+  test: `python -m build`, install the wheel into a clean `venv`, import
+  `lv_chordia` and touch `__version__` and
+  `lv_chordia.chord_recognition.chord_recognition`. Also asserts the wheel
+  still contains its expected `lv_chordia/**/*.py` files (>=10; actual count
+  36) -- guarding against the exact `[tool.hatch.build.targets.wheel]
+  packages` misconfiguration class of bug the constitution flags, given this
+  repo's wheel target also carries a `shared-data` entry for `cache_data`.
+  Note: unlike some openmirlab siblings, lv-chordia's wheel intentionally
+  bundles its pretrained-model `.sdict` weight files via that `shared-data`
+  mechanism (pre-existing design, not runtime-downloaded) -- the build job
+  does not flag bundled weights as an error here, since that would be a false
+  positive against this repo's actual packaging contract.
+- README `Test` CI badge.
+- Python 3.13 classifier (confirmed green; previously absent even though
+  3.8/3.9 were claimed and untested).
+
+### Changed
+- Stale dependency floors bumped, each verified across the full 3.10-3.13
+  matrix before being kept:
+  - `torch>=2.0.0` -> `>=2.13.0` (current latest stable; ships cp310-cp313
+    wheels).
+  - `h5py>=2.9.0` -> `>=3.16.0` (current latest; very stale before).
+  - `joblib>=0.13.2` -> `>=1.5.3` (current latest; very stale before).
+  - `librosa>=0.7.2` -> `>=0.11.0` (current latest; doesn't force an
+    incompatible numpy/scipy/numba floor for Python 3.10).
+  - `numpy>=1.19.2` -> `>=2.2.6` -- **the numpy/Python-version trap**:
+    `numpy>=2.3` requires Python>=3.11 and `numpy>=2.5` requires
+    Python>=3.12, which would break the Python 3.10 leg of this repo's new
+    CI matrix. `2.2.6` is the newest 2.x release whose own `requires-python`
+    (`>=3.10`) is still compatible with all four matrix versions (confirmed
+    via PyPI JSON metadata, not assumed).
+- **`requires-python` bumped `>=3.8` -> `>=3.10`** (a change beyond the
+  original CI-only ask, forced by the floor bumps above, not an independent
+  scope decision): `torch>=2.13.0` itself only ships cp310+ wheels, and
+  `numpy>=2.2.6` itself requires Python>=3.10, so the second the mandated
+  torch/numpy floor bumps landed, the `>=3.8` claim became factually false --
+  `uv sync`'s universal resolver confirmed this empirically (unsatisfiable
+  resolution errors citing exactly these two packages) before the bump.
+  Classifiers updated to match: 3.8/3.9 dropped, 3.13 added.
+- **Consolidated the two dev-dependency declarations into one.** This repo
+  previously declared dev deps in both `[project.optional-dependencies].dev`
+  (pytest, black, flake8, build, twine) and a separate PEP-735
+  `[dependency-groups].dev` (build, hatchling, pytest). Empirically, `uv
+  sync --extra dev` was already installing both (uv installs the default
+  dependency group alongside any requested extra unless told not to), so the
+  duplication only added confusion, not failures. Removed
+  `[dependency-groups]` entirely; `[project.optional-dependencies].dev` is
+  now the single source of dev deps (pytest, black, flake8, `build>=1.0.0`,
+  twine). `hatchling` was dropped as an explicit dev dependency since it is
+  already declared in `[build-system].requires` and uv/pip provide it via
+  build isolation regardless.
+- `uv.lock` regenerated (110 packages resolved, `requires-python = ">=3.10"`).
+- README: `Test` badge added; Python badge `3.8+` -> `3.10+`; PyTorch badge
+  `2.0+` -> `2.13+`; dependencies list and Requirements section floors
+  updated to match pyproject.toml.
+- `publish.yml`: added a comment clarifying its Python-3.10-only `test` job
+  is a deliberate release-gate simplification now that the full matrix lives
+  in `test.yml`; the job itself is unchanged.
+
+### Test counts
+- Before: 24 passed (Python 3.10 only, via `pip install -e ".[dev]"` --
+  reconfirmed, matches prior audit baseline).
+- After: 24 passed on every matrix leg (3.10, 3.11, 3.12, 3.13), both via
+  `uv sync --extra dev` + `uv run pytest` and via the original
+  `pip install -e ".[dev]"` path (re-verified on 3.10 for publish.yml
+  parity).
+
 ## [1.1.0] - 2026-07-11
 
 ### Removed

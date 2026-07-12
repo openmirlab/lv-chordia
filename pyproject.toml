@@ -36,24 +36,30 @@ classifiers = [
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.8",
-    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
     "Topic :: Multimedia :: Sound/Audio :: Analysis",
     "Topic :: Scientific/Engineering :: Artificial Intelligence",
     "Topic :: Software Development :: Libraries :: Python Modules",
 ]
-requires-python = ">=3.8"
+# Bumped from >=3.8 (see CHANGELOG): torch>=2.13.0 itself only ships
+# cp310+ wheels, so >=3.8 became factually false the moment the mandated
+# torch floor bump landed -- this is a forced consequence of the floor
+# refresh, not an independent scope decision.
+requires-python = ">=3.10"
 dependencies = [
-    "torch>=2.0.0",
+    "torch>=2.13.0",
     "pretty_midi>=0.2.9",
-    "h5py>=2.9.0",
+    "h5py>=3.16.0",
     "pydub>=0.23.1",
-    "joblib>=0.13.2",
-    "librosa>=0.7.2",
-    "numpy>=1.19.2",
+    "joblib>=1.5.3",
+    "librosa>=0.11.0",
+    # numpy>=2.3 requires Python>=3.11 and numpy>=2.5 requires Python>=3.12;
+    # 2.2.6 is the newest 2.x release that still supports the Python 3.10
+    # floor this repo's CI matrix covers (org constitution article 3).
+    "numpy>=2.2.6",
 ]
 
 [project.optional-dependencies]
@@ -61,7 +67,7 @@ dev = [
     "pytest>=6.0",
     "black>=22.0",
     "flake8>=4.0",
-    "build>=0.10.0",
+    "build>=1.0.0",
     "twine>=4.0.0",
 ]
 
@@ -94,13 +100,6 @@ include = [
     "/LICENSE",
     "/pyproject.toml",
     "/MANIFEST.in",
-]
-
-[dependency-groups]
-dev = [
-    "build>=1.0.0",  # build>=1.3.0 requires Python 3.9+
-    "hatchling>=1.27.0",
-    "pytest>=6.0",
 ]
 
 [tool.pytest.ini_options]

@@ -2,9 +2,10 @@
 
 **Large-Vocabulary Chord Transcription via Chord Structure Decomposition**
 
+[![Test](https://github.com/openmirlab/lv-chordia/actions/workflows/test.yml/badge.svg)](https://github.com/openmirlab/lv-chordia/actions/workflows/test.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
-[![PyTorch](https://img.shields.io/badge/PyTorch-2.0+-ee4c2c.svg)](https://pytorch.org/)
+[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
+[![PyTorch](https://img.shields.io/badge/PyTorch-2.13+-ee4c2c.svg)](https://pytorch.org/)
 [![PyPI version](https://badge.fury.io/py/lv-chordia.svg)](https://pypi.org/project/lv-chordia/)
 
 A high-quality chord recognition system capable of transcribing complex chord progressions from audio recordings using deep learning.
@@ -393,13 +394,13 @@ Chord Sequence (JSON)
 All core dependencies are needed by the inference path (`lv_chordia.chord_recognition` / the CLI); none are training/eval-only.
 
 ```
-torch>=2.0.0          # Deep learning framework
-librosa>=0.7.2        # Audio loading and CQT feature extraction
-numpy>=1.19.2         # Numerical computing
-h5py>=2.9.0           # HDF5 file format (model checkpoint storage backend)
+torch>=2.13.0         # Deep learning framework
+librosa>=0.11.0       # Audio loading and CQT feature extraction
+numpy>=2.2.6          # Numerical computing
+h5py>=3.16.0          # HDF5 file format (model checkpoint storage backend)
 pydub>=0.23.1         # Audio file manipulation
 pretty_midi>=0.2.9    # MIDI file handling
-joblib>=0.13.2        # Parallel computing
+joblib>=1.5.3         # Parallel computing
 ```
 
 ### Optional Dependencies
@@ -559,8 +560,8 @@ results = chord_recognition("input.wav")
 
 ## 📋 Requirements
 
-- **Python**: 3.8 or later
-- **PyTorch**: 2.0 or later
+- **Python**: 3.10 or later
+- **PyTorch**: 2.13 or later
 - **OS**: Linux, macOS, Windows
 - **GPU**: Optional (CUDA-capable GPU recommended for faster processing)
 - **Memory**: 4GB RAM minimum, 8GB+ recommended for long audio files
