@@ -3,6 +3,11 @@ name: Publish to PyPI
 # This workflow publishes the package to PyPI when a GitHub Release is created.
 # It uses PyPI's trusted publishing feature, which must be configured on PyPI
 # for the GitHub organization and repository.
+#
+# The `test` job below is the release gate (org constitution article 7:
+# "publishing workflows gate on the test suite") and deliberately stays
+# Python-3.10-only for release-gate simplicity -- the full 3.10-3.13 matrix
+# now lives in test.yml, which runs on every push/PR.
 
 on:
   release:

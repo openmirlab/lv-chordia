@@ -1,0 +1,86 @@
+name: Test
+
+# Runs the test suite on every push/PR, matrixed across the Python versions
+# this repo actually declares support for (3.10-3.13; see pyproject.toml
+# requires-python and CHANGELOG.md for why the floor moved up from 3.8).
+# publish.yml keeps its own Python-3.10-only test job as the release gate
+# (org constitution article 7: "publishing workflows gate on the test
+# suite") -- that's deliberate release-gate simplicity, not a gap this
+# workflow needs to fill.
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.11", "3.12", "3.13"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v4
+        with:
+          enable-cache: true
+
+      - name: Set up Python ${{ matrix.python-version }}
+        run: uv python install ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: uv sync --extra dev --python ${{ matrix.python-version }}
+
+      - name: Run tests
+        run: uv run --python ${{ matrix.python-version }} pytest tests/ -v
+
+  build:
+    name: Wheel-from-sdist smoke test
+    needs: [test]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Build package (wheel-from-sdist, org constitution article 7)
+        run: |
+          python -m pip install --upgrade pip build
+          python -m build
+
+      - name: Install wheel into a clean venv and touch public symbols
+        run: |
+          python -m venv /tmp/smoke-venv
+          /tmp/smoke-venv/bin/pip install --upgrade pip
+          /tmp/smoke-venv/bin/pip install dist/*.whl
+          /tmp/smoke-venv/bin/python -c "
+          import lv_chordia
+          from lv_chordia import __version__
+          from lv_chordia.chord_recognition import chord_recognition
+          print('lv_chordia', __version__, 'imported OK')
+          print('chord_recognition entry point:', chord_recognition)
+          "
+
+      - name: Confirm the wheel packages the expected lv_chordia/**/*.py files
+        run: |
+          # lv-chordia's [tool.hatch.build.targets.wheel] has a `shared-data`
+          # entry for cache_data (the pretrained model weights, bundled by
+          # this repo's existing, pre-campaign design -- unlike some
+          # openmirlab siblings, lv-chordia does not runtime-download
+          # weights, so bundled .sdict files here are expected, not a bug).
+          # What we're actually guarding against (org constitution article 7)
+          # is the sdist/wheel `packages` misconfiguration class of bug that
+          # silently produces an empty, non-importable wheel.
+          count=$(unzip -l dist/*.whl | grep -c 'lv_chordia/.*\.py$')
+          if [ "$count" -lt 10 ]; then
+            echo "::error::Wheel looks empty ($count lv_chordia/*.py files) -- check [tool.hatch.build.targets.wheel] packages"
+            exit 1
+          fi
+          echo "Verified: wheel has $count lv_chordia/*.py files"
