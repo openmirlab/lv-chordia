@@ -27,9 +27,11 @@ from . import mir
 
 # Import the main function for easy access
 from .chord_recognition import chord_recognition
+from .session import LVChordiaSession
 
 __all__ = [
     "chord_recognition",
+    "LVChordiaSession",
     "extractors",
     "mir",
     "__version__",

@@ -1,0 +1,12 @@
+[models.lv_chordia]
+description = "ISMIR 2019 five-model chord recognition ensemble"
+license = "MIT"
+provenance = "https://github.com/music-x-lab/ISMIR2019-Large-Vocabulary-Chord-Recognition"
+source_revision = "master"
+updated_at = "2026-07-15"
+
+[[models.lv_chordia.artifacts]]
+name = "ensemble"
+url = "package://lv_chordia/cache_data"
+sha256 = ""
+size = 0

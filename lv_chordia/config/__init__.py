@@ -1,0 +1,1 @@
+"""Package-owned checkpoint metadata."""

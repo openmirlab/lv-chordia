@@ -89,6 +89,7 @@ packages = ["lv_chordia"]
 shared-data = { "cache_data" = "share/lv-chordia/cache_data" }
 include = [
     "lv_chordia/data/*",
+    "lv_chordia/config/checkpoints.toml",
 ]
 
 [tool.hatch.build.targets.sdist]

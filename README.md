@@ -625,3 +625,16 @@ A: Yes, the MIT license allows commercial use. Please cite the original research
 ---
 
 **Made for the music and research community, built on the research of Junyan Jiang, Ke Chen, Wei Li, and Gus Xia (ISMIR 2019)**
+# Lifecycle API
+
+Use `LVChordiaSession` for explicit model lifecycle management while retaining
+the legacy `chord_recognition()` one-shot function:
+
+```python
+from lv_chordia import LVChordiaSession
+
+with LVChordiaSession(chord_dict_name="submission") as session:
+    chords = session.infer("song.wav")
+```
+
+Checkpoint metadata is package-owned in `lv_chordia/config/checkpoints.toml`.
