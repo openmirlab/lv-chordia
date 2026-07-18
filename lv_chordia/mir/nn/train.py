@@ -5,12 +5,16 @@ import torch.optim as optim  # Still needed for checkpoint loading (optimizer st
 from ..common import WORKING_PATH
 import os
 import numpy as np
+from typing import Optional
 
 class NetworkBehavior(nn.Module):
 
-    def __init__(self):
+    def __init__(self, use_gpu: Optional[bool]=None):
         super().__init__()
-        self.use_gpu=torch.cuda.device_count()>0
+        # use_gpu=None (the default) preserves the original auto-detect
+        # behavior exactly; callers that want an explicit override (e.g. to
+        # force CPU on a CUDA-capable machine) pass True/False.
+        self.use_gpu=torch.cuda.device_count()>0 if use_gpu is None else use_gpu
         self.use_data_parallel=False
 
     def get_optimizer(self):

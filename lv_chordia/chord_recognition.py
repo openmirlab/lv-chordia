@@ -11,7 +11,7 @@ probabilities, and decodes them into chord segments with an HMM
 keep tests/test_chord_recognition_regression.py passing byte-for-byte.
 
 Reads: chordnet_ismir_naive.py, mir/nn/train.py, extractors/cqt.py,
-extractors/xhmm_ismir.py, settings.py, audio_utils.py
+extractors/xhmm_ismir.py, settings.py, audio_utils.py, device_utils.py
 """
 
 from .chordnet_ismir_naive import ChordNet
@@ -22,6 +22,7 @@ from .extractors.xhmm_ismir import XHMMDecoder
 import numpy as np
 from .settings import DEFAULT_SR,DEFAULT_HOP_LENGTH
 from .audio_utils import get_audio_path, cleanup_temp_audio
+from .device_utils import resolve_use_gpu
 import sys
 import json
 import os
@@ -31,7 +32,7 @@ import importlib.resources
 MODEL_NAMES = ['joint_chord_net_ismir_naive_v1.0_reweight(0.0,10.0)_s%d.best' % i for i in range(5)]
 
 
-def chord_recognition(audio_path: str, chord_dict_name: str = 'submission') -> List[Dict[str, Union[float, str]]]:
+def chord_recognition(audio_path: str, chord_dict_name: str = 'submission', device: Optional[str] = None) -> List[Dict[str, Union[float, str]]]:
     """
     Perform chord recognition on an audio file and return results as JSON.
 
@@ -41,12 +42,25 @@ def chord_recognition(audio_path: str, chord_dict_name: str = 'submission') -> L
     Args:
         audio_path: Path to the input audio file or URL (http://, https://)
         chord_dict_name: Chord dictionary to use ('submission', 'ismir2017', or 'full')
+        device: Optional device override -- one of 'cpu', 'cuda', 'cuda:N', or
+            'auto'. None (the default) preserves today's behavior exactly:
+            auto-detect GPU via torch.cuda.device_count() > 0. 'cpu' forces
+            CPU even when CUDA is available; 'cuda'/'cuda:N' force GPU,
+            raising RuntimeError if no CUDA device is visible. Only
+            GPU-yes/no is wired through the inference pipeline -- 'cuda:N' is
+            validated but does not itself pick which physical GPU runs the
+            model (see device_utils.resolve_use_gpu).
 
     Returns:
         List of chord annotations as dictionaries with keys:
         - start_time: Start time in seconds (float)
         - end_time: End time in seconds (float)
         - chord: Chord label (string)
+
+    Raises:
+        RuntimeError: device requests CUDA but none is visible, or requests
+            an out-of-range CUDA index.
+        ValueError: device is not a recognized string.
 
     Examples:
         >>> # Local file
@@ -60,7 +74,14 @@ def chord_recognition(audio_path: str, chord_dict_name: str = 'submission') -> L
 
         >>> # URL
         >>> results = chord_recognition("https://example.com/audio.mp3")
+
+        >>> # Force CPU even on a CUDA-capable machine
+        >>> results = chord_recognition("song.mp3", device="cpu")
     """
+    # Resolve device before doing any work, so an invalid/unavailable device
+    # request fails fast rather than after downloading a URL.
+    use_gpu = resolve_use_gpu(device)
+
     # Handle URL downloads
     actual_audio_path, is_temp = get_audio_path(audio_path)
 
@@ -75,7 +96,7 @@ def chord_recognition(audio_path: str, chord_dict_name: str = 'submission') -> L
         entry.append_extractor(CQTV2, 'cqt')
         probs = []
         for model_name in MODEL_NAMES:
-            net = NetworkInterface(ChordNet(None), model_name, load_checkpoint=False)
+            net = NetworkInterface(ChordNet(None, use_gpu=use_gpu), model_name, load_checkpoint=False)
             print('Inference: %s on %s' % (model_name, audio_path), file=sys.stderr)
             probs.append(net.inference(entry.cqt))
         probs = [np.mean([p[i] for p in probs], axis=0) for i in range(len(probs[0]))]
@@ -96,21 +117,23 @@ def chord_recognition(audio_path: str, chord_dict_name: str = 'submission') -> L
             cleanup_temp_audio(actual_audio_path)
 
 
-def chord_recognition_json(audio_path: str, chord_dict_name: str = 'submission') -> List[Dict[str, Union[float, str]]]:
+def chord_recognition_json(audio_path: str, chord_dict_name: str = 'submission', device: Optional[str] = None) -> List[Dict[str, Union[float, str]]]:
     """
     Alias for chord_recognition function for backward compatibility.
-    
+
     Args:
         audio_path: Path to the input audio file
         chord_dict_name: Chord dictionary to use ('submission', 'ismir2017', or 'full')
-    
+        device: Optional device override -- see chord_recognition() for the
+            accepted values and defaults.
+
     Returns:
         List of chord annotations as dictionaries with keys:
         - start_time: Start time in seconds (float)
         - end_time: End time in seconds (float)
         - chord: Chord label (string)
     """
-    return chord_recognition(audio_path, chord_dict_name)
+    return chord_recognition(audio_path, chord_dict_name, device)
 
 
 if __name__ == '__main__':

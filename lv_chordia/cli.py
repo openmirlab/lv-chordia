@@ -33,6 +33,10 @@ Examples:
   # URLs (auto-download)
   lv-chordia https://example.com/song.mp3
   lv-chordia https://example.com/audio.wav --chord-dict ismir2017
+
+  # Device override
+  lv-chordia example.mp3 --device cpu
+  lv-chordia example.mp3 --device cuda:1
         """
     )
 
@@ -49,7 +53,16 @@ Examples:
         choices=["submission", "ismir2017", "full"],
         help="Chord dictionary to use for decoding (default: submission)"
     )
-    
+
+    parser.add_argument(
+        "--device",
+        dest="device",
+        default=None,
+        help="Device override: 'cpu', 'cuda', 'cuda:N', or 'auto'. "
+             "Default: unset, which auto-detects GPU the same way this tool "
+             "always has."
+    )
+
     args = parser.parse_args()
 
     # Import here to check if it's a URL
@@ -62,7 +75,7 @@ Examples:
 
     try:
         # Perform chord recognition and output JSON
-        results = chord_recognition(args.audio_file, args.chord_dict)
+        results = chord_recognition(args.audio_file, args.chord_dict, device=args.device)
         print(json.dumps(results, indent=2))
     except Exception as e:
         print(f"Error during chord recognition: {e}", file=sys.stderr)

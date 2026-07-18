@@ -21,6 +21,7 @@ from .mir.nn.data_decorator import CQTPitchShifter,AbstractPitchShifter,NoPitchS
 from .mir.nn.data_provider import FramedDataProvider
 import torch
 import numpy as np
+from typing import Optional
 from .complex_chord import Chord,ChordTypeLimit,shift_complex_chord_array_list,complex_chord_chop,enum_to_dict,\
     TriadTypes,SeventhTypes,NinthTypes,EleventhTypes,ThirteenthTypes,complex_chord_chop_list
 
@@ -136,8 +137,8 @@ class CNNFeatureExtractor(nn.Module):
 
 class ChordNet(NetworkBehavior):
 
-    def __init__(self,cross_subpart_counter,triad_only=False):
-        super(ChordNet, self).__init__()
+    def __init__(self,cross_subpart_counter,triad_only=False,use_gpu: Optional[bool]=None):
+        super(ChordNet, self).__init__(use_gpu=use_gpu)
         self.triad_only=triad_only
         self.audio_feature_block=CNNFeatureExtractor()
 
@@ -203,8 +204,8 @@ class ChordNet(NetworkBehavior):
 
 class ChordNetCNN(NetworkBehavior):
 
-    def __init__(self,cross_subpart_counter):
-        super(ChordNetCNN, self).__init__()
+    def __init__(self,cross_subpart_counter,use_gpu: Optional[bool]=None):
+        super(ChordNetCNN, self).__init__(use_gpu=use_gpu)
         self.audio_feature_block=CNNFeatureExtractor()
 
         self.hidden_dim1=192

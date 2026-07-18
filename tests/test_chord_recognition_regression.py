@@ -14,7 +14,11 @@ variable, applied to a subprocess -- so it never depends on import order and
 never edits/monkeypatches the source's device-selection code. On a machine
 where the GPU is unavailable or busy, this still exercises the exact same
 code path the CLI uses in production; it just runs on CPU as the fallback
-that already exists in mir/nn/train.py.
+that already exists in mir/nn/train.py. (An explicit `--device cpu` /
+`device='cpu'` override also exists now -- see test_device_selection.py --
+but this test intentionally keeps exercising the external
+CUDA_VISIBLE_DEVICES path, since that's what's known to be
+byte-identical to the golden fixture.)
 
 The golden fixture (tests/fixtures/expected_chords_yellow.json) was captured
 against test_data/yellow.wav (already tracked in this repo) using the

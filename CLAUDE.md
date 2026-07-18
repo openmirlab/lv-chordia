@@ -83,12 +83,28 @@ future, dedicated pass.)
 
 ## Device handling -- do not touch casually
 
-GPU/CPU selection is automatic: `mir/nn/train.py` checks
-`torch.cuda.device_count() > 0` and moves the model to `.cuda()` if so.
-**Do not simplify, remove, or hardcode this to CPU or GPU.** GPU support is
-a hard requirement of this package. If you need CPU-only behavior for a
-local test or CI run, force it externally via `CUDA_VISIBLE_DEVICES=""` on
-the environment/subprocess -- never by editing the device-selection source.
+GPU/CPU selection defaults to automatic: `NetworkBehavior.__init__`
+(`mir/nn/train.py`) checks `torch.cuda.device_count() > 0` and moves the
+model to `.cuda()` if so, and this default **must stay untouched** -- GPU
+support is a hard requirement of this package.
+
+As of 2026-07, that default has an explicit, opt-in override:
+`chord_recognition(..., device=...)` / `lv-chordia --device ...` accept
+`'cpu'`, `'cuda'`, `'cuda:N'`, or `'auto'`, resolved by
+`device_utils.resolve_use_gpu()` into the `use_gpu` bool threaded through
+`NetworkBehavior`/`ChordNet`/`ChordNetCNN`. Passing nothing (`device=None`,
+no `--device` flag) is byte-for-byte the same auto-detect as before this
+change -- the override is additive, not a replacement of the default. Only
+GPU-yes/no is wired through the pipeline; `'cuda:N'` is validated against
+`torch.cuda.device_count()` but does not itself select which physical GPU
+runs the model (every `.cuda()` call site targets torch's "current" device,
+not a caller-chosen index) -- pinning a specific GPU still requires
+`CUDA_VISIBLE_DEVICES` set before the process starts, same as today.
+
+Do not simplify, remove, or hardcode the *default* auto-detect to CPU or
+GPU. Do not add index-level device selection (e.g. `torch.cuda.set_device`)
+without re-reading this note -- it was deliberately left out to avoid
+mutating process-global CUDA state from a library call.
 
 ## Accuracy rule
 
