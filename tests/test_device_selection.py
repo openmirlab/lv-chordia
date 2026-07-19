@@ -6,7 +6,7 @@ import torch
 
 from lv_chordia.chordnet_ismir_naive import ChordNet
 from lv_chordia.device_utils import resolve_use_gpu
-from lv_chordia.mir.nn.train import NetworkBehavior
+from lv_chordia.mir.nn.network import NetworkBehavior
 
 
 def test_device_none_defers_to_auto_detect():

@@ -367,7 +367,7 @@ pip install lv-chordia[dev]  # Adds: pytest, black, flake8, build, twine
 
 ```python
 from lv_chordia.chordnet_ismir_naive import ChordNet
-from lv_chordia.mir.nn.train import NetworkInterface
+from lv_chordia.mir.nn.network import NetworkInterface
 
 # Load specific model from ensemble
 model_name = 'joint_chord_net_ismir_naive_v1.0_reweight(0.0,10.0)_s0.best'

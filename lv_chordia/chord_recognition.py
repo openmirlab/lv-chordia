@@ -4,7 +4,7 @@ The inference pipeline: audio in, time-aligned chord JSON out.
 This is the one real entry point of the package (cli.py just wraps it;
 session.py holds a preloaded ensemble across calls). The pipeline runs a
 5-model ensemble (ChordNet, defined in chordnet_ismir_naive.py) over CQT
-features (extractors/cqt.py) loaded via mir.nn.train.NetworkInterface,
+features (extractors/cqt.py) loaded via mir.nn.network.NetworkInterface,
 averages the ensemble's per-frame probabilities, and decodes them into chord
 segments with an HMM (extractors/xhmm_ismir.py) driven by a chosen chord
 dictionary (lv_chordia/data/*_chord_list.txt). Split into load_ensemble()
@@ -14,12 +14,12 @@ chord_recognition() composes the two for one-shot callers. Accuracy-sensitive:
 any change here must keep tests/test_chord_recognition_regression.py passing
 byte-for-byte.
 
-Reads: chordnet_ismir_naive.py, mir/nn/train.py, extractors/cqt.py,
+Reads: chordnet_ismir_naive.py, mir/nn/network.py, extractors/cqt.py,
 extractors/xhmm_ismir.py, settings.py, audio_utils.py, device_utils.py
 """
 
 from .chordnet_ismir_naive import ChordNet
-from .mir.nn.train import NetworkInterface
+from .mir.nn.network import NetworkInterface
 from .extractors.cqt import CQTV2,SimpleChordToID
 from .mir import io,DataEntry
 from .extractors.xhmm_ismir import XHMMDecoder

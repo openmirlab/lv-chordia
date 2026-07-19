@@ -1,7 +1,6 @@
 import torch.nn as nn
 import torch.nn.functional as F
 import torch
-import torch.optim as optim  # Still needed for checkpoint loading (optimizer state)
 from ..common import WORKING_PATH
 import os
 import numpy as np
@@ -17,21 +16,15 @@ class NetworkBehavior(nn.Module):
         self.use_gpu=torch.cuda.device_count()>0 if use_gpu is None else use_gpu
         self.use_data_parallel=False
 
-    def get_optimizer(self):
-        return optim.Adam(self.parameters())
-
     def forward(self, *args):
         raise NotImplementedError()
 
-    def init_settings(self, is_training):
+    def init_settings(self):
         if(self.use_gpu):
             self.cuda()
         else:
             self.cpu()
-        if(is_training):
-            self.train()
-        else:
-            self.eval()
+        self.eval()
         if(self.use_data_parallel):
             self.parallel_net=[nn.DataParallel(self)]
 
@@ -41,13 +34,7 @@ class NetworkBehavior(nn.Module):
         else:
             return self(*args)
 
-    def loss(self, *args):
-        raise NotImplementedError()
-
     def inference(self, *args):
-        raise NotImplementedError()
-
-    def evaluation(self, *args):
         raise NotImplementedError()
 
 class NetworkInterface:
@@ -59,14 +46,13 @@ class NetworkInterface:
             raise Exception('Invalid network type')
         if('(p)' in save_name):
             self.net.use_data_parallel=True
-        self.net.init_settings(False)
+        self.net.init_settings()
         self.save_name=save_name
         # Use CACHE_DATA_PATH if load_path is 'cache_data', otherwise use WORKING_PATH
         self.base_path = CACHE_DATA_PATH if load_path == 'cache_data' else os.path.join(WORKING_PATH, load_path)
         save_path=os.path.join(self.base_path,'%s.sdict'%save_name)
         cp_save_path=os.path.join(self.base_path,'%s.cp.sdict'%save_name)
         self.finalized=False
-        self.optimizer=self.net.get_optimizer()
         self.counter=0
         self.best_val_loss=np.inf
         self.best_epoch_dist=0
@@ -80,7 +66,6 @@ class NetworkInterface:
             # self.net.load_state_dict(new_state_dict)
             self.net.load_state_dict(state_dict['net'])
             self.counter=state_dict['counter']
-            self.optimizer.load_state_dict(state_dict['opt'])
             try:
                 self.best_epoch_dist=state_dict['best_epoch_dist']
                 self.best_val_loss=state_dict['best_val_loss']
@@ -97,17 +82,14 @@ class NetworkInterface:
             # self.net.load_state_dict(new_state_dict)
             self.net.load_state_dict(state_dict['net'])
             self.counter=state_dict['counter']
-            self.optimizer.load_state_dict(state_dict['opt'])
             try:
                 self.best_epoch_dist=state_dict['best_epoch_dist']
                 self.best_val_loss=state_dict['best_val_loss']
             except:
                 pass
 
-    # Removed train_supervised() method - training-only, not needed for inference-only package
-
     def inference(self, *args,**kwargs):
-        self.net.init_settings(False)
+        self.net.init_settings()
         inputs=[torch.tensor(arg,dtype=torch.float if arg.dtype in [np.float16,np.float32,np.float64] else torch.long)
                 for arg in args]
         if(self.net.use_gpu):
@@ -116,12 +98,10 @@ class NetworkInterface:
             return self.net.inference(*inputs,**kwargs)
 
     def inference_function(self,function,*args,**kwargs):
-        self.net.init_settings(False)
+        self.net.init_settings()
         inputs=[torch.tensor(arg,dtype=torch.float if arg.dtype in [np.float16,np.float32,np.float64] else torch.long)
                 for arg in args]
         if(self.net.use_gpu):
             inputs=[input.cuda() for input in inputs]
         with torch.no_grad():
             return self.net.__class__.__dict__[function](self.net,*inputs,**kwargs)
-
-

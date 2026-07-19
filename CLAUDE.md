@@ -60,7 +60,7 @@ to clear.
   `chord_recognition.py` and is the one owner of the pipeline math.
 
 `chord_recognition()` transitively imports:
-`chordnet_ismir_naive.py` (model definitions), `mir.nn.train.NetworkInterface`
+`chordnet_ismir_naive.py` (model definitions), `mir.nn.network.NetworkInterface`
 (checkpoint loading + inference), `extractors.cqt` / `extractors.xhmm_ismir`
 (feature extraction + HMM decoding), `mir.io` / `mir.DataEntry`,
 `settings.py`, `audio_utils.py` (local file + URL handling).
@@ -80,7 +80,7 @@ file; `io_new/` no longer exists.)
 `lv_chordia/mir/` is a vendored, general-purpose MIR toolkit (has its own
 `README.MD` and `requirements.txt`) that predates this package. Only a
 fraction of it is used by the live inference path
-(`mir.io`, `mir.data_file.DataEntry`, `mir.nn.train`, `mir.nn.data_storage`,
+(`mir.io`, `mir.data_file.DataEntry`, `mir.nn.network`, `mir.nn.data_storage`,
 `mir.nn.data_decorator`, `mir.nn.data_provider`, `mir.extractors.ExtractorBase`).
 It is treated as a lower-churn vendored dependency rather than lv-chordia's
 own code: don't prune it opportunistically in an unrelated change. (A few
@@ -90,10 +90,27 @@ training tooling, but were left in place during the 2026-07 inference-only
 cleanup rather than touching the vendored subpackage; flagged here for a
 future, dedicated pass.)
 
+`mir/nn/train.py` was renamed to `mir/nn/network.py` on 2026-07-19: despite
+its old name it held genuinely load-bearing inference code
+(`NetworkBehavior`, `NetworkInterface.inference()`/`inference_function()`),
+mixed with training-only dead weight (`loss()`/`evaluation()` abstract
+stubs never called anywhere, the unreachable `is_training=True` branch of
+`init_settings` -- every call site in this package passes `is_training`
+implicitly false now, and `get_optimizer()`/the checkpoint's `opt` restore,
+which nothing downstream ever read). The dead pieces were deleted and the
+file renamed once its remaining content was honestly inference-only; the
+CSV cross-validation fold manifests in `data/train0{0-4}.csv` (unreferenced
+by any code, README, or CI) were deleted the same day. `chordnet_ismir_naive.py`'s
+`ChordNet.loss()`/`ChordNetCNN.loss()`/`ReweightedLoss` are the same
+category of training-only dead weight (verified: `chord_recognition.py`
+always constructs `ChordNet(None, ...)`, so `loss_reweight` is never even
+set) but were left untouched -- out of scope for this pass, flagged for a
+future, dedicated one.
+
 ## Device handling -- do not touch casually
 
 GPU/CPU selection defaults to automatic: `NetworkBehavior.__init__`
-(`mir/nn/train.py`) checks `torch.cuda.device_count() > 0` and moves the
+(`mir/nn/network.py`) checks `torch.cuda.device_count() > 0` and moves the
 model to `.cuda()` if so, and this default **must stay untouched** -- GPU
 support is a hard requirement of this package.
 

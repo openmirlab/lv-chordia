@@ -6,6 +6,46 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## Finish the inference-only cleanup: dead training code + orphaned CSVs removed (2026-07-19, branch `master`, local)
+
+`mir/nn/train.py` mixed genuinely load-bearing inference machinery
+(`NetworkBehavior`, `NetworkInterface.inference()`/`inference_function()`)
+with training-only dead weight left over from a prior, unfinished cleanup
+pass (`train_supervised()` had already been removed; this pass finishes it).
+
+### Removed
+- `NetworkBehavior.loss()` / `.evaluation()` -- abstract stubs, never called
+  anywhere in the inference path (verified by call-site grep).
+- `NetworkBehavior.init_settings()`'s `is_training` parameter and its
+  `is_training=True` branch (`self.train()`) -- every call site in this
+  package always passed `False`; the `True` path was unreachable dead code.
+- `NetworkInterface.get_optimizer()` / `self.optimizer` construction and its
+  two `optimizer.load_state_dict(state_dict['opt'])` calls -- vestigial
+  checkpoint-format compatibility; nothing downstream ever reads
+  `self.optimizer` after construction.
+- `lv_chordia/data/train0{0-4}.csv` (5 files) -- unreferenced training-fold
+  manifests; confirmed orphaned by a repo-wide grep (code, README, CI, and
+  packaging config), not just a `.py`-file search.
+
+### Changed
+- `mir/nn/train.py` renamed to `mir/nn/network.py` -- once its remaining
+  content was honestly inference-only, the old name (evoking a training
+  entry point) was the last piece of the false impression. All importers
+  updated (`chordnet_ismir_naive.py`, `chord_recognition.py`,
+  `tests/test_device_selection.py`) along with README's advanced-usage
+  example and CLAUDE.md's import-graph notes.
+
+### Verification
+- `tests/test_chord_recognition_regression.py` (the byte-identical
+  accuracy gate): 2/2 passed before and after, output identical to the
+  pinned `tests/fixtures/expected_chords_yellow.json`.
+- Full suite: 47 passed before, 47 passed after.
+- `chordnet_ismir_naive.py`'s `ChordNet.loss()`/`ChordNetCNN.loss()`/
+  `ReweightedLoss` are the same category of training-only dead weight
+  (verified: `chord_recognition.py` always constructs `ChordNet(None, ...)`,
+  so `loss_reweight` is never even set) but were left untouched -- out of
+  scope for this pass, flagged in CLAUDE.md for a future, dedicated one.
+
 ## Load-once session API (2026-07-19, branch `master`, local)
 
 `LVChordiaSession` (added 2026-07-15) was a lifecycle facade in name only: its

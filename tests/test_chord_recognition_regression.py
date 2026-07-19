@@ -7,14 +7,14 @@ refactors that are supposed to be behavior-preserving (dead-code removal,
 dependency pruning, etc.).
 
 Device handling is deliberately NOT hardcoded here. lv_chordia auto-selects
-CUDA when available (see mir/nn/train.py); that selection logic is untouched
+CUDA when available (see mir/nn/network.py); that selection logic is untouched
 and GPU support is fully preserved. This test forces CPU only through the
 package's normal, external mechanism -- the CUDA_VISIBLE_DEVICES environment
 variable, applied to a subprocess -- so it never depends on import order and
 never edits/monkeypatches the source's device-selection code. On a machine
 where the GPU is unavailable or busy, this still exercises the exact same
 code path the CLI uses in production; it just runs on CPU as the fallback
-that already exists in mir/nn/train.py. (An explicit `--device cpu` /
+that already exists in mir/nn/network.py. (An explicit `--device cpu` /
 `device='cpu'` override also exists now -- see test_device_selection.py --
 but this test intentionally keeps exercising the external
 CUDA_VISIBLE_DEVICES path, since that's what's known to be
