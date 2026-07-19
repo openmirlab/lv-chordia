@@ -6,6 +6,40 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## Load-once session API (2026-07-19, branch `master`, local)
+
+`LVChordiaSession` (added 2026-07-15) was a lifecycle facade in name only: its
+`load()` deliberately deferred to the legacy pipeline, which reloaded all five
+ChordNet ensemble members from `cache_data/*.sdict` on every
+`chord_recognition()` call. This change makes the session real.
+
+### Added
+- `chord_recognition.load_ensemble(use_gpu)`: loads the five ensemble members
+  once (the expensive part -- five `torch.load` calls; chord-dictionary
+  independent).
+- `chord_recognition.recognize_with_ensemble(ensemble, audio_path,
+  chord_dict_name)`: the per-call part -- HMM decoder for the chosen chord
+  dictionary (the only thing the dictionary drives), CQT features, ensemble
+  inference, decode. No weights are loaded here.
+- `LVChordiaSession(device=...)`: the session now accepts the same device
+  contract as `chord_recognition()` (`'cpu'`/`'cuda'`/`'cuda:N'`/`'auto'`/
+  None), resolved once at `load()` through `device_utils.resolve_use_gpu`'s
+  fail-loudly check.
+- `tests/test_session.py`: 6 real tests -- ensemble loaded exactly once across
+  two `infer()` calls, session-vs-one-shot result identity on
+  `test_data/yellow.wav`, release/close state transitions, and the device
+  contract at `load()`.
+
+### Changed
+- `LVChordiaSession.load()` genuinely loads the ensemble once; `infer()`
+  reuses it (with an optional per-call `chord_dict_name` override);
+  `release()` drops the model references (reloadable), `close()` is final.
+- `chord_recognition()` now composes `load_ensemble()` +
+  `recognize_with_ensemble()`. Behavior and results are unchanged (the
+  byte-for-byte regression gate `test_chord_recognition_regression.py` stays
+  green; full suite 47 passed); the only observable difference is failure
+  order -- model loading now happens before a URL download instead of after.
+
 ## CI matrix + dependency floor refresh (2026-07-12, branch `fix/ci-matrix`)
 
 An org audit found this repo tested only Python 3.10, and only inside

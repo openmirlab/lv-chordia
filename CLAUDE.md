@@ -47,8 +47,17 @@ to clear.
 ## Entry points and the live import graph
 
 - CLI: `lv_chordia/cli.py` (`lv-chordia` console script) -> `chord_recognition()`
-- Python API: `lv_chordia.chord_recognition.chord_recognition()` /
-  `chord_recognition_json()` (alias)
+- Python API (one-shot): `lv_chordia.chord_recognition.chord_recognition()` /
+  `chord_recognition_json()` (alias) -- loads a throwaway five-model ensemble
+  per call.
+- Python API (resident): `lv_chordia.LVChordiaSession` (`session.py`) -- loads
+  the ensemble once at `load()` for a resolved device and reuses it across
+  `infer()` calls (made a real load-once session on 2026-07-19; it previously
+  deferred to the per-call reload). The chord dictionary is a per-call choice:
+  it only drives the HMM decoder built in `recognize_with_ensemble()`, never
+  the ensemble load. `chord_recognition()` itself now composes
+  `load_ensemble()` + `recognize_with_ensemble()` -- the split lives in
+  `chord_recognition.py` and is the one owner of the pipeline math.
 
 `chord_recognition()` transitively imports:
 `chordnet_ismir_naive.py` (model definitions), `mir.nn.train.NetworkInterface`

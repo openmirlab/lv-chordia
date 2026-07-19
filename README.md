@@ -627,14 +627,24 @@ A: Yes, the MIT license allows commercial use. Please cite the original research
 **Made for the music and research community, built on the research of Junyan Jiang, Ke Chen, Wei Li, and Gus Xia (ISMIR 2019)**
 # Lifecycle API
 
-Use `LVChordiaSession` for explicit model lifecycle management while retaining
-the legacy `chord_recognition()` one-shot function:
+Use `LVChordiaSession` to load the five-model ensemble once and reuse it
+across calls -- the API for resident processes that recognize chords
+repeatedly. The legacy `chord_recognition()` one-shot function remains and
+loads a throwaway ensemble per call:
 
 ```python
 from lv_chordia import LVChordiaSession
 
-with LVChordiaSession(chord_dict_name="submission") as session:
-    chords = session.infer("song.wav")
+with LVChordiaSession(chord_dict_name="submission", device="cpu") as session:
+    chords = session.infer("song.wav")            # ensemble loaded at enter
+    more = session.infer("other.wav")             # no reload
+    jazz = session.infer("song.wav", "full")      # per-call chord dict, still no reload
 ```
+
+`load()` resolves the device (same `'cpu'`/`'cuda'`/`'cuda:N'`/`'auto'`
+contract as `chord_recognition()`'s `device` parameter) and loads the
+ensemble exactly once; `release()` drops the model references. The chord
+dictionary only drives the per-call HMM decoder, never the ensemble load,
+so one loaded session serves any vocabulary.
 
 Checkpoint metadata is package-owned in `lv_chordia/config/checkpoints.toml`.
