@@ -75,7 +75,7 @@ def test_infer_before_load_raises():
 
 def test_release_drops_ensemble_and_infer_raises(monkeypatch):
     # Loading is stubbed out here -- this test is about state transitions, not weights.
-    monkeypatch.setattr(lv_chordia.session, "load_ensemble", lambda use_gpu: ["fake-ensemble"])
+    monkeypatch.setattr(lv_chordia.session, "load_ensemble", lambda use_gpu, **_kwargs: ["fake-ensemble"])
 
     session = LVChordiaSession(device="cpu").load()
     assert session.loaded
@@ -90,7 +90,7 @@ def test_release_drops_ensemble_and_infer_raises(monkeypatch):
 
 
 def test_closed_session_refuses_load(monkeypatch):
-    monkeypatch.setattr(lv_chordia.session, "load_ensemble", lambda use_gpu: ["fake-ensemble"])
+    monkeypatch.setattr(lv_chordia.session, "load_ensemble", lambda use_gpu, **_kwargs: ["fake-ensemble"])
 
     session = LVChordiaSession(device="cpu").load()
     session.close()
@@ -109,3 +109,74 @@ def test_session_load_enforces_the_device_contract(monkeypatch):
 
     with pytest.raises(ValueError):
         LVChordiaSession(device="tpu").load()
+
+
+def test_session_contract_uses_one_resident_ensemble_and_reloads_after_release(monkeypatch):
+    """Lifecycle behavior is verified with doubles, without audio or weights."""
+    calls = []
+
+    def fake_load(use_gpu, *, device=None):
+        calls.append((use_gpu, device))
+        return [object()]
+
+    monkeypatch.setattr(lv_chordia.session, "load_ensemble", fake_load)
+    monkeypatch.setattr(lv_chordia.session, "recognize_with_ensemble", lambda ensemble, path, chord_dict: [path, chord_dict])
+
+    session = LVChordiaSession(device="cpu")
+    assert session.status == "created"
+    with pytest.raises(RuntimeError, match="load"):
+        session.infer("unused.wav")
+    session.load().load()
+    assert calls == [(False, torch.device("cpu"))]
+    assert session.infer("first.wav") == ["first.wav", "submission"]
+    assert session.status == "ready"
+    session.release()
+    assert session.status == "released"
+    session.load()
+    assert len(calls) == 2
+    session.close().close()
+    assert session.status == "closed"
+    with pytest.raises(RuntimeError, match="closed"):
+        session.load()
+    with pytest.raises(RuntimeError, match="load"):
+        session.infer("unused.wav")
+
+
+def test_session_failed_load_is_visible_and_cache_info_is_toml_backed(monkeypatch, tmp_path):
+    monkeypatch.setattr(lv_chordia.session, "load_ensemble", lambda *args, **kwargs: (_ for _ in ()).throw(OSError("broken")))
+    session = LVChordiaSession(device="cpu")
+    with pytest.raises(OSError, match="broken"):
+        session.load()
+    assert session.status == "failed"
+
+    import importlib
+
+    config = importlib.import_module("lv_chordia.config")
+
+    artifact = config.checkpoint_entries()[0]
+    target_root = tmp_path / "bundled"
+    target_root.mkdir()
+    monkeypatch.setattr(lv_chordia.session, "resolve_checkpoint_paths", lambda: (target_root, ({**artifact, "path": target_root / artifact["name"], "cached": False},)))
+    info = session.cache_info()
+    assert info["path"] == str(target_root)
+    assert info["artifacts"] == [artifact["name"]]
+    assert info["cached"] is False
+
+
+def test_checkpoint_path_resolver_and_cache_info_do_not_materialize_missing_root(monkeypatch, tmp_path):
+    import importlib
+
+    config = importlib.import_module("lv_chordia.config")
+    common = importlib.import_module("lv_chordia.mir.common")
+    missing_root = tmp_path / "not-created"
+    monkeypatch.setattr(common, "CACHE_DATA_PATH", str(missing_root))
+
+    root, entries = config.resolve_checkpoint_paths()
+    assert root == missing_root
+    assert not missing_root.exists()
+    assert not any(entry["cached"] for entry in entries)
+
+    monkeypatch.setattr(lv_chordia.session, "resolve_checkpoint_paths", config.resolve_checkpoint_paths)
+    info = LVChordiaSession().cache_info()
+    assert info["path"] == str(missing_root)
+    assert not missing_root.exists()

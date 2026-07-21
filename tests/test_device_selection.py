@@ -5,7 +5,7 @@ import pytest
 import torch
 
 from lv_chordia.chordnet_ismir_naive import ChordNet
-from lv_chordia.device_utils import resolve_use_gpu
+from lv_chordia.device_utils import resolve_device, resolve_use_gpu
 from lv_chordia.mir.nn.network import NetworkBehavior
 
 
@@ -38,9 +38,10 @@ def test_device_cuda_raises_when_unavailable(monkeypatch):
         resolve_use_gpu("cuda")
 
 
-def test_device_cuda_index_in_range_resolves_true(monkeypatch):
+def test_device_cuda_index_is_preserved(monkeypatch):
     monkeypatch.setattr(torch.cuda, "device_count", lambda: 2)
     assert resolve_use_gpu("cuda:1") is True
+    assert resolve_device("cuda:1") == torch.device("cuda:1")
 
 
 def test_device_cuda_index_out_of_range_raises(monkeypatch):
@@ -55,7 +56,13 @@ def test_device_cuda_index_when_no_cuda_visible_raises(monkeypatch):
         resolve_use_gpu("cuda:0")
 
 
-@pytest.mark.parametrize("bad_device", ["tpu", "gpu", "cuda:", "cuda:one", ""])
+def test_device_mps_requires_an_available_backend(monkeypatch):
+    monkeypatch.setattr(torch.backends.mps, "is_available", lambda: False)
+    with pytest.raises(RuntimeError, match="MPS"):
+        resolve_device("mps")
+
+
+@pytest.mark.parametrize("bad_device", ["tpu", "gpu", "cuda:", "cuda:one", "mps:0", ""])
 def test_invalid_device_string_raises_value_error(bad_device):
     with pytest.raises(ValueError):
         resolve_use_gpu(bad_device)
@@ -90,3 +97,32 @@ def test_chordnet_threads_use_gpu_override_through_to_networkbehavior(monkeypatc
 def test_chordnet_default_still_auto_detects(monkeypatch):
     monkeypatch.setattr(torch.cuda, "device_count", lambda: 0)
     assert ChordNet(None).use_gpu is False
+
+
+def test_cuda_index_reaches_chordnet_construction(monkeypatch):
+    """The public one-shot path must not collapse ``cuda:1`` into a bool."""
+    import importlib
+
+    api = importlib.import_module("lv_chordia.chord_recognition")
+
+    captured = {}
+
+    class FakeChordNet:
+        def __init__(self, _counter, *, use_gpu, device):
+            captured["use_gpu"] = use_gpu
+            captured["device"] = device
+
+    monkeypatch.setattr(torch.cuda, "device_count", lambda: 2)
+    monkeypatch.setattr(api, "ChordNet", FakeChordNet)
+    monkeypatch.setattr(api, "NetworkInterface", lambda net, name, load_checkpoint: (net, name))
+
+    api.load_ensemble(True, device=resolve_device("cuda:1"))
+    assert captured == {"use_gpu": True, "device": torch.device("cuda:1")}
+
+
+def test_production_ensemble_names_come_from_package_toml():
+    import importlib
+
+    api = importlib.import_module("lv_chordia.chord_recognition")
+    config = importlib.import_module("lv_chordia.config")
+    assert api.MODEL_NAMES == config.model_names()

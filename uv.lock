@@ -842,6 +842,7 @@ dependencies = [
     { name = "numpy", version = "2.4.6", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
     { name = "pretty-midi" },
     { name = "pydub" },
+    { name = "tomli", marker = "python_full_version < '3.11'" },
     { name = "torch" },
 ]
 
@@ -866,6 +867,7 @@ requires-dist = [
     { name = "pretty-midi", specifier = ">=0.2.9" },
     { name = "pydub", specifier = ">=0.23.1" },
     { name = "pytest", marker = "extra == 'dev'", specifier = ">=6.0" },
+    { name = "tomli", marker = "python_full_version < '3.11'", specifier = ">=2.0.1" },
     { name = "torch", specifier = ">=2.13.0" },
     { name = "twine", marker = "extra == 'dev'", specifier = ">=4.0.0" },
 ]

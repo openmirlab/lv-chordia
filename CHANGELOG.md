@@ -6,6 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Changed
+- Explicit device requests now validate CPU, CUDA (including `cuda:N`), and
+  MPS availability before loading; a requested CUDA index reaches model and
+  tensor construction instead of silently using the current device.
+- `LVChordiaSession` now exposes failed lifecycle state, terminal idempotent
+  close, and TOML-backed read-only bundled-checkpoint cache inspection.
+
 ## Finish the inference-only cleanup: dead training code + orphaned CSVs removed (2026-07-19, branch `master`, local)
 
 `mir/nn/train.py` mixed genuinely load-bearing inference machinery

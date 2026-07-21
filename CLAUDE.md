@@ -116,21 +116,18 @@ support is a hard requirement of this package.
 
 As of 2026-07, that default has an explicit, opt-in override:
 `chord_recognition(..., device=...)` / `lv-chordia --device ...` accept
-`'cpu'`, `'cuda'`, `'cuda:N'`, or `'auto'`, resolved by
-`device_utils.resolve_use_gpu()` into the `use_gpu` bool threaded through
+`'cpu'`, `'cuda'`, `'cuda:N'`, `'mps'`, or `'auto'`, resolved by
+`device_utils.resolve_device()` and threaded through
 `NetworkBehavior`/`ChordNet`/`ChordNetCNN`. Passing nothing (`device=None`,
 no `--device` flag) is byte-for-byte the same auto-detect as before this
-change -- the override is additive, not a replacement of the default. Only
-GPU-yes/no is wired through the pipeline; `'cuda:N'` is validated against
-`torch.cuda.device_count()` but does not itself select which physical GPU
-runs the model (every `.cuda()` call site targets torch's "current" device,
-not a caller-chosen index) -- pinning a specific GPU still requires
-`CUDA_VISIBLE_DEVICES` set before the process starts, same as today.
+change -- the override is additive, not a replacement of the default. An
+explicit `'cuda:N'` is validated against `torch.cuda.device_count()` and is
+passed into model and tensor `.to()` calls without changing process-global
+CUDA state.
 
 Do not simplify, remove, or hardcode the *default* auto-detect to CPU or
-GPU. Do not add index-level device selection (e.g. `torch.cuda.set_device`)
-without re-reading this note -- it was deliberately left out to avoid
-mutating process-global CUDA state from a library call.
+GPU. Do not add `torch.cuda.set_device`: explicit indexes are carried on
+individual model/tensor operations and must not mutate global CUDA state.
 
 ## Accuracy rule
 

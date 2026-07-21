@@ -137,8 +137,8 @@ class CNNFeatureExtractor(nn.Module):
 
 class ChordNet(NetworkBehavior):
 
-    def __init__(self,cross_subpart_counter,triad_only=False,use_gpu: Optional[bool]=None):
-        super(ChordNet, self).__init__(use_gpu=use_gpu)
+    def __init__(self,cross_subpart_counter,triad_only=False,use_gpu: Optional[bool]=None,device=None):
+        super(ChordNet, self).__init__(use_gpu=use_gpu, device=device)
         self.triad_only=triad_only
         self.audio_feature_block=CNNFeatureExtractor()
 
@@ -162,9 +162,8 @@ class ChordNet(NetworkBehavior):
     def init_hidden(self,batch_size,hidden_dim):
         c_0=torch.zeros(2,batch_size,hidden_dim//2)
         h_0=torch.zeros(2,batch_size,hidden_dim//2)
-        if(self.use_gpu):
-            c_0=c_0.cuda()
-            h_0=h_0.cuda()
+        c_0=c_0.to(self.device)
+        h_0=h_0.to(self.device)
         return (c_0,h_0)
 
     def forward(self, x):
@@ -204,8 +203,8 @@ class ChordNet(NetworkBehavior):
 
 class ChordNetCNN(NetworkBehavior):
 
-    def __init__(self,cross_subpart_counter,use_gpu: Optional[bool]=None):
-        super(ChordNetCNN, self).__init__(use_gpu=use_gpu)
+    def __init__(self,cross_subpart_counter,use_gpu: Optional[bool]=None,device=None):
+        super(ChordNetCNN, self).__init__(use_gpu=use_gpu, device=device)
         self.audio_feature_block=CNNFeatureExtractor()
 
         self.hidden_dim1=192
@@ -219,9 +218,8 @@ class ChordNetCNN(NetworkBehavior):
     def init_hidden(self,batch_size,hidden_dim):
         c_0=torch.zeros(2,batch_size,hidden_dim//2)
         h_0=torch.zeros(2,batch_size,hidden_dim//2)
-        if(self.use_gpu):
-            c_0=c_0.cuda()
-            h_0=h_0.cuda()
+        c_0=c_0.to(self.device)
+        h_0=h_0.to(self.device)
         return (c_0,h_0)
 
     def forward(self, x):

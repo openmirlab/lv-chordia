@@ -26,17 +26,18 @@ from .extractors.xhmm_ismir import XHMMDecoder
 import numpy as np
 from .settings import DEFAULT_SR,DEFAULT_HOP_LENGTH
 from .audio_utils import get_audio_path, cleanup_temp_audio
-from .device_utils import resolve_use_gpu
+from .config import model_names
+from .device_utils import resolve_device
 import sys
 import json
 import os
 from typing import List, Dict, Union, Optional
 import importlib.resources
 
-MODEL_NAMES = ['joint_chord_net_ismir_naive_v1.0_reweight(0.0,10.0)_s%d.best' % i for i in range(5)]
+MODEL_NAMES = model_names()
 
 
-def load_ensemble(use_gpu: Optional[bool] = None) -> List[NetworkInterface]:
+def load_ensemble(use_gpu: Optional[bool] = None, *, device=None) -> List[NetworkInterface]:
     """
     Load all five ChordNet ensemble members from their bundled checkpoints, once.
 
@@ -52,12 +53,14 @@ def load_ensemble(use_gpu: Optional[bool] = None) -> List[NetworkInterface]:
             GPU, False forces CPU, None preserves auto-detection. Produce it
             from a caller-facing device string with
             device_utils.resolve_use_gpu().
+        device: Optional explicit ``torch.device``.  ``cuda:N`` is forwarded
+            unchanged so model construction and tensors use that index.
 
     Returns:
         The five loaded NetworkInterface ensemble members, in MODEL_NAMES order.
     """
     return [
-        NetworkInterface(ChordNet(None, use_gpu=use_gpu), model_name, load_checkpoint=False)
+        NetworkInterface(ChordNet(None, use_gpu=use_gpu, device=device), model_name, load_checkpoint=False)
         for model_name in MODEL_NAMES
     ]
 
@@ -128,14 +131,13 @@ def chord_recognition(audio_path: str, chord_dict_name: str = 'submission', devi
     Args:
         audio_path: Path to the input audio file or URL (http://, https://)
         chord_dict_name: Chord dictionary to use ('submission', 'ismir2017', or 'full')
-        device: Optional device override -- one of 'cpu', 'cuda', 'cuda:N', or
+        device: Optional device override -- one of 'cpu', 'cuda', 'cuda:N', 'mps', or
             'auto'. None (the default) preserves today's behavior exactly:
             auto-detect GPU via torch.cuda.device_count() > 0. 'cpu' forces
             CPU even when CUDA is available; 'cuda'/'cuda:N' force GPU,
             raising RuntimeError if no CUDA device is visible. Only
-            GPU-yes/no is wired through the inference pipeline -- 'cuda:N' is
-            validated but does not itself pick which physical GPU runs the
-            model (see device_utils.resolve_use_gpu).
+            CUDA and MPS availability are validated before model loading;
+            'cuda:N' is forwarded to model construction unchanged.
 
     Returns:
         List of chord annotations as dictionaries with keys:
@@ -166,12 +168,13 @@ def chord_recognition(audio_path: str, chord_dict_name: str = 'submission', devi
     """
     # Resolve device before doing any work, so an invalid/unavailable device
     # request fails fast rather than after loading models or downloading a URL.
-    use_gpu = resolve_use_gpu(device)
+    resolved_device = resolve_device(device)
+    use_gpu = None if resolved_device is None else resolved_device.type == "cuda"
 
     # One-shot convenience path: a throwaway ensemble is loaded per call, so
     # every call pays the five torch.load calls. Callers that recognize chords
     # repeatedly should hold an LVChordiaSession (session.py) instead.
-    ensemble = load_ensemble(use_gpu)
+    ensemble = load_ensemble(use_gpu, device=resolved_device)
     return recognize_with_ensemble(ensemble, audio_path, chord_dict_name)
 
 

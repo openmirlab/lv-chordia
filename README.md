@@ -641,10 +641,13 @@ with LVChordiaSession(chord_dict_name="submission", device="cpu") as session:
     jazz = session.infer("song.wav", "full")      # per-call chord dict, still no reload
 ```
 
-`load()` resolves the device (same `'cpu'`/`'cuda'`/`'cuda:N'`/`'auto'`
+`load()` resolves the device (same `'cpu'`/`'cuda'`/`'cuda:N'`/`'mps'`/`'auto'`
 contract as `chord_recognition()`'s `device` parameter) and loads the
 ensemble exactly once; `release()` drops the model references. The chord
 dictionary only drives the per-call HMM decoder, never the ensemble load,
 so one loaded session serves any vocabulary.
 
-Checkpoint metadata is package-owned in `lv_chordia/config/checkpoints.toml`.
+Explicit unavailable devices raise before models load; `cuda:N` is passed to
+the model and tensors as that exact CUDA index. `cache_info()` is a read-only
+view of the bundled artifacts named in package-owned
+`lv_chordia/config/checkpoints.toml`; it never downloads or creates a cache.

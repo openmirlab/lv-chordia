@@ -8,22 +8,20 @@ from typing import Optional
 
 class NetworkBehavior(nn.Module):
 
-    def __init__(self, use_gpu: Optional[bool]=None):
+    def __init__(self, use_gpu: Optional[bool]=None, device=None):
         super().__init__()
         # use_gpu=None (the default) preserves the original auto-detect
         # behavior exactly; callers that want an explicit override (e.g. to
         # force CPU on a CUDA-capable machine) pass True/False.
         self.use_gpu=torch.cuda.device_count()>0 if use_gpu is None else use_gpu
+        self.device = torch.device('cuda' if self.use_gpu else 'cpu') if device is None else torch.device(device)
         self.use_data_parallel=False
 
     def forward(self, *args):
         raise NotImplementedError()
 
     def init_settings(self):
-        if(self.use_gpu):
-            self.cuda()
-        else:
-            self.cpu()
+        self.to(self.device)
         self.eval()
         if(self.use_data_parallel):
             self.parallel_net=[nn.DataParallel(self)]
@@ -57,7 +55,7 @@ class NetworkInterface:
         self.best_val_loss=np.inf
         self.best_epoch_dist=0
         if(os.path.exists(save_path)):
-            state_dict=torch.load(save_path,map_location='cuda' if self.net.use_gpu else 'cpu')
+            state_dict=torch.load(save_path,map_location=self.net.device)
             # The following codes are for torch 4.0 compatibility
             # new_state_dict={}
             # for key in state_dict['net']:
@@ -73,7 +71,7 @@ class NetworkInterface:
                 pass
             self.finalized=True
         elif(load_checkpoint and os.path.exists(cp_save_path)):
-            state_dict=torch.load(cp_save_path,map_location='cuda' if self.net.use_gpu else 'cpu')
+            state_dict=torch.load(cp_save_path,map_location=self.net.device)
             # The following codes are for torch 4.0 compatibility
             # new_state_dict={}
             # for key in state_dict['net']:
@@ -92,8 +90,7 @@ class NetworkInterface:
         self.net.init_settings()
         inputs=[torch.tensor(arg,dtype=torch.float if arg.dtype in [np.float16,np.float32,np.float64] else torch.long)
                 for arg in args]
-        if(self.net.use_gpu):
-            inputs=[input.cuda() for input in inputs]
+        inputs=[input.to(self.net.device) for input in inputs]
         with torch.no_grad():
             return self.net.inference(*inputs,**kwargs)
 
@@ -101,7 +98,6 @@ class NetworkInterface:
         self.net.init_settings()
         inputs=[torch.tensor(arg,dtype=torch.float if arg.dtype in [np.float16,np.float32,np.float64] else torch.long)
                 for arg in args]
-        if(self.net.use_gpu):
-            inputs=[input.cuda() for input in inputs]
+        inputs=[input.to(self.net.device) for input in inputs]
         with torch.no_grad():
             return self.net.__class__.__dict__[function](self.net,*inputs,**kwargs)

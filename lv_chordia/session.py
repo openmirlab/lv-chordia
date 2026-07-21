@@ -20,7 +20,8 @@ from pathlib import Path
 from typing import Optional
 
 from .chord_recognition import load_ensemble, recognize_with_ensemble
-from .device_utils import resolve_use_gpu
+from .config import resolve_checkpoint_paths
+from .device_utils import resolve_device
 
 
 class LVChordiaSession:
@@ -31,7 +32,7 @@ class LVChordiaSession:
         Args:
             chord_dict_name: Default chord dictionary for infer() calls
                 ('submission', 'ismir2017', or 'full'); overridable per call.
-            device: Optional device override -- one of 'cpu', 'cuda', 'cuda:N',
+            device: Optional device override -- one of 'cpu', 'cuda', 'cuda:N', 'mps',
                 or 'auto'. None (the default) preserves auto-detection, exactly
                 as chord_recognition()'s own device parameter documents.
         """
@@ -60,8 +61,13 @@ class LVChordiaSession:
         if self._state == "closed":
             raise RuntimeError("session is closed")
         if self._ensemble is None:
-            use_gpu = resolve_use_gpu(self.device)
-            self._ensemble = load_ensemble(use_gpu)
+            try:
+                resolved_device = resolve_device(self.device)
+                use_gpu = None if resolved_device is None else resolved_device.type == "cuda"
+                self._ensemble = load_ensemble(use_gpu, device=resolved_device)
+            except Exception:
+                self._state = "failed"
+                raise
         self._state = "ready"
         return self
 
@@ -97,10 +103,17 @@ class LVChordiaSession:
         """Release the ensemble and end the session; load() is refused afterwards."""
         self.release()
         self._state = "closed"
+        return self
 
     def cache_info(self):
-        root = Path(__file__).parent.parent / "cache_data"
-        return {"path": str(root), "exists": root.exists(), "artifacts": sorted(p.name for p in root.glob("*.sdict"))}
+        root, entries = resolve_checkpoint_paths()
+        return {
+            "path": str(root),
+            "exists": root.exists(),
+            "cached": all(entry["cached"] for entry in entries),
+            "artifacts": [entry["name"] for entry in entries],
+            "entries": entries,
+        }
 
     def __enter__(self):
         return self.load()
