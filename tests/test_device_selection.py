@@ -56,10 +56,35 @@ def test_device_cuda_index_when_no_cuda_visible_raises(monkeypatch):
         resolve_use_gpu("cuda:0")
 
 
-def test_device_mps_requires_an_available_backend(monkeypatch):
-    monkeypatch.setattr(torch.backends.mps, "is_available", lambda: False)
-    with pytest.raises(RuntimeError, match="MPS"):
+def test_device_mps_rejected_outright_even_when_available(monkeypatch):
+    """Apple MLX/MPS backends are permanently out of scope for this project
+    (org canon art. 4b). device='mps' must raise ValueError unconditionally
+    -- even when MPS is actually available -- not RuntimeError only when
+    unavailable (the old, pre-removal behavior).
+    """
+    monkeypatch.setattr(torch.backends.mps, "is_available", lambda: True)
+    with pytest.raises(ValueError, match="mps"):
         resolve_device("mps")
+
+
+def test_device_mps_rejected_outright_when_unavailable_too(monkeypatch):
+    monkeypatch.setattr(torch.backends.mps, "is_available", lambda: False)
+    with pytest.raises(ValueError, match="mps"):
+        resolve_device("mps")
+
+
+def test_device_auto_never_resolves_to_mps_even_if_available(monkeypatch):
+    """'auto' (and None) must never select mps, even when
+    torch.backends.mps.is_available() would return True -- the auto path
+    defers to legacy CUDA-or-CPU auto-detect and must stay None here.
+    """
+    monkeypatch.setattr(torch.backends.mps, "is_available", lambda: True)
+    monkeypatch.setattr(torch.cuda, "device_count", lambda: 0)
+
+    assert resolve_device("auto") is None
+    assert resolve_device(None) is None
+    assert resolve_use_gpu("auto") is None
+    assert resolve_use_gpu(None) is None
 
 
 @pytest.mark.parametrize("bad_device", ["tpu", "gpu", "cuda:", "cuda:one", "mps:0", ""])

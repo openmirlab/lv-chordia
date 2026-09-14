@@ -116,8 +116,9 @@ support is a hard requirement of this package.
 
 As of 2026-07, that default has an explicit, opt-in override:
 `chord_recognition(..., device=...)` / `lv-chordia --device ...` accept
-`'cpu'`, `'cuda'`, `'cuda:N'`, `'mps'`, or `'auto'`, resolved by
-`device_utils.resolve_device()` and threaded through
+`'cpu'`, `'cuda'`, `'cuda:N'`, or `'auto'` (`'mps'` is rejected outright --
+Apple MLX/MPS backends are permanently out of scope, org canon art. 4b),
+resolved by `device_utils.resolve_device()` and threaded through
 `NetworkBehavior`/`ChordNet`/`ChordNetCNN`. Passing nothing (`device=None`,
 no `--device` flag) is byte-for-byte the same auto-detect as before this
 change -- the override is additive, not a replacement of the default. An

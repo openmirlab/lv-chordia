@@ -32,9 +32,11 @@ class LVChordiaSession:
         Args:
             chord_dict_name: Default chord dictionary for infer() calls
                 ('submission', 'ismir2017', or 'full'); overridable per call.
-            device: Optional device override -- one of 'cpu', 'cuda', 'cuda:N', 'mps',
+            device: Optional device override -- one of 'cpu', 'cuda', 'cuda:N',
                 or 'auto'. None (the default) preserves auto-detection, exactly
-                as chord_recognition()'s own device parameter documents.
+                as chord_recognition()'s own device parameter documents. 'mps'
+                is rejected outright -- Apple MLX/MPS backends are permanently
+                out of scope for this project (org canon art. 4b).
         """
         self.chord_dict_name = chord_dict_name
         self.device = device

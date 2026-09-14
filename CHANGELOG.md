@@ -7,11 +7,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [Unreleased]
 
 ### Changed
-- Explicit device requests now validate CPU, CUDA (including `cuda:N`), and
-  MPS availability before loading; a requested CUDA index reaches model and
+- Explicit device requests now validate CPU and CUDA (including `cuda:N`)
+  availability before loading; a requested CUDA index reaches model and
   tensor construction instead of silently using the current device.
 - `LVChordiaSession` now exposes failed lifecycle state, terminal idempotent
   close, and TOML-backed read-only bundled-checkpoint cache inspection.
+
+### Removed
+- MPS device support (org decision 2026-09-14). `device="mps"` now raises
+  `ValueError` unconditionally -- Apple MLX/MPS backends are permanently out
+  of scope for this project (org canon art. 4b). This support was never
+  published to PyPI (introduced after the `v1.1.0` release), so this is not
+  a breaking change to any released version.
 
 ## Finish the inference-only cleanup: dead training code + orphaned CSVs removed (2026-07-19, branch `master`, local)
 

@@ -131,13 +131,15 @@ def chord_recognition(audio_path: str, chord_dict_name: str = 'submission', devi
     Args:
         audio_path: Path to the input audio file or URL (http://, https://)
         chord_dict_name: Chord dictionary to use ('submission', 'ismir2017', or 'full')
-        device: Optional device override -- one of 'cpu', 'cuda', 'cuda:N', 'mps', or
+        device: Optional device override -- one of 'cpu', 'cuda', 'cuda:N', or
             'auto'. None (the default) preserves today's behavior exactly:
             auto-detect GPU via torch.cuda.device_count() > 0. 'cpu' forces
             CPU even when CUDA is available; 'cuda'/'cuda:N' force GPU,
             raising RuntimeError if no CUDA device is visible. Only
-            CUDA and MPS availability are validated before model loading;
-            'cuda:N' is forwarded to model construction unchanged.
+            CUDA availability is validated before model loading; 'cuda:N'
+            is forwarded to model construction unchanged. 'mps' is rejected
+            outright (ValueError) -- Apple MLX/MPS backends are permanently
+            out of scope for this project (org canon art. 4b).
 
     Returns:
         List of chord annotations as dictionaries with keys:
