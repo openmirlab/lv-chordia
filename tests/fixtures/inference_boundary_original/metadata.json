@@ -1,0 +1,2719 @@
+{
+  "captured_at_utc": "2026-10-02T15:26:42.200790+00:00",
+  "provenance": "Original current-port baseline, not upstream full-model golden parity",
+  "source_sha": "aa6841bacbfd740fae2b2aee860ddc85e5339ff4",
+  "production_sha256_before": {
+    "lv_chordia/__init__.py": "afcad80ac18c41ef2e8f6f81224c6576f230b4039db0c717e5454d0d7f4462d1",
+    "lv_chordia/audio_utils.py": "bf8f59091195f2d6de45f5161562040320a50e9690235a62b98b1ffd28efee7d",
+    "lv_chordia/chord_recognition.py": "f1f1a0e8d183070cf99100fc3cdf27ab4cb8eaa86b8301e35b1f16f5d8813bda",
+    "lv_chordia/chordnet_ismir_naive.py": "0a96d6053fbb5fc9b6891863e20b831be812ed30ad76745613e3aafbef79cff2",
+    "lv_chordia/cli.py": "5bff9fd2abe77b7c437033fc03486d392f45f9886b326fc45e15c8987d613d9d",
+    "lv_chordia/complex_chord.py": "b86a196e524f6e9a97efd7c85f10c4610b9c1e6d424c45232166bf224e026fb9",
+    "lv_chordia/config/__init__.py": "23b7fb0be2f7732073c06d98a1d8a3654fda9a5293546cfb75cb4edb21a0f490",
+    "lv_chordia/device_utils.py": "445fcb2d9e5a49ca18dc5a1e89c50b9516f922c5cadd31e71a44fea7e061ca1c",
+    "lv_chordia/extractors/__init__.py": "38b1997e7ca531cb766fa57217620d7661cc5281e69fee71f9a6480fa6ab9858",
+    "lv_chordia/extractors/cqt.py": "afa5569a8b7e9c50d2377be4c6bbd192d1fa9dd1fbb3b16029d664388cf8f915",
+    "lv_chordia/extractors/xhmm_ismir.py": "135679cbcb551ec027aa2e8a3ac0dd1a258864b6653b1af909149ef33b9b3bd3",
+    "lv_chordia/mir/__init__.py": "f913eb972d1bdae09d8cfe6d0fb50fdf45c6d8da789d841d4b762865b90eb684",
+    "lv_chordia/mir/cache.py": "e52e419b08f1a13acd5b8801498598671227e4f36a0330f1a13fa51ed0f693ed",
+    "lv_chordia/mir/common.py": "c07282e352adab9d80124f5207f7bbc8a66c76c04a20ae3599b539d8c538f272",
+    "lv_chordia/mir/data_file.py": "514bfff9f31cd2ba20e8a755b1067c3181e2d412e5b87fa35fc0df15bed2a9b5",
+    "lv_chordia/mir/extractors/__init__.py": "b3c72c6520ad332cb478bf393136beeba8039a13b211fcdf70f0ea3d6138047a",
+    "lv_chordia/mir/extractors/extractor_base.py": "ad1a1aea438f52ac29fc8ec8a8c31bc88d9e5ff9c19dd500ad299660fedd1e44",
+    "lv_chordia/mir/extractors/librosa_extractor.py": "8f44a75494649bbbafa67dff3a4c94732bca8baf8dfec4465a1e617970ffcb3a",
+    "lv_chordia/mir/extractors/misc.py": "adf1fe123baaf091c97e7f5dc3cbe7fbd67a32b576e8b80f8754362daf36ee82",
+    "lv_chordia/mir/extractors/vamp_extractor.py": "1d47eb662fe7f9954b2e3c1102e79099904ba9105928193fea4da74a8c160351",
+    "lv_chordia/mir/io/__init__.py": "d9bcb61a96a94a1e9c5ed8d226659617ce2b6e926e9ff03ab95b502ab2928561",
+    "lv_chordia/mir/io/feature_io_base.py": "3e5a700550ea8a8ee07c42922bcdcb57023b6f7bb39a525d105988ca6ed4a10a",
+    "lv_chordia/mir/io/implement/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "lv_chordia/mir/io/implement/chroma_io.py": "a88a3382d8baab99040cfbd676a175625bd56d283fd592829894079120dc23e1",
+    "lv_chordia/mir/io/implement/midi_io.py": "c7f198635e2af108f2c73a55a32e91c410bf99ee74d26a8da94cd30c7c58a2f9",
+    "lv_chordia/mir/io/implement/music_io.py": "83f31a88ee165f04bcd993f83ccfadc5cf3adf88dcc96ba713b4e7950801e93e",
+    "lv_chordia/mir/io/implement/regional_spectrogram_io.py": "83b8e92f1d549930a1b9e2e446d4bfe1e062bb35a26559c83c29a41376352c94",
+    "lv_chordia/mir/io/implement/scalar_io.py": "b77703ebf3d0556489496b78b5366fef06ee0c67cca8497cb58b1259263b03bb",
+    "lv_chordia/mir/io/implement/spectrogram_io.py": "e9d56f12c20c6c71f0deafcba777da540e4123dc071d416c272819961445b935",
+    "lv_chordia/mir/io/implement/unknown_io.py": "00378e1f342c09360e47194fb443a638f35f7fb6d51f73593799135cd11b4faa",
+    "lv_chordia/mir/music_base.py": "700b1a319e12b01f0850025d0bdaa605ac29d3c6b9df5de427413db12f3f1e3d",
+    "lv_chordia/mir/nn/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "lv_chordia/mir/nn/data_decorator.py": "622fddaa594a27d3bc4f411a7859b71d6f97ead302d007eec38294147ec19e14",
+    "lv_chordia/mir/nn/data_provider.py": "4ba30c59e2e988ba525d17c7652a253ed379d0f328d8b9112e72b86d9a5f1e2b",
+    "lv_chordia/mir/nn/data_storage.py": "a9042f83fde01a55c529e3d73342329da23842283a406e0620e099ff617337b0",
+    "lv_chordia/mir/nn/network.py": "ac2d2ea7e4576bc770508740aa0f9054c785a76ec7c8cbfd64db2b327e8f60cf",
+    "lv_chordia/mir/settings.py": "8a5f685ab7446d4a3c1d9fc372b5579c3c9cf470b22bca0f73ab75fc8ff2a393",
+    "lv_chordia/session.py": "ed6e7ed2aa09769a9b63935392789208458c983646c2bcd1c706639edeafc8be",
+    "lv_chordia/settings.py": "a1d51871a6739dae57405f3f67c412da9c91f5a07a4e199e5ed51a7b9dec7333"
+  },
+  "production_sha256_after": {
+    "lv_chordia/__init__.py": "afcad80ac18c41ef2e8f6f81224c6576f230b4039db0c717e5454d0d7f4462d1",
+    "lv_chordia/audio_utils.py": "bf8f59091195f2d6de45f5161562040320a50e9690235a62b98b1ffd28efee7d",
+    "lv_chordia/chord_recognition.py": "f1f1a0e8d183070cf99100fc3cdf27ab4cb8eaa86b8301e35b1f16f5d8813bda",
+    "lv_chordia/chordnet_ismir_naive.py": "0a96d6053fbb5fc9b6891863e20b831be812ed30ad76745613e3aafbef79cff2",
+    "lv_chordia/cli.py": "5bff9fd2abe77b7c437033fc03486d392f45f9886b326fc45e15c8987d613d9d",
+    "lv_chordia/complex_chord.py": "b86a196e524f6e9a97efd7c85f10c4610b9c1e6d424c45232166bf224e026fb9",
+    "lv_chordia/config/__init__.py": "23b7fb0be2f7732073c06d98a1d8a3654fda9a5293546cfb75cb4edb21a0f490",
+    "lv_chordia/device_utils.py": "445fcb2d9e5a49ca18dc5a1e89c50b9516f922c5cadd31e71a44fea7e061ca1c",
+    "lv_chordia/extractors/__init__.py": "38b1997e7ca531cb766fa57217620d7661cc5281e69fee71f9a6480fa6ab9858",
+    "lv_chordia/extractors/cqt.py": "afa5569a8b7e9c50d2377be4c6bbd192d1fa9dd1fbb3b16029d664388cf8f915",
+    "lv_chordia/extractors/xhmm_ismir.py": "135679cbcb551ec027aa2e8a3ac0dd1a258864b6653b1af909149ef33b9b3bd3",
+    "lv_chordia/mir/__init__.py": "f913eb972d1bdae09d8cfe6d0fb50fdf45c6d8da789d841d4b762865b90eb684",
+    "lv_chordia/mir/cache.py": "e52e419b08f1a13acd5b8801498598671227e4f36a0330f1a13fa51ed0f693ed",
+    "lv_chordia/mir/common.py": "c07282e352adab9d80124f5207f7bbc8a66c76c04a20ae3599b539d8c538f272",
+    "lv_chordia/mir/data_file.py": "514bfff9f31cd2ba20e8a755b1067c3181e2d412e5b87fa35fc0df15bed2a9b5",
+    "lv_chordia/mir/extractors/__init__.py": "b3c72c6520ad332cb478bf393136beeba8039a13b211fcdf70f0ea3d6138047a",
+    "lv_chordia/mir/extractors/extractor_base.py": "ad1a1aea438f52ac29fc8ec8a8c31bc88d9e5ff9c19dd500ad299660fedd1e44",
+    "lv_chordia/mir/extractors/librosa_extractor.py": "8f44a75494649bbbafa67dff3a4c94732bca8baf8dfec4465a1e617970ffcb3a",
+    "lv_chordia/mir/extractors/misc.py": "adf1fe123baaf091c97e7f5dc3cbe7fbd67a32b576e8b80f8754362daf36ee82",
+    "lv_chordia/mir/extractors/vamp_extractor.py": "1d47eb662fe7f9954b2e3c1102e79099904ba9105928193fea4da74a8c160351",
+    "lv_chordia/mir/io/__init__.py": "d9bcb61a96a94a1e9c5ed8d226659617ce2b6e926e9ff03ab95b502ab2928561",
+    "lv_chordia/mir/io/feature_io_base.py": "3e5a700550ea8a8ee07c42922bcdcb57023b6f7bb39a525d105988ca6ed4a10a",
+    "lv_chordia/mir/io/implement/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "lv_chordia/mir/io/implement/chroma_io.py": "a88a3382d8baab99040cfbd676a175625bd56d283fd592829894079120dc23e1",
+    "lv_chordia/mir/io/implement/midi_io.py": "c7f198635e2af108f2c73a55a32e91c410bf99ee74d26a8da94cd30c7c58a2f9",
+    "lv_chordia/mir/io/implement/music_io.py": "83f31a88ee165f04bcd993f83ccfadc5cf3adf88dcc96ba713b4e7950801e93e",
+    "lv_chordia/mir/io/implement/regional_spectrogram_io.py": "83b8e92f1d549930a1b9e2e446d4bfe1e062bb35a26559c83c29a41376352c94",
+    "lv_chordia/mir/io/implement/scalar_io.py": "b77703ebf3d0556489496b78b5366fef06ee0c67cca8497cb58b1259263b03bb",
+    "lv_chordia/mir/io/implement/spectrogram_io.py": "e9d56f12c20c6c71f0deafcba777da540e4123dc071d416c272819961445b935",
+    "lv_chordia/mir/io/implement/unknown_io.py": "00378e1f342c09360e47194fb443a638f35f7fb6d51f73593799135cd11b4faa",
+    "lv_chordia/mir/music_base.py": "700b1a319e12b01f0850025d0bdaa605ac29d3c6b9df5de427413db12f3f1e3d",
+    "lv_chordia/mir/nn/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "lv_chordia/mir/nn/data_decorator.py": "622fddaa594a27d3bc4f411a7859b71d6f97ead302d007eec38294147ec19e14",
+    "lv_chordia/mir/nn/data_provider.py": "4ba30c59e2e988ba525d17c7652a253ed379d0f328d8b9112e72b86d9a5f1e2b",
+    "lv_chordia/mir/nn/data_storage.py": "a9042f83fde01a55c529e3d73342329da23842283a406e0620e099ff617337b0",
+    "lv_chordia/mir/nn/network.py": "ac2d2ea7e4576bc770508740aa0f9054c785a76ec7c8cbfd64db2b327e8f60cf",
+    "lv_chordia/mir/settings.py": "8a5f685ab7446d4a3c1d9fc372b5579c3c9cf470b22bca0f73ab75fc8ff2a393",
+    "lv_chordia/session.py": "ed6e7ed2aa09769a9b63935392789208458c983646c2bcd1c706639edeafc8be",
+    "lv_chordia/settings.py": "a1d51871a6739dae57405f3f67c412da9c91f5a07a4e199e5ed51a7b9dec7333"
+  },
+  "capture_sha256": "705b66c825bddcaf590d7ddf0204ce582604b4eaa45aeddd30d628021301e925",
+  "command": "CUDA_VISIBLE_DEVICES='' PYTHONDONTWRITEBYTECODE=1 OMP_NUM_THREADS=4 OPENBLAS_NUM_THREADS=4 /home/worzpro/Desktop/dev/openmirlab/lv-chordia/.venv/bin/python tests/fixtures/inference_boundary_original/capture.py --record --output /tmp/openmirlab-remediation/lvchordia-boundary/original-final",
+  "input": {
+    "path": "test_data/yellow.wav",
+    "sha256": "377688003f9ae02a8f298c1e6ef2b6b3486edd09162c9a9eec8c8993b039d301",
+    "sample_rate": 44100,
+    "shape": [
+      978868,
+      2
+    ],
+    "decoded_dtype": "float32",
+    "silence": "same shape/rate, exact zero float32 samples written as FLOAT WAV"
+  },
+  "checkpoints": {
+    "joint_chord_net_ismir_naive_v1.0_reweight(0.0,10.0)_s0.best.sdict": {
+      "sha256": "921b42d5d1cf9ce1c0c0e45a74d409b8066e0acec46058ef74e24ee0fb540761",
+      "bytes": 5746183
+    },
+    "joint_chord_net_ismir_naive_v1.0_reweight(0.0,10.0)_s1.best.sdict": {
+      "sha256": "bcb75859e0efa256696cf5da396b320093317b9b1d9560c304f46c25fe1f8b17",
+      "bytes": 5746175
+    },
+    "joint_chord_net_ismir_naive_v1.0_reweight(0.0,10.0)_s2.best.sdict": {
+      "sha256": "acddf85c3fff29954c4877021177d72e2cba9f729ce80c1010f054c477bf3f61",
+      "bytes": 5746179
+    },
+    "joint_chord_net_ismir_naive_v1.0_reweight(0.0,10.0)_s3.best.sdict": {
+      "sha256": "65d81a3ab73435aaaade586981b4cabdf57b8953d76052703e6968c32ef8421c",
+      "bytes": 5746175
+    },
+    "joint_chord_net_ismir_naive_v1.0_reweight(0.0,10.0)_s4.best.sdict": {
+      "sha256": "5ff6b0ec85640e17a09a9b3de68c93fdd45adc24488e8fa9be5715c28d561122",
+      "bytes": 5746227
+    }
+  },
+  "model_order": [
+    "joint_chord_net_ismir_naive_v1.0_reweight(0.0,10.0)_s0.best",
+    "joint_chord_net_ismir_naive_v1.0_reweight(0.0,10.0)_s1.best",
+    "joint_chord_net_ismir_naive_v1.0_reweight(0.0,10.0)_s2.best",
+    "joint_chord_net_ismir_naive_v1.0_reweight(0.0,10.0)_s3.best",
+    "joint_chord_net_ismir_naive_v1.0_reweight(0.0,10.0)_s4.best"
+  ],
+  "model_state_layouts": {
+    "0": {
+      "audio_feature_block.conv1a.weight": {
+        "shape": [
+          16,
+          1,
+          3,
+          3
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv1a.bias": {
+        "shape": [
+          16
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv1b.weight": {
+        "shape": [
+          16,
+          16,
+          3,
+          3
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv1b.bias": {
+        "shape": [
+          16
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv1c.weight": {
+        "shape": [
+          16,
+          16,
+          3,
+          3
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv1c.bias": {
+        "shape": [
+          16
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv2a.weight": {
+        "shape": [
+          32,
+          16,
+          3,
+          3
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv2a.bias": {
+        "shape": [
+          32
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv2b.weight": {
+        "shape": [
+          32,
+          32,
+          3,
+          3
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv2b.bias": {
+        "shape": [
+          32
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv2c.weight": {
+        "shape": [
+          32,
+          32,
+          3,
+          3
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv2c.bias": {
+        "shape": [
+          32
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv3a.weight": {
+        "shape": [
+          64,
+          32,
+          3,
+          3
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv3a.bias": {
+        "shape": [
+          64
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv3b.weight": {
+        "shape": [
+          64,
+          64,
+          3,
+          3
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv3b.bias": {
+        "shape": [
+          64
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv4a.weight": {
+        "shape": [
+          80,
+          64,
+          3,
+          3
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv4a.bias": {
+        "shape": [
+          80
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv4b.weight": {
+        "shape": [
+          80,
+          80,
+          3,
+          3
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv4b.bias": {
+        "shape": [
+          80
+        ],
+        "dtype": "torch.float32"
+      },
+      "condition_linear.weight": {
+        "shape": [
+          128,
+          270
+        ],
+        "dtype": "torch.float32"
+      },
+      "condition_linear.bias": {
+        "shape": [
+          128
+        ],
+        "dtype": "torch.float32"
+      },
+      "lstm1.weight_ih_l0": {
+        "shape": [
+          384,
+          240
+        ],
+        "dtype": "torch.float32"
+      },
+      "lstm1.weight_hh_l0": {
+        "shape": [
+          384,
+          96
+        ],
+        "dtype": "torch.float32"
+      },
+      "lstm1.bias_ih_l0": {
+        "shape": [
+          384
+        ],
+        "dtype": "torch.float32"
+      },
+      "lstm1.bias_hh_l0": {
+        "shape": [
+          384
+        ],
+        "dtype": "torch.float32"
+      },
+      "lstm1.weight_ih_l0_reverse": {
+        "shape": [
+          384,
+          240
+        ],
+        "dtype": "torch.float32"
+      },
+      "lstm1.weight_hh_l0_reverse": {
+        "shape": [
+          384,
+          96
+        ],
+        "dtype": "torch.float32"
+      },
+      "lstm1.bias_ih_l0_reverse": {
+        "shape": [
+          384
+        ],
+        "dtype": "torch.float32"
+      },
+      "lstm1.bias_hh_l0_reverse": {
+        "shape": [
+          384
+        ],
+        "dtype": "torch.float32"
+      },
+      "final_fc1.weight": {
+        "shape": [
+          100,
+          192
+        ],
+        "dtype": "torch.float32"
+      },
+      "final_fc1.bias": {
+        "shape": [
+          100
+        ],
+        "dtype": "torch.float32"
+      }
+    },
+    "1": {
+      "audio_feature_block.conv1a.weight": {
+        "shape": [
+          16,
+          1,
+          3,
+          3
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv1a.bias": {
+        "shape": [
+          16
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv1b.weight": {
+        "shape": [
+          16,
+          16,
+          3,
+          3
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv1b.bias": {
+        "shape": [
+          16
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv1c.weight": {
+        "shape": [
+          16,
+          16,
+          3,
+          3
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv1c.bias": {
+        "shape": [
+          16
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv2a.weight": {
+        "shape": [
+          32,
+          16,
+          3,
+          3
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv2a.bias": {
+        "shape": [
+          32
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv2b.weight": {
+        "shape": [
+          32,
+          32,
+          3,
+          3
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv2b.bias": {
+        "shape": [
+          32
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv2c.weight": {
+        "shape": [
+          32,
+          32,
+          3,
+          3
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv2c.bias": {
+        "shape": [
+          32
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv3a.weight": {
+        "shape": [
+          64,
+          32,
+          3,
+          3
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv3a.bias": {
+        "shape": [
+          64
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv3b.weight": {
+        "shape": [
+          64,
+          64,
+          3,
+          3
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv3b.bias": {
+        "shape": [
+          64
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv4a.weight": {
+        "shape": [
+          80,
+          64,
+          3,
+          3
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv4a.bias": {
+        "shape": [
+          80
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv4b.weight": {
+        "shape": [
+          80,
+          80,
+          3,
+          3
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv4b.bias": {
+        "shape": [
+          80
+        ],
+        "dtype": "torch.float32"
+      },
+      "condition_linear.weight": {
+        "shape": [
+          128,
+          270
+        ],
+        "dtype": "torch.float32"
+      },
+      "condition_linear.bias": {
+        "shape": [
+          128
+        ],
+        "dtype": "torch.float32"
+      },
+      "lstm1.weight_ih_l0": {
+        "shape": [
+          384,
+          240
+        ],
+        "dtype": "torch.float32"
+      },
+      "lstm1.weight_hh_l0": {
+        "shape": [
+          384,
+          96
+        ],
+        "dtype": "torch.float32"
+      },
+      "lstm1.bias_ih_l0": {
+        "shape": [
+          384
+        ],
+        "dtype": "torch.float32"
+      },
+      "lstm1.bias_hh_l0": {
+        "shape": [
+          384
+        ],
+        "dtype": "torch.float32"
+      },
+      "lstm1.weight_ih_l0_reverse": {
+        "shape": [
+          384,
+          240
+        ],
+        "dtype": "torch.float32"
+      },
+      "lstm1.weight_hh_l0_reverse": {
+        "shape": [
+          384,
+          96
+        ],
+        "dtype": "torch.float32"
+      },
+      "lstm1.bias_ih_l0_reverse": {
+        "shape": [
+          384
+        ],
+        "dtype": "torch.float32"
+      },
+      "lstm1.bias_hh_l0_reverse": {
+        "shape": [
+          384
+        ],
+        "dtype": "torch.float32"
+      },
+      "final_fc1.weight": {
+        "shape": [
+          100,
+          192
+        ],
+        "dtype": "torch.float32"
+      },
+      "final_fc1.bias": {
+        "shape": [
+          100
+        ],
+        "dtype": "torch.float32"
+      }
+    },
+    "2": {
+      "audio_feature_block.conv1a.weight": {
+        "shape": [
+          16,
+          1,
+          3,
+          3
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv1a.bias": {
+        "shape": [
+          16
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv1b.weight": {
+        "shape": [
+          16,
+          16,
+          3,
+          3
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv1b.bias": {
+        "shape": [
+          16
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv1c.weight": {
+        "shape": [
+          16,
+          16,
+          3,
+          3
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv1c.bias": {
+        "shape": [
+          16
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv2a.weight": {
+        "shape": [
+          32,
+          16,
+          3,
+          3
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv2a.bias": {
+        "shape": [
+          32
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv2b.weight": {
+        "shape": [
+          32,
+          32,
+          3,
+          3
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv2b.bias": {
+        "shape": [
+          32
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv2c.weight": {
+        "shape": [
+          32,
+          32,
+          3,
+          3
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv2c.bias": {
+        "shape": [
+          32
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv3a.weight": {
+        "shape": [
+          64,
+          32,
+          3,
+          3
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv3a.bias": {
+        "shape": [
+          64
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv3b.weight": {
+        "shape": [
+          64,
+          64,
+          3,
+          3
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv3b.bias": {
+        "shape": [
+          64
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv4a.weight": {
+        "shape": [
+          80,
+          64,
+          3,
+          3
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv4a.bias": {
+        "shape": [
+          80
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv4b.weight": {
+        "shape": [
+          80,
+          80,
+          3,
+          3
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv4b.bias": {
+        "shape": [
+          80
+        ],
+        "dtype": "torch.float32"
+      },
+      "condition_linear.weight": {
+        "shape": [
+          128,
+          270
+        ],
+        "dtype": "torch.float32"
+      },
+      "condition_linear.bias": {
+        "shape": [
+          128
+        ],
+        "dtype": "torch.float32"
+      },
+      "lstm1.weight_ih_l0": {
+        "shape": [
+          384,
+          240
+        ],
+        "dtype": "torch.float32"
+      },
+      "lstm1.weight_hh_l0": {
+        "shape": [
+          384,
+          96
+        ],
+        "dtype": "torch.float32"
+      },
+      "lstm1.bias_ih_l0": {
+        "shape": [
+          384
+        ],
+        "dtype": "torch.float32"
+      },
+      "lstm1.bias_hh_l0": {
+        "shape": [
+          384
+        ],
+        "dtype": "torch.float32"
+      },
+      "lstm1.weight_ih_l0_reverse": {
+        "shape": [
+          384,
+          240
+        ],
+        "dtype": "torch.float32"
+      },
+      "lstm1.weight_hh_l0_reverse": {
+        "shape": [
+          384,
+          96
+        ],
+        "dtype": "torch.float32"
+      },
+      "lstm1.bias_ih_l0_reverse": {
+        "shape": [
+          384
+        ],
+        "dtype": "torch.float32"
+      },
+      "lstm1.bias_hh_l0_reverse": {
+        "shape": [
+          384
+        ],
+        "dtype": "torch.float32"
+      },
+      "final_fc1.weight": {
+        "shape": [
+          100,
+          192
+        ],
+        "dtype": "torch.float32"
+      },
+      "final_fc1.bias": {
+        "shape": [
+          100
+        ],
+        "dtype": "torch.float32"
+      }
+    },
+    "3": {
+      "audio_feature_block.conv1a.weight": {
+        "shape": [
+          16,
+          1,
+          3,
+          3
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv1a.bias": {
+        "shape": [
+          16
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv1b.weight": {
+        "shape": [
+          16,
+          16,
+          3,
+          3
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv1b.bias": {
+        "shape": [
+          16
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv1c.weight": {
+        "shape": [
+          16,
+          16,
+          3,
+          3
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv1c.bias": {
+        "shape": [
+          16
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv2a.weight": {
+        "shape": [
+          32,
+          16,
+          3,
+          3
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv2a.bias": {
+        "shape": [
+          32
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv2b.weight": {
+        "shape": [
+          32,
+          32,
+          3,
+          3
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv2b.bias": {
+        "shape": [
+          32
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv2c.weight": {
+        "shape": [
+          32,
+          32,
+          3,
+          3
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv2c.bias": {
+        "shape": [
+          32
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv3a.weight": {
+        "shape": [
+          64,
+          32,
+          3,
+          3
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv3a.bias": {
+        "shape": [
+          64
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv3b.weight": {
+        "shape": [
+          64,
+          64,
+          3,
+          3
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv3b.bias": {
+        "shape": [
+          64
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv4a.weight": {
+        "shape": [
+          80,
+          64,
+          3,
+          3
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv4a.bias": {
+        "shape": [
+          80
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv4b.weight": {
+        "shape": [
+          80,
+          80,
+          3,
+          3
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv4b.bias": {
+        "shape": [
+          80
+        ],
+        "dtype": "torch.float32"
+      },
+      "condition_linear.weight": {
+        "shape": [
+          128,
+          270
+        ],
+        "dtype": "torch.float32"
+      },
+      "condition_linear.bias": {
+        "shape": [
+          128
+        ],
+        "dtype": "torch.float32"
+      },
+      "lstm1.weight_ih_l0": {
+        "shape": [
+          384,
+          240
+        ],
+        "dtype": "torch.float32"
+      },
+      "lstm1.weight_hh_l0": {
+        "shape": [
+          384,
+          96
+        ],
+        "dtype": "torch.float32"
+      },
+      "lstm1.bias_ih_l0": {
+        "shape": [
+          384
+        ],
+        "dtype": "torch.float32"
+      },
+      "lstm1.bias_hh_l0": {
+        "shape": [
+          384
+        ],
+        "dtype": "torch.float32"
+      },
+      "lstm1.weight_ih_l0_reverse": {
+        "shape": [
+          384,
+          240
+        ],
+        "dtype": "torch.float32"
+      },
+      "lstm1.weight_hh_l0_reverse": {
+        "shape": [
+          384,
+          96
+        ],
+        "dtype": "torch.float32"
+      },
+      "lstm1.bias_ih_l0_reverse": {
+        "shape": [
+          384
+        ],
+        "dtype": "torch.float32"
+      },
+      "lstm1.bias_hh_l0_reverse": {
+        "shape": [
+          384
+        ],
+        "dtype": "torch.float32"
+      },
+      "final_fc1.weight": {
+        "shape": [
+          100,
+          192
+        ],
+        "dtype": "torch.float32"
+      },
+      "final_fc1.bias": {
+        "shape": [
+          100
+        ],
+        "dtype": "torch.float32"
+      }
+    },
+    "4": {
+      "audio_feature_block.conv1a.weight": {
+        "shape": [
+          16,
+          1,
+          3,
+          3
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv1a.bias": {
+        "shape": [
+          16
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv1b.weight": {
+        "shape": [
+          16,
+          16,
+          3,
+          3
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv1b.bias": {
+        "shape": [
+          16
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv1c.weight": {
+        "shape": [
+          16,
+          16,
+          3,
+          3
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv1c.bias": {
+        "shape": [
+          16
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv2a.weight": {
+        "shape": [
+          32,
+          16,
+          3,
+          3
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv2a.bias": {
+        "shape": [
+          32
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv2b.weight": {
+        "shape": [
+          32,
+          32,
+          3,
+          3
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv2b.bias": {
+        "shape": [
+          32
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv2c.weight": {
+        "shape": [
+          32,
+          32,
+          3,
+          3
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv2c.bias": {
+        "shape": [
+          32
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv3a.weight": {
+        "shape": [
+          64,
+          32,
+          3,
+          3
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv3a.bias": {
+        "shape": [
+          64
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv3b.weight": {
+        "shape": [
+          64,
+          64,
+          3,
+          3
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv3b.bias": {
+        "shape": [
+          64
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv4a.weight": {
+        "shape": [
+          80,
+          64,
+          3,
+          3
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv4a.bias": {
+        "shape": [
+          80
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv4b.weight": {
+        "shape": [
+          80,
+          80,
+          3,
+          3
+        ],
+        "dtype": "torch.float32"
+      },
+      "audio_feature_block.conv4b.bias": {
+        "shape": [
+          80
+        ],
+        "dtype": "torch.float32"
+      },
+      "condition_linear.weight": {
+        "shape": [
+          128,
+          270
+        ],
+        "dtype": "torch.float32"
+      },
+      "condition_linear.bias": {
+        "shape": [
+          128
+        ],
+        "dtype": "torch.float32"
+      },
+      "lstm1.weight_ih_l0": {
+        "shape": [
+          384,
+          240
+        ],
+        "dtype": "torch.float32"
+      },
+      "lstm1.weight_hh_l0": {
+        "shape": [
+          384,
+          96
+        ],
+        "dtype": "torch.float32"
+      },
+      "lstm1.bias_ih_l0": {
+        "shape": [
+          384
+        ],
+        "dtype": "torch.float32"
+      },
+      "lstm1.bias_hh_l0": {
+        "shape": [
+          384
+        ],
+        "dtype": "torch.float32"
+      },
+      "lstm1.weight_ih_l0_reverse": {
+        "shape": [
+          384,
+          240
+        ],
+        "dtype": "torch.float32"
+      },
+      "lstm1.weight_hh_l0_reverse": {
+        "shape": [
+          384,
+          96
+        ],
+        "dtype": "torch.float32"
+      },
+      "lstm1.bias_ih_l0_reverse": {
+        "shape": [
+          384
+        ],
+        "dtype": "torch.float32"
+      },
+      "lstm1.bias_hh_l0_reverse": {
+        "shape": [
+          384
+        ],
+        "dtype": "torch.float32"
+      },
+      "final_fc1.weight": {
+        "shape": [
+          100,
+          192
+        ],
+        "dtype": "torch.float32"
+      },
+      "final_fc1.bias": {
+        "shape": [
+          100
+        ],
+        "dtype": "torch.float32"
+      }
+    }
+  },
+  "runtime": {
+    "python": "3.10.18 (main, Jul  8 2025, 20:59:20) [Clang 20.1.4 ]",
+    "packages": {
+      "torch": "2.13.0",
+      "numpy": "2.2.6",
+      "scipy": "1.15.3",
+      "librosa": "0.11.0",
+      "numba": "0.66.0",
+      "llvmlite": "0.48.0",
+      "soundfile": "0.14.0",
+      "soxr": "1.1.0"
+    },
+    "device": "cpu",
+    "machine": "x86_64",
+    "libc": [
+      "glibc",
+      "2.39"
+    ],
+    "cpu": [
+      "vendor_id\t: GenuineIntel",
+      "cpu family\t: 6",
+      "model\t\t: 183",
+      "model name\t: 13th Gen Intel(R) Core(TM) i5-13600K",
+      "stepping\t: 1",
+      "microcode\t: 0x133",
+      "flags\t\t: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc art arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc cpuid aperfmperf tsc_known_freq pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm 3dnowprefetch cpuid_fault epb ssbd ibrs ibpb stibp ibrs_enhanced tpr_shadow flexpriority ept vpid ept_ad fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid rdseed adx smap clflushopt clwb intel_pt sha_ni xsaveopt xsavec xgetbv1 xsaves split_lock_detect user_shstk avx_vnni dtherm ida arat pln pts hwp hwp_notify hwp_act_window hwp_epp hwp_pkg_req hfi vnmi umip pku ospke waitpkg gfni vaes vpclmulqdq rdpid movdiri movdir64b fsrm md_clear serialize pconfig arch_lbr ibt flush_l1d arch_capabilities"
+    ],
+    "native_libraries": {
+      "libscipy_openblas-68440149.so": "3e739a2435af49d2d938749f316aa338c65f41c9ae6615406e7cf83feb662f46",
+      "libtorch_cpu.so": "657a070fac708beaedb2dd95fefc9db454c8e82e3e41894cdb4711227348d830",
+      "libscipy_openblas64_-56d6093b.so": "0bd815d04b6b54990e3cccc7528fbb696456d09569f533d0390c13f0cdc4dd4a",
+      "libc.so.6": "3a15d66867d83762c7f2f1e37359cb8f6c5743edb369c65285cb0b1c4f7498bf",
+      "libm.so.6": "fce00b6f25f459cf4ae0b7fae4257909a1a8a86f9149e7c029a5d617baf1ccd0"
+    },
+    "torch_config": "PyTorch built with:\n  - GCC 13.3\n  - C++ Version: 202002\n  - Intel(R) oneAPI Math Kernel Library Version 2024.2-Product Build 20240605 for Intel(R) 64 architecture applications\n  - Intel(R) MKL-DNN v3.12.0 (Git Hash 80afa71049cd69a3df32adcccb623b12cd7baa22)\n  - OpenMP 201511 (a.k.a. OpenMP 4.5)\n  - LAPACK is enabled (usually provided by MKL)\n  - NNPACK is enabled\n  - CPU capability usage: AVX2\n  - Build settings: BLAS_INFO=mkl, BUILD_TYPE=Release, COMMIT_SHA=cf30153c4c131c8164ee7798e5022d810682e2cb, CUDA_FLAGS= -DLIBCUDACXX_ENABLE_SIMPLIFIED_COMPLEX_OPERATIONS -Xfatbin -compress-all -DONNX_NAMESPACE=onnx_torch -gencode arch=compute_75,code=sm_75 -gencode arch=compute_80,code=sm_80 -gencode arch=compute_86,code=sm_86 -gencode arch=compute_90,code=sm_90 -gencode arch=compute_100,code=sm_100 -gencode arch=compute_120,code=sm_120 -Xcudafe --diag_suppress=cc_clobber_ignored,--diag_suppress=field_without_dll_interface,--diag_suppress=base_class_has_different_dll_interface,--diag_suppress=dll_interface_conflict_none_assumed,--diag_suppress=dll_interface_conflict_dllexport_assumed,--diag_suppress=bad_friend_decl --expt-relaxed-constexpr --expt-extended-lambda -Xfatbin -compress-all --threads 2 -compress-mode=size -Wno-deprecated-gpu-targets --expt-extended-lambda -DCUB_WRAPPED_NAMESPACE=at_cuda_detail -DDISABLE_CUSPARSE_DEPRECATED -DCUDA_HAS_FP16=1 -D__CUDA_NO_HALF_OPERATORS__ -D__CUDA_NO_HALF_CONVERSIONS__ -D__CUDA_NO_HALF2_OPERATORS__ -D__CUDA_NO_BFLOAT16_CONVERSIONS__ -DC10_NODEPRECATED, CUDA_VERSION=13.0, CUDNN_VERSION=9.20.0, CXX_COMPILER=/opt/rh/gcc-toolset-13/root/usr/bin/c++, CXX_FLAGS= -fvisibility-inlines-hidden -DUSE_PTHREADPOOL -DNDEBUG -DUSE_KINETO -DHAS_CUPTI -DUSE_FBGEMM -DUSE_MSLK -DUSE_PYTORCH_QNNPACK -DSYMBOLICATE_MOBILE_DEBUG_HANDLE -O2 -fPIC -DC10_NODEPRECATED -Wall -Wextra -Werror=return-type -Werror=non-virtual-dtor -Werror=range-loop-construct -Werror=bool-operation -Wnarrowing -Wno-missing-field-initializers -Wno-unknown-pragmas -Wno-unused-parameter -Wno-strict-overflow -Wno-strict-aliasing -Wno-stringop-overflow -Wsuggest-override -Wno-psabi -Wno-error=old-style-cast -faligned-new -Wno-maybe-uninitialized -fno-math-errno -fno-trapping-math -Werror=format -Wno-dangling-reference -Wno-error=dangling-reference -Wno-stringop-overflow, LAPACK_INFO=mkl, PERF_WITH_AVX=1, PERF_WITH_AVX2=1, TORCH_VERSION=2.13.0, USE_CUDA=1, USE_CUDNN=ON, USE_CUSPARSELT=1, USE_GFLAGS=OFF, USE_GLOG=OFF, USE_GLOO=ON, USE_MKL=ON, USE_MKLDNN=ON, USE_MPI=OFF, USE_NCCL=ON, USE_NNPACK=ON, USE_OPENMP=ON, USE_ROCM=OFF, USE_ROCM_KERNEL_ASSERT=OFF, USE_XCCL=OFF, USE_XPU=OFF, \n",
+    "numpy_config": "{\n  \"Compilers\": {\n    \"c\": {\n      \"name\": \"gcc\",\n      \"linker\": \"ld.bfd\",\n      \"version\": \"10.2.1\",\n      \"commands\": \"cc\"\n    },\n    \"cython\": {\n      \"name\": \"cython\",\n      \"linker\": \"cython\",\n      \"version\": \"3.1.0\",\n      \"commands\": \"cython\"\n    },\n    \"c++\": {\n      \"name\": \"gcc\",\n      \"linker\": \"ld.bfd\",\n      \"version\": \"10.2.1\",\n      \"commands\": \"c++\"\n    }\n  },\n  \"Machine Information\": {\n    \"host\": {\n      \"cpu\": \"x86_64\",\n      \"family\": \"x86_64\",\n      \"endian\": \"little\",\n      \"system\": \"linux\"\n    },\n    \"build\": {\n      \"cpu\": \"x86_64\",\n      \"family\": \"x86_64\",\n      \"endian\": \"little\",\n      \"system\": \"linux\"\n    }\n  },\n  \"Build Dependencies\": {\n    \"blas\": {\n      \"name\": \"scipy-openblas\",\n      \"found\": true,\n      \"version\": \"0.3.29\",\n      \"detection method\": \"pkgconfig\",\n      \"include directory\": \"/opt/_internal/cpython-3.10.15/lib/python3.10/site-packages/scipy_openblas64/include\",\n      \"lib directory\": \"/opt/_internal/cpython-3.10.15/lib/python3.10/site-packages/scipy_openblas64/lib\",\n      \"openblas configuration\": \"OpenBLAS 0.3.29  USE64BITINT DYNAMIC_ARCH NO_AFFINITY Haswell MAX_THREADS=64\",\n      \"pc file directory\": \"/project/.openblas\"\n    },\n    \"lapack\": {\n      \"name\": \"scipy-openblas\",\n      \"found\": true,\n      \"version\": \"0.3.29\",\n      \"detection method\": \"pkgconfig\",\n      \"include directory\": \"/opt/_internal/cpython-3.10.15/lib/python3.10/site-packages/scipy_openblas64/include\",\n      \"lib directory\": \"/opt/_internal/cpython-3.10.15/lib/python3.10/site-packages/scipy_openblas64/lib\",\n      \"openblas configuration\": \"OpenBLAS 0.3.29  USE64BITINT DYNAMIC_ARCH NO_AFFINITY Haswell MAX_THREADS=64\",\n      \"pc file directory\": \"/project/.openblas\"\n    }\n  },\n  \"Python Information\": {\n    \"path\": \"/tmp/build-env-a8ncef9o/bin/python\",\n    \"version\": \"3.10\"\n  },\n  \"SIMD Extensions\": {\n    \"baseline\": [\n      \"SSE\",\n      \"SSE2\",\n      \"SSE3\"\n    ],\n    \"found\": [\n      \"SSSE3\",\n      \"SSE41\",\n      \"POPCNT\",\n      \"SSE42\",\n      \"AVX\",\n      \"F16C\",\n      \"FMA3\",\n      \"AVX2\"\n    ],\n    \"not found\": [\n      \"AVX512F\",\n      \"AVX512CD\",\n      \"AVX512_KNL\",\n      \"AVX512_KNM\",\n      \"AVX512_SKX\",\n      \"AVX512_CLX\",\n      \"AVX512_CNL\",\n      \"AVX512_ICL\"\n    ]\n  }\n}\n",
+    "threads": 4,
+    "interop_threads": 14,
+    "mkldnn": true,
+    "environment": {
+      "CUDA_VISIBLE_DEVICES": "",
+      "OMP_NUM_THREADS": "4",
+      "OPENBLAS_NUM_THREADS": "4",
+      "MKL_NUM_THREADS": null,
+      "NPY_DISABLE_CPU_FEATURES": null,
+      "GLIBC_TUNABLES": null
+    }
+  },
+  "seed": 1234,
+  "repeat_exact": true,
+  "downloads_blocked": true,
+  "arrays": {
+    "music/audio": {
+      "shape": [
+        489434
+      ],
+      "dtype": "float32",
+      "rms": 0.25531645420735266,
+      "peak": 1.0148229598999023,
+      "minimum": -1.0148229598999023,
+      "maximum": 1.0025050640106201
+    },
+    "music/cqt": {
+      "shape": [
+        956,
+        288
+      ],
+      "dtype": "float32",
+      "rms": 0.9506628647360967,
+      "peak": 13.739156723022461,
+      "minimum": 2.1828974183790706e-09,
+      "maximum": 13.739156723022461
+    },
+    "music/fold0/triad": {
+      "shape": [
+        956,
+        73
+      ],
+      "dtype": "float32",
+      "rms": 0.09694971034922238,
+      "peak": 0.9906721115112305,
+      "minimum": 1.0356935309374649e-09,
+      "maximum": 0.9906721115112305
+    },
+    "music/fold0/bass": {
+      "shape": [
+        956,
+        13
+      ],
+      "dtype": "float32",
+      "rms": 0.2432205081464147,
+      "peak": 0.9888375997543335,
+      "minimum": 1.3134135770087596e-05,
+      "maximum": 0.9888375997543335
+    },
+    "music/fold0/seventh": {
+      "shape": [
+        956,
+        4
+      ],
+      "dtype": "float32",
+      "rms": 0.4369284256686428,
+      "peak": 0.9780062437057495,
+      "minimum": 7.123668979147624e-07,
+      "maximum": 0.9780062437057495
+    },
+    "music/fold0/ninth": {
+      "shape": [
+        956,
+        4
+      ],
+      "dtype": "float32",
+      "rms": 0.4723283590786238,
+      "peak": 0.9928309321403503,
+      "minimum": 1.9711098957486684e-06,
+      "maximum": 0.9928309321403503
+    },
+    "music/fold0/eleventh": {
+      "shape": [
+        956,
+        3
+      ],
+      "dtype": "float32",
+      "rms": 0.5685797770319793,
+      "peak": 0.9994004964828491,
+      "minimum": 3.333685890538618e-05,
+      "maximum": 0.9994004964828491
+    },
+    "music/fold0/thirteenth": {
+      "shape": [
+        956,
+        3
+      ],
+      "dtype": "float32",
+      "rms": 0.5591912368590711,
+      "peak": 0.9962612986564636,
+      "minimum": 4.846634055866161e-06,
+      "maximum": 0.9962612986564636
+    },
+    "music/fold1/triad": {
+      "shape": [
+        956,
+        73
+      ],
+      "dtype": "float32",
+      "rms": 0.09528331141091975,
+      "peak": 0.9907570481300354,
+      "minimum": 7.120824763173772e-12,
+      "maximum": 0.9907570481300354
+    },
+    "music/fold1/bass": {
+      "shape": [
+        956,
+        13
+      ],
+      "dtype": "float32",
+      "rms": 0.24631199121730118,
+      "peak": 0.9910377264022827,
+      "minimum": 1.102462465496501e-05,
+      "maximum": 0.9910377264022827
+    },
+    "music/fold1/seventh": {
+      "shape": [
+        956,
+        4
+      ],
+      "dtype": "float32",
+      "rms": 0.42771257848803235,
+      "peak": 0.9751810431480408,
+      "minimum": 6.255665994103765e-07,
+      "maximum": 0.9751810431480408
+    },
+    "music/fold1/ninth": {
+      "shape": [
+        956,
+        4
+      ],
+      "dtype": "float32",
+      "rms": 0.47114625862109843,
+      "peak": 0.9891760945320129,
+      "minimum": 2.4037144612520933e-06,
+      "maximum": 0.9891760945320129
+    },
+    "music/fold1/eleventh": {
+      "shape": [
+        956,
+        3
+      ],
+      "dtype": "float32",
+      "rms": 0.5729956160779506,
+      "peak": 0.9988387227058411,
+      "minimum": 1.7714561181492172e-05,
+      "maximum": 0.9988387227058411
+    },
+    "music/fold1/thirteenth": {
+      "shape": [
+        956,
+        3
+      ],
+      "dtype": "float32",
+      "rms": 0.560217654120397,
+      "peak": 0.9972169399261475,
+      "minimum": 4.575542698148638e-05,
+      "maximum": 0.9972169399261475
+    },
+    "music/fold2/triad": {
+      "shape": [
+        956,
+        73
+      ],
+      "dtype": "float32",
+      "rms": 0.09347686073108635,
+      "peak": 0.9868443012237549,
+      "minimum": 3.6229039213075964e-10,
+      "maximum": 0.9868443012237549
+    },
+    "music/fold2/bass": {
+      "shape": [
+        956,
+        13
+      ],
+      "dtype": "float32",
+      "rms": 0.23486591970132162,
+      "peak": 0.9918928146362305,
+      "minimum": 9.890496585285291e-06,
+      "maximum": 0.9918928146362305
+    },
+    "music/fold2/seventh": {
+      "shape": [
+        956,
+        4
+      ],
+      "dtype": "float32",
+      "rms": 0.43777677646390956,
+      "peak": 0.9600223302841187,
+      "minimum": 4.12403051086585e-06,
+      "maximum": 0.9600223302841187
+    },
+    "music/fold2/ninth": {
+      "shape": [
+        956,
+        4
+      ],
+      "dtype": "float32",
+      "rms": 0.45618678760602316,
+      "peak": 0.9880819320678711,
+      "minimum": 7.450134376085771e-07,
+      "maximum": 0.9880819320678711
+    },
+    "music/fold2/eleventh": {
+      "shape": [
+        956,
+        3
+      ],
+      "dtype": "float32",
+      "rms": 0.5690452031739608,
+      "peak": 0.9990437626838684,
+      "minimum": 6.0252761613810435e-05,
+      "maximum": 0.9990437626838684
+    },
+    "music/fold2/thirteenth": {
+      "shape": [
+        956,
+        3
+      ],
+      "dtype": "float32",
+      "rms": 0.5634347374640806,
+      "peak": 0.9958439469337463,
+      "minimum": 9.789485193323344e-05,
+      "maximum": 0.9958439469337463
+    },
+    "music/fold3/triad": {
+      "shape": [
+        956,
+        73
+      ],
+      "dtype": "float32",
+      "rms": 0.08951295444424877,
+      "peak": 0.9808372855186462,
+      "minimum": 3.674830217903491e-09,
+      "maximum": 0.9808372855186462
+    },
+    "music/fold3/bass": {
+      "shape": [
+        956,
+        13
+      ],
+      "dtype": "float32",
+      "rms": 0.2382734905862409,
+      "peak": 0.9882071614265442,
+      "minimum": 8.287701348308474e-06,
+      "maximum": 0.9882071614265442
+    },
+    "music/fold3/seventh": {
+      "shape": [
+        956,
+        4
+      ],
+      "dtype": "float32",
+      "rms": 0.39140585586800086,
+      "peak": 0.9271750450134277,
+      "minimum": 4.096041834600328e-07,
+      "maximum": 0.9271750450134277
+    },
+    "music/fold3/ninth": {
+      "shape": [
+        956,
+        4
+      ],
+      "dtype": "float32",
+      "rms": 0.4421311066575766,
+      "peak": 0.985191822052002,
+      "minimum": 1.6147960479884205e-07,
+      "maximum": 0.985191822052002
+    },
+    "music/fold3/eleventh": {
+      "shape": [
+        956,
+        3
+      ],
+      "dtype": "float32",
+      "rms": 0.5614952511337257,
+      "peak": 0.9977667331695557,
+      "minimum": 9.968366794055328e-05,
+      "maximum": 0.9977667331695557
+    },
+    "music/fold3/thirteenth": {
+      "shape": [
+        956,
+        3
+      ],
+      "dtype": "float32",
+      "rms": 0.5509748760512854,
+      "peak": 0.9964589476585388,
+      "minimum": 6.272676546359435e-05,
+      "maximum": 0.9964589476585388
+    },
+    "music/fold4/triad": {
+      "shape": [
+        956,
+        73
+      ],
+      "dtype": "float32",
+      "rms": 0.09549806607330956,
+      "peak": 0.9918612241744995,
+      "minimum": 2.5516613821885414e-10,
+      "maximum": 0.9918612241744995
+    },
+    "music/fold4/bass": {
+      "shape": [
+        956,
+        13
+      ],
+      "dtype": "float32",
+      "rms": 0.24765893785159138,
+      "peak": 0.9902492165565491,
+      "minimum": 7.064298642944777e-06,
+      "maximum": 0.9902492165565491
+    },
+    "music/fold4/seventh": {
+      "shape": [
+        956,
+        4
+      ],
+      "dtype": "float32",
+      "rms": 0.3826147350253779,
+      "peak": 0.9042210578918457,
+      "minimum": 2.690508154046256e-07,
+      "maximum": 0.9042210578918457
+    },
+    "music/fold4/ninth": {
+      "shape": [
+        956,
+        4
+      ],
+      "dtype": "float32",
+      "rms": 0.4595698521528887,
+      "peak": 0.9832133054733276,
+      "minimum": 7.692414328630548e-06,
+      "maximum": 0.9832133054733276
+    },
+    "music/fold4/eleventh": {
+      "shape": [
+        956,
+        3
+      ],
+      "dtype": "float32",
+      "rms": 0.5699327240370505,
+      "peak": 0.9977293610572815,
+      "minimum": 4.1396142478333786e-05,
+      "maximum": 0.9977293610572815
+    },
+    "music/fold4/thirteenth": {
+      "shape": [
+        956,
+        3
+      ],
+      "dtype": "float32",
+      "rms": 0.5627716317546502,
+      "peak": 0.997686505317688,
+      "minimum": 8.151995643856935e-06,
+      "maximum": 0.997686505317688
+    },
+    "music/ensemble/triad": {
+      "shape": [
+        956,
+        73
+      ],
+      "dtype": "float32",
+      "rms": 0.09141138159552101,
+      "peak": 0.9777914881706238,
+      "minimum": 4.251415219869159e-09,
+      "maximum": 0.9777914881706238
+    },
+    "music/ensemble/bass": {
+      "shape": [
+        956,
+        13
+      ],
+      "dtype": "float32",
+      "rms": 0.23913719431056255,
+      "peak": 0.9846502542495728,
+      "minimum": 3.088963421760127e-05,
+      "maximum": 0.9846502542495728
+    },
+    "music/ensemble/seventh": {
+      "shape": [
+        956,
+        4
+      ],
+      "dtype": "float32",
+      "rms": 0.4033949858354996,
+      "peak": 0.9145857691764832,
+      "minimum": 4.185762918496039e-06,
+      "maximum": 0.9145857691764832
+    },
+    "music/ensemble/ninth": {
+      "shape": [
+        956,
+        4
+      ],
+      "dtype": "float32",
+      "rms": 0.45901382343000535,
+      "peak": 0.9794037938117981,
+      "minimum": 1.714534664642997e-05,
+      "maximum": 0.9794037938117981
+    },
+    "music/ensemble/eleventh": {
+      "shape": [
+        956,
+        3
+      ],
+      "dtype": "float32",
+      "rms": 0.5683403697955031,
+      "peak": 0.9968729019165039,
+      "minimum": 0.0001251992944162339,
+      "maximum": 0.9968729019165039
+    },
+    "music/ensemble/thirteenth": {
+      "shape": [
+        956,
+        3
+      ],
+      "dtype": "float32",
+      "rms": 0.5590755734325877,
+      "peak": 0.9889348149299622,
+      "minimum": 0.00010933222074527293,
+      "maximum": 0.9889348149299622
+    },
+    "music/submission/times": {
+      "shape": [
+        11,
+        2
+      ],
+      "dtype": "float64",
+      "rms": 10.778736962374559,
+      "peak": 22.19827664399093,
+      "minimum": 0.0,
+      "maximum": 22.19827664399093
+    },
+    "music/ismir2017/times": {
+      "shape": [
+        11,
+        2
+      ],
+      "dtype": "float64",
+      "rms": 10.778736962374559,
+      "peak": 22.19827664399093,
+      "minimum": 0.0,
+      "maximum": 22.19827664399093
+    },
+    "music/full/times": {
+      "shape": [
+        11,
+        2
+      ],
+      "dtype": "float64",
+      "rms": 10.778736962374559,
+      "peak": 22.19827664399093,
+      "minimum": 0.0,
+      "maximum": 22.19827664399093
+    },
+    "music/extended/times": {
+      "shape": [
+        11,
+        2
+      ],
+      "dtype": "float64",
+      "rms": 10.778736962374559,
+      "peak": 22.19827664399093,
+      "minimum": 0.0,
+      "maximum": 22.19827664399093
+    },
+    "silence/audio": {
+      "shape": [
+        489434
+      ],
+      "dtype": "float32",
+      "rms": 0.0,
+      "peak": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "silence/cqt": {
+      "shape": [
+        956,
+        288
+      ],
+      "dtype": "float32",
+      "rms": 0.0,
+      "peak": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "silence/fold0/triad": {
+      "shape": [
+        956,
+        73
+      ],
+      "dtype": "float32",
+      "rms": 0.02766121063210903,
+      "peak": 0.262593537569046,
+      "minimum": 3.39078287652228e-05,
+      "maximum": 0.262593537569046
+    },
+    "silence/fold0/bass": {
+      "shape": [
+        956,
+        13
+      ],
+      "dtype": "float32",
+      "rms": 0.09698263982793295,
+      "peak": 0.37669381499290466,
+      "minimum": 0.00712138507515192,
+      "maximum": 0.37669381499290466
+    },
+    "silence/fold0/seventh": {
+      "shape": [
+        956,
+        4
+      ],
+      "dtype": "float32",
+      "rms": 0.42109893493397943,
+      "peak": 0.9837424755096436,
+      "minimum": 0.00048335979226976633,
+      "maximum": 0.9837424755096436
+    },
+    "silence/fold0/ninth": {
+      "shape": [
+        956,
+        4
+      ],
+      "dtype": "float32",
+      "rms": 0.4326409225691326,
+      "peak": 0.9512537121772766,
+      "minimum": 0.00018766429275274277,
+      "maximum": 0.9512537121772766
+    },
+    "silence/fold0/eleventh": {
+      "shape": [
+        956,
+        3
+      ],
+      "dtype": "float32",
+      "rms": 0.48131365214889843,
+      "peak": 0.9072889089584351,
+      "minimum": 0.008445442654192448,
+      "maximum": 0.9072889089584351
+    },
+    "silence/fold0/thirteenth": {
+      "shape": [
+        956,
+        3
+      ],
+      "dtype": "float32",
+      "rms": 0.4149386775960997,
+      "peak": 0.8980261087417603,
+      "minimum": 0.029958542436361313,
+      "maximum": 0.8980261087417603
+    },
+    "silence/fold1/triad": {
+      "shape": [
+        956,
+        73
+      ],
+      "dtype": "float32",
+      "rms": 0.08584634741972878,
+      "peak": 0.830574095249176,
+      "minimum": 4.374032158693808e-08,
+      "maximum": 0.830574095249176
+    },
+    "silence/fold1/bass": {
+      "shape": [
+        956,
+        13
+      ],
+      "dtype": "float32",
+      "rms": 0.12722249360600849,
+      "peak": 0.6263313293457031,
+      "minimum": 0.0005439362139441073,
+      "maximum": 0.6263313293457031
+    },
+    "silence/fold1/seventh": {
+      "shape": [
+        956,
+        4
+      ],
+      "dtype": "float32",
+      "rms": 0.31308440396419107,
+      "peak": 0.7986057996749878,
+      "minimum": 0.00014929143071640283,
+      "maximum": 0.7986057996749878
+    },
+    "silence/fold1/ninth": {
+      "shape": [
+        956,
+        4
+      ],
+      "dtype": "float32",
+      "rms": 0.41376798700446404,
+      "peak": 0.9491367340087891,
+      "minimum": 0.00015705882105976343,
+      "maximum": 0.9491367340087891
+    },
+    "silence/fold1/eleventh": {
+      "shape": [
+        956,
+        3
+      ],
+      "dtype": "float32",
+      "rms": 0.3644554077783805,
+      "peak": 0.9851171970367432,
+      "minimum": 0.0004959546495229006,
+      "maximum": 0.9851171970367432
+    },
+    "silence/fold1/thirteenth": {
+      "shape": [
+        956,
+        3
+      ],
+      "dtype": "float32",
+      "rms": 0.35875908890936054,
+      "peak": 0.9532784223556519,
+      "minimum": 0.0003861564036924392,
+      "maximum": 0.9532784223556519
+    },
+    "silence/fold2/triad": {
+      "shape": [
+        956,
+        73
+      ],
+      "dtype": "float32",
+      "rms": 0.021804605756356333,
+      "peak": 0.3487299978733063,
+      "minimum": 3.404752533242572e-07,
+      "maximum": 0.3487299978733063
+    },
+    "silence/fold2/bass": {
+      "shape": [
+        956,
+        13
+      ],
+      "dtype": "float32",
+      "rms": 0.10354820009422322,
+      "peak": 0.7171145081520081,
+      "minimum": 0.001644531381316483,
+      "maximum": 0.7171145081520081
+    },
+    "silence/fold2/seventh": {
+      "shape": [
+        956,
+        4
+      ],
+      "dtype": "float32",
+      "rms": 0.4478837797675736,
+      "peak": 0.9025563597679138,
+      "minimum": 0.0014846088597550988,
+      "maximum": 0.9025563597679138
+    },
+    "silence/fold2/ninth": {
+      "shape": [
+        956,
+        4
+      ],
+      "dtype": "float32",
+      "rms": 0.33024434769625083,
+      "peak": 0.9584166407585144,
+      "minimum": 0.0008046402945183218,
+      "maximum": 0.9584166407585144
+    },
+    "silence/fold2/eleventh": {
+      "shape": [
+        956,
+        3
+      ],
+      "dtype": "float32",
+      "rms": 0.469722755906197,
+      "peak": 0.9980588555335999,
+      "minimum": 0.00015236454783007503,
+      "maximum": 0.9980588555335999
+    },
+    "silence/fold2/thirteenth": {
+      "shape": [
+        956,
+        3
+      ],
+      "dtype": "float32",
+      "rms": 0.41749280412936207,
+      "peak": 0.9785960912704468,
+      "minimum": 0.0002215152489952743,
+      "maximum": 0.9785960912704468
+    },
+    "silence/fold3/triad": {
+      "shape": [
+        956,
+        73
+      ],
+      "dtype": "float32",
+      "rms": 0.03376923747081294,
+      "peak": 0.3660605549812317,
+      "minimum": 9.775031685421709e-06,
+      "maximum": 0.3660605549812317
+    },
+    "silence/fold3/bass": {
+      "shape": [
+        956,
+        13
+      ],
+      "dtype": "float32",
+      "rms": 0.09683261931599554,
+      "peak": 0.3789515495300293,
+      "minimum": 0.0018917170818895102,
+      "maximum": 0.3789515495300293
+    },
+    "silence/fold3/seventh": {
+      "shape": [
+        956,
+        4
+      ],
+      "dtype": "float32",
+      "rms": 0.49367214816222227,
+      "peak": 0.9928405284881592,
+      "minimum": 0.0003836347605101764,
+      "maximum": 0.9928405284881592
+    },
+    "silence/fold3/ninth": {
+      "shape": [
+        956,
+        4
+      ],
+      "dtype": "float32",
+      "rms": 0.4924283175069351,
+      "peak": 0.997190535068512,
+      "minimum": 0.0004072483570780605,
+      "maximum": 0.997190535068512
+    },
+    "silence/fold3/eleventh": {
+      "shape": [
+        956,
+        3
+      ],
+      "dtype": "float32",
+      "rms": 0.5225123212081637,
+      "peak": 0.9458214044570923,
+      "minimum": 0.0034422825556248426,
+      "maximum": 0.9458214044570923
+    },
+    "silence/fold3/thirteenth": {
+      "shape": [
+        956,
+        3
+      ],
+      "dtype": "float32",
+      "rms": 0.4431670352380174,
+      "peak": 0.9271628856658936,
+      "minimum": 0.003213596995919943,
+      "maximum": 0.9271628856658936
+    },
+    "silence/fold4/triad": {
+      "shape": [
+        956,
+        73
+      ],
+      "dtype": "float32",
+      "rms": 0.022251857447466637,
+      "peak": 0.2282630354166031,
+      "minimum": 2.392068381595891e-05,
+      "maximum": 0.2282630354166031
+    },
+    "silence/fold4/bass": {
+      "shape": [
+        956,
+        13
+      ],
+      "dtype": "float32",
+      "rms": 0.09282727828087767,
+      "peak": 0.5945315957069397,
+      "minimum": 0.006081908475607634,
+      "maximum": 0.5945315957069397
+    },
+    "silence/fold4/seventh": {
+      "shape": [
+        956,
+        4
+      ],
+      "dtype": "float32",
+      "rms": 0.43653938481433296,
+      "peak": 0.8710556030273438,
+      "minimum": 0.0049393028020858765,
+      "maximum": 0.8710556030273438
+    },
+    "silence/fold4/ninth": {
+      "shape": [
+        956,
+        4
+      ],
+      "dtype": "float32",
+      "rms": 0.45091101271253836,
+      "peak": 0.9276461005210876,
+      "minimum": 0.0032318681478500366,
+      "maximum": 0.9276461005210876
+    },
+    "silence/fold4/eleventh": {
+      "shape": [
+        956,
+        3
+      ],
+      "dtype": "float32",
+      "rms": 0.3860211897998444,
+      "peak": 0.9811623096466064,
+      "minimum": 0.0038173517677932978,
+      "maximum": 0.9811623096466064
+    },
+    "silence/fold4/thirteenth": {
+      "shape": [
+        956,
+        3
+      ],
+      "dtype": "float32",
+      "rms": 0.3504967843280379,
+      "peak": 0.9772685170173645,
+      "minimum": 0.007220784667879343,
+      "maximum": 0.9772685170173645
+    },
+    "silence/ensemble/triad": {
+      "shape": [
+        956,
+        73
+      ],
+      "dtype": "float32",
+      "rms": 0.027730382767004062,
+      "peak": 0.25387054681777954,
+      "minimum": 0.00014647733769379556,
+      "maximum": 0.25387054681777954
+    },
+    "silence/ensemble/bass": {
+      "shape": [
+        956,
+        13
+      ],
+      "dtype": "float32",
+      "rms": 0.08712207483749615,
+      "peak": 0.2912253737449646,
+      "minimum": 0.016955947503447533,
+      "maximum": 0.2912253737449646
+    },
+    "silence/ensemble/seventh": {
+      "shape": [
+        956,
+        4
+      ],
+      "dtype": "float32",
+      "rms": 0.4000973121537087,
+      "peak": 0.842247486114502,
+      "minimum": 0.0062527768313884735,
+      "maximum": 0.842247486114502
+    },
+    "silence/ensemble/ninth": {
+      "shape": [
+        956,
+        4
+      ],
+      "dtype": "float32",
+      "rms": 0.41191511006894516,
+      "peak": 0.8534321784973145,
+      "minimum": 0.010388709604740143,
+      "maximum": 0.8534321784973145
+    },
+    "silence/ensemble/eleventh": {
+      "shape": [
+        956,
+        3
+      ],
+      "dtype": "float32",
+      "rms": 0.41766797463364846,
+      "peak": 0.8900846242904663,
+      "minimum": 0.00979963131248951,
+      "maximum": 0.8900846242904663
+    },
+    "silence/ensemble/thirteenth": {
+      "shape": [
+        956,
+        3
+      ],
+      "dtype": "float32",
+      "rms": 0.3540282672042352,
+      "peak": 0.8718827366828918,
+      "minimum": 0.025246918201446533,
+      "maximum": 0.8718827366828918
+    },
+    "silence/submission/times": {
+      "shape": [
+        1,
+        2
+      ],
+      "dtype": "float64",
+      "rms": 15.696551945620943,
+      "peak": 22.19827664399093,
+      "minimum": 0.0,
+      "maximum": 22.19827664399093
+    },
+    "silence/ismir2017/times": {
+      "shape": [
+        1,
+        2
+      ],
+      "dtype": "float64",
+      "rms": 15.696551945620943,
+      "peak": 22.19827664399093,
+      "minimum": 0.0,
+      "maximum": 22.19827664399093
+    },
+    "silence/full/times": {
+      "shape": [
+        1,
+        2
+      ],
+      "dtype": "float64",
+      "rms": 15.696551945620943,
+      "peak": 22.19827664399093,
+      "minimum": 0.0,
+      "maximum": 22.19827664399093
+    },
+    "silence/extended/times": {
+      "shape": [
+        1,
+        2
+      ],
+      "dtype": "float64",
+      "rms": 15.696551945620943,
+      "peak": 22.19827664399093,
+      "minimum": 0.0,
+      "maximum": 22.19827664399093
+    }
+  },
+  "repeat_comparison": {
+    "music/audio": {
+      "max_abs": 0.0,
+      "rms_error_over_reference_rms": 0.0,
+      "max_abs_over_reference_peak": 0.0
+    },
+    "music/cqt": {
+      "max_abs": 0.0,
+      "rms_error_over_reference_rms": 0.0,
+      "max_abs_over_reference_peak": 0.0
+    },
+    "music/fold0/triad": {
+      "max_abs": 0.0,
+      "rms_error_over_reference_rms": 0.0,
+      "max_abs_over_reference_peak": 0.0
+    },
+    "music/fold0/bass": {
+      "max_abs": 0.0,
+      "rms_error_over_reference_rms": 0.0,
+      "max_abs_over_reference_peak": 0.0
+    },
+    "music/fold0/seventh": {
+      "max_abs": 0.0,
+      "rms_error_over_reference_rms": 0.0,
+      "max_abs_over_reference_peak": 0.0
+    },
+    "music/fold0/ninth": {
+      "max_abs": 0.0,
+      "rms_error_over_reference_rms": 0.0,
+      "max_abs_over_reference_peak": 0.0
+    },
+    "music/fold0/eleventh": {
+      "max_abs": 0.0,
+      "rms_error_over_reference_rms": 0.0,
+      "max_abs_over_reference_peak": 0.0
+    },
+    "music/fold0/thirteenth": {
+      "max_abs": 0.0,
+      "rms_error_over_reference_rms": 0.0,
+      "max_abs_over_reference_peak": 0.0
+    },
+    "music/fold1/triad": {
+      "max_abs": 0.0,
+      "rms_error_over_reference_rms": 0.0,
+      "max_abs_over_reference_peak": 0.0
+    },
+    "music/fold1/bass": {
+      "max_abs": 0.0,
+      "rms_error_over_reference_rms": 0.0,
+      "max_abs_over_reference_peak": 0.0
+    },
+    "music/fold1/seventh": {
+      "max_abs": 0.0,
+      "rms_error_over_reference_rms": 0.0,
+      "max_abs_over_reference_peak": 0.0
+    },
+    "music/fold1/ninth": {
+      "max_abs": 0.0,
+      "rms_error_over_reference_rms": 0.0,
+      "max_abs_over_reference_peak": 0.0
+    },
+    "music/fold1/eleventh": {
+      "max_abs": 0.0,
+      "rms_error_over_reference_rms": 0.0,
+      "max_abs_over_reference_peak": 0.0
+    },
+    "music/fold1/thirteenth": {
+      "max_abs": 0.0,
+      "rms_error_over_reference_rms": 0.0,
+      "max_abs_over_reference_peak": 0.0
+    },
+    "music/fold2/triad": {
+      "max_abs": 0.0,
+      "rms_error_over_reference_rms": 0.0,
+      "max_abs_over_reference_peak": 0.0
+    },
+    "music/fold2/bass": {
+      "max_abs": 0.0,
+      "rms_error_over_reference_rms": 0.0,
+      "max_abs_over_reference_peak": 0.0
+    },
+    "music/fold2/seventh": {
+      "max_abs": 0.0,
+      "rms_error_over_reference_rms": 0.0,
+      "max_abs_over_reference_peak": 0.0
+    },
+    "music/fold2/ninth": {
+      "max_abs": 0.0,
+      "rms_error_over_reference_rms": 0.0,
+      "max_abs_over_reference_peak": 0.0
+    },
+    "music/fold2/eleventh": {
+      "max_abs": 0.0,
+      "rms_error_over_reference_rms": 0.0,
+      "max_abs_over_reference_peak": 0.0
+    },
+    "music/fold2/thirteenth": {
+      "max_abs": 0.0,
+      "rms_error_over_reference_rms": 0.0,
+      "max_abs_over_reference_peak": 0.0
+    },
+    "music/fold3/triad": {
+      "max_abs": 0.0,
+      "rms_error_over_reference_rms": 0.0,
+      "max_abs_over_reference_peak": 0.0
+    },
+    "music/fold3/bass": {
+      "max_abs": 0.0,
+      "rms_error_over_reference_rms": 0.0,
+      "max_abs_over_reference_peak": 0.0
+    },
+    "music/fold3/seventh": {
+      "max_abs": 0.0,
+      "rms_error_over_reference_rms": 0.0,
+      "max_abs_over_reference_peak": 0.0
+    },
+    "music/fold3/ninth": {
+      "max_abs": 0.0,
+      "rms_error_over_reference_rms": 0.0,
+      "max_abs_over_reference_peak": 0.0
+    },
+    "music/fold3/eleventh": {
+      "max_abs": 0.0,
+      "rms_error_over_reference_rms": 0.0,
+      "max_abs_over_reference_peak": 0.0
+    },
+    "music/fold3/thirteenth": {
+      "max_abs": 0.0,
+      "rms_error_over_reference_rms": 0.0,
+      "max_abs_over_reference_peak": 0.0
+    },
+    "music/fold4/triad": {
+      "max_abs": 0.0,
+      "rms_error_over_reference_rms": 0.0,
+      "max_abs_over_reference_peak": 0.0
+    },
+    "music/fold4/bass": {
+      "max_abs": 0.0,
+      "rms_error_over_reference_rms": 0.0,
+      "max_abs_over_reference_peak": 0.0
+    },
+    "music/fold4/seventh": {
+      "max_abs": 0.0,
+      "rms_error_over_reference_rms": 0.0,
+      "max_abs_over_reference_peak": 0.0
+    },
+    "music/fold4/ninth": {
+      "max_abs": 0.0,
+      "rms_error_over_reference_rms": 0.0,
+      "max_abs_over_reference_peak": 0.0
+    },
+    "music/fold4/eleventh": {
+      "max_abs": 0.0,
+      "rms_error_over_reference_rms": 0.0,
+      "max_abs_over_reference_peak": 0.0
+    },
+    "music/fold4/thirteenth": {
+      "max_abs": 0.0,
+      "rms_error_over_reference_rms": 0.0,
+      "max_abs_over_reference_peak": 0.0
+    },
+    "music/ensemble/triad": {
+      "max_abs": 0.0,
+      "rms_error_over_reference_rms": 0.0,
+      "max_abs_over_reference_peak": 0.0
+    },
+    "music/ensemble/bass": {
+      "max_abs": 0.0,
+      "rms_error_over_reference_rms": 0.0,
+      "max_abs_over_reference_peak": 0.0
+    },
+    "music/ensemble/seventh": {
+      "max_abs": 0.0,
+      "rms_error_over_reference_rms": 0.0,
+      "max_abs_over_reference_peak": 0.0
+    },
+    "music/ensemble/ninth": {
+      "max_abs": 0.0,
+      "rms_error_over_reference_rms": 0.0,
+      "max_abs_over_reference_peak": 0.0
+    },
+    "music/ensemble/eleventh": {
+      "max_abs": 0.0,
+      "rms_error_over_reference_rms": 0.0,
+      "max_abs_over_reference_peak": 0.0
+    },
+    "music/ensemble/thirteenth": {
+      "max_abs": 0.0,
+      "rms_error_over_reference_rms": 0.0,
+      "max_abs_over_reference_peak": 0.0
+    },
+    "music/submission/times": {
+      "max_abs": 0.0,
+      "rms_error_over_reference_rms": 0.0,
+      "max_abs_over_reference_peak": 0.0
+    },
+    "music/ismir2017/times": {
+      "max_abs": 0.0,
+      "rms_error_over_reference_rms": 0.0,
+      "max_abs_over_reference_peak": 0.0
+    },
+    "music/full/times": {
+      "max_abs": 0.0,
+      "rms_error_over_reference_rms": 0.0,
+      "max_abs_over_reference_peak": 0.0
+    },
+    "music/extended/times": {
+      "max_abs": 0.0,
+      "rms_error_over_reference_rms": 0.0,
+      "max_abs_over_reference_peak": 0.0
+    },
+    "silence/audio": {
+      "max_abs": 0.0,
+      "rms_error_over_reference_rms": 0.0,
+      "max_abs_over_reference_peak": 0.0
+    },
+    "silence/cqt": {
+      "max_abs": 0.0,
+      "rms_error_over_reference_rms": 0.0,
+      "max_abs_over_reference_peak": 0.0
+    },
+    "silence/fold0/triad": {
+      "max_abs": 0.0,
+      "rms_error_over_reference_rms": 0.0,
+      "max_abs_over_reference_peak": 0.0
+    },
+    "silence/fold0/bass": {
+      "max_abs": 0.0,
+      "rms_error_over_reference_rms": 0.0,
+      "max_abs_over_reference_peak": 0.0
+    },
+    "silence/fold0/seventh": {
+      "max_abs": 0.0,
+      "rms_error_over_reference_rms": 0.0,
+      "max_abs_over_reference_peak": 0.0
+    },
+    "silence/fold0/ninth": {
+      "max_abs": 0.0,
+      "rms_error_over_reference_rms": 0.0,
+      "max_abs_over_reference_peak": 0.0
+    },
+    "silence/fold0/eleventh": {
+      "max_abs": 0.0,
+      "rms_error_over_reference_rms": 0.0,
+      "max_abs_over_reference_peak": 0.0
+    },
+    "silence/fold0/thirteenth": {
+      "max_abs": 0.0,
+      "rms_error_over_reference_rms": 0.0,
+      "max_abs_over_reference_peak": 0.0
+    },
+    "silence/fold1/triad": {
+      "max_abs": 0.0,
+      "rms_error_over_reference_rms": 0.0,
+      "max_abs_over_reference_peak": 0.0
+    },
+    "silence/fold1/bass": {
+      "max_abs": 0.0,
+      "rms_error_over_reference_rms": 0.0,
+      "max_abs_over_reference_peak": 0.0
+    },
+    "silence/fold1/seventh": {
+      "max_abs": 0.0,
+      "rms_error_over_reference_rms": 0.0,
+      "max_abs_over_reference_peak": 0.0
+    },
+    "silence/fold1/ninth": {
+      "max_abs": 0.0,
+      "rms_error_over_reference_rms": 0.0,
+      "max_abs_over_reference_peak": 0.0
+    },
+    "silence/fold1/eleventh": {
+      "max_abs": 0.0,
+      "rms_error_over_reference_rms": 0.0,
+      "max_abs_over_reference_peak": 0.0
+    },
+    "silence/fold1/thirteenth": {
+      "max_abs": 0.0,
+      "rms_error_over_reference_rms": 0.0,
+      "max_abs_over_reference_peak": 0.0
+    },
+    "silence/fold2/triad": {
+      "max_abs": 0.0,
+      "rms_error_over_reference_rms": 0.0,
+      "max_abs_over_reference_peak": 0.0
+    },
+    "silence/fold2/bass": {
+      "max_abs": 0.0,
+      "rms_error_over_reference_rms": 0.0,
+      "max_abs_over_reference_peak": 0.0
+    },
+    "silence/fold2/seventh": {
+      "max_abs": 0.0,
+      "rms_error_over_reference_rms": 0.0,
+      "max_abs_over_reference_peak": 0.0
+    },
+    "silence/fold2/ninth": {
+      "max_abs": 0.0,
+      "rms_error_over_reference_rms": 0.0,
+      "max_abs_over_reference_peak": 0.0
+    },
+    "silence/fold2/eleventh": {
+      "max_abs": 0.0,
+      "rms_error_over_reference_rms": 0.0,
+      "max_abs_over_reference_peak": 0.0
+    },
+    "silence/fold2/thirteenth": {
+      "max_abs": 0.0,
+      "rms_error_over_reference_rms": 0.0,
+      "max_abs_over_reference_peak": 0.0
+    },
+    "silence/fold3/triad": {
+      "max_abs": 0.0,
+      "rms_error_over_reference_rms": 0.0,
+      "max_abs_over_reference_peak": 0.0
+    },
+    "silence/fold3/bass": {
+      "max_abs": 0.0,
+      "rms_error_over_reference_rms": 0.0,
+      "max_abs_over_reference_peak": 0.0
+    },
+    "silence/fold3/seventh": {
+      "max_abs": 0.0,
+      "rms_error_over_reference_rms": 0.0,
+      "max_abs_over_reference_peak": 0.0
+    },
+    "silence/fold3/ninth": {
+      "max_abs": 0.0,
+      "rms_error_over_reference_rms": 0.0,
+      "max_abs_over_reference_peak": 0.0
+    },
+    "silence/fold3/eleventh": {
+      "max_abs": 0.0,
+      "rms_error_over_reference_rms": 0.0,
+      "max_abs_over_reference_peak": 0.0
+    },
+    "silence/fold3/thirteenth": {
+      "max_abs": 0.0,
+      "rms_error_over_reference_rms": 0.0,
+      "max_abs_over_reference_peak": 0.0
+    },
+    "silence/fold4/triad": {
+      "max_abs": 0.0,
+      "rms_error_over_reference_rms": 0.0,
+      "max_abs_over_reference_peak": 0.0
+    },
+    "silence/fold4/bass": {
+      "max_abs": 0.0,
+      "rms_error_over_reference_rms": 0.0,
+      "max_abs_over_reference_peak": 0.0
+    },
+    "silence/fold4/seventh": {
+      "max_abs": 0.0,
+      "rms_error_over_reference_rms": 0.0,
+      "max_abs_over_reference_peak": 0.0
+    },
+    "silence/fold4/ninth": {
+      "max_abs": 0.0,
+      "rms_error_over_reference_rms": 0.0,
+      "max_abs_over_reference_peak": 0.0
+    },
+    "silence/fold4/eleventh": {
+      "max_abs": 0.0,
+      "rms_error_over_reference_rms": 0.0,
+      "max_abs_over_reference_peak": 0.0
+    },
+    "silence/fold4/thirteenth": {
+      "max_abs": 0.0,
+      "rms_error_over_reference_rms": 0.0,
+      "max_abs_over_reference_peak": 0.0
+    },
+    "silence/ensemble/triad": {
+      "max_abs": 0.0,
+      "rms_error_over_reference_rms": 0.0,
+      "max_abs_over_reference_peak": 0.0
+    },
+    "silence/ensemble/bass": {
+      "max_abs": 0.0,
+      "rms_error_over_reference_rms": 0.0,
+      "max_abs_over_reference_peak": 0.0
+    },
+    "silence/ensemble/seventh": {
+      "max_abs": 0.0,
+      "rms_error_over_reference_rms": 0.0,
+      "max_abs_over_reference_peak": 0.0
+    },
+    "silence/ensemble/ninth": {
+      "max_abs": 0.0,
+      "rms_error_over_reference_rms": 0.0,
+      "max_abs_over_reference_peak": 0.0
+    },
+    "silence/ensemble/eleventh": {
+      "max_abs": 0.0,
+      "rms_error_over_reference_rms": 0.0,
+      "max_abs_over_reference_peak": 0.0
+    },
+    "silence/ensemble/thirteenth": {
+      "max_abs": 0.0,
+      "rms_error_over_reference_rms": 0.0,
+      "max_abs_over_reference_peak": 0.0
+    },
+    "silence/submission/times": {
+      "max_abs": 0.0,
+      "rms_error_over_reference_rms": 0.0,
+      "max_abs_over_reference_peak": 0.0
+    },
+    "silence/ismir2017/times": {
+      "max_abs": 0.0,
+      "rms_error_over_reference_rms": 0.0,
+      "max_abs_over_reference_peak": 0.0
+    },
+    "silence/full/times": {
+      "max_abs": 0.0,
+      "rms_error_over_reference_rms": 0.0,
+      "max_abs_over_reference_peak": 0.0
+    },
+    "silence/extended/times": {
+      "max_abs": 0.0,
+      "rms_error_over_reference_rms": 0.0,
+      "max_abs_over_reference_peak": 0.0
+    }
+  },
+  "imported_package_modules": [
+    "lv_chordia",
+    "lv_chordia.audio_utils",
+    "lv_chordia.chord_recognition",
+    "lv_chordia.chordnet_ismir_naive",
+    "lv_chordia.complex_chord",
+    "lv_chordia.config",
+    "lv_chordia.data",
+    "lv_chordia.device_utils",
+    "lv_chordia.extractors",
+    "lv_chordia.extractors.cqt",
+    "lv_chordia.extractors.xhmm_ismir",
+    "lv_chordia.mir",
+    "lv_chordia.mir.cache",
+    "lv_chordia.mir.common",
+    "lv_chordia.mir.data_file",
+    "lv_chordia.mir.extractors",
+    "lv_chordia.mir.extractors.extractor_base",
+    "lv_chordia.mir.io",
+    "lv_chordia.mir.io.feature_io_base",
+    "lv_chordia.mir.io.implement",
+    "lv_chordia.mir.io.implement.chroma_io",
+    "lv_chordia.mir.io.implement.midi_io",
+    "lv_chordia.mir.io.implement.music_io",
+    "lv_chordia.mir.io.implement.regional_spectrogram_io",
+    "lv_chordia.mir.io.implement.scalar_io",
+    "lv_chordia.mir.io.implement.spectrogram_io",
+    "lv_chordia.mir.io.implement.unknown_io",
+    "lv_chordia.mir.nn",
+    "lv_chordia.mir.nn.data_decorator",
+    "lv_chordia.mir.nn.data_provider",
+    "lv_chordia.mir.nn.data_storage",
+    "lv_chordia.mir.nn.network",
+    "lv_chordia.mir.settings",
+    "lv_chordia.session",
+    "lv_chordia.settings"
+  ],
+  "artifact_sha256": {
+    "outputs.npz": "78b5d2bee94c19131693428484d70353bd6ee81ccfa51f927f9cc532a62ca0ce",
+    "decoded.json": "f4a47fa6c8710be233d9f30235f4f042aaa1d5866ff4c121f2e8e9e7e35b5f1a"
+  }
+}
