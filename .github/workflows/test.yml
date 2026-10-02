@@ -67,6 +67,7 @@ jobs:
           print('lv_chordia', __version__, 'imported OK')
           print('chord_recognition entry point:', chord_recognition)
           "
+          /tmp/smoke-venv/bin/python tools/check_installed_wheel.py
 
       - name: Confirm the wheel packages the expected lv_chordia/**/*.py files
         run: |

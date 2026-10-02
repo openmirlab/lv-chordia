@@ -6,6 +6,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Fixed
+- Include the checkpoint manifest in source distributions so wheels built
+  from them can import and load the bundled ensemble. The installed-wheel
+  smoke check now verifies all five model hashes and real session inference.
+
 ### Changed
 - Explicit device requests now validate CPU and CUDA (including `cuda:N`)
   availability before loading; a requested CUDA index reaches model and

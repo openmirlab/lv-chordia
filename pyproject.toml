@@ -96,6 +96,7 @@ include = [
 [tool.hatch.build.targets.sdist]
 include = [
     "lv_chordia/**/*.py",
+    "lv_chordia/config/checkpoints.toml",
     "lv_chordia/data/*",
     "cache_data/*.sdict",
     "/README.md",

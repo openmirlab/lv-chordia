@@ -161,6 +161,15 @@ and the test audio (`test_data/yellow.wav`) are tracked in the repo.
 
 ## Versioning
 
+Packaging verification: `python -m build` must include
+`lv_chordia/config/checkpoints.toml` in the sdist as well as the wheel. Install
+the wheel into a fresh environment, then run that environment's Python on
+`tools/check_installed_wheel.py` from this checkout. It rejects source-tree
+imports, verifies all five installed checkpoint hashes, and runs the public
+CPU session against the existing Yellow JSON fixture. The original
+`aa6841b` wheel-from-sdist omitted the manifest and failed installed import;
+source-tree tests alone did not expose this.
+
 The package version is single-sourced from `lv_chordia.__version__` in
 `lv_chordia/__init__.py` (`[tool.hatch.version] path = ...` in
 `pyproject.toml` reads it at build time). Don't add a second, hand-edited

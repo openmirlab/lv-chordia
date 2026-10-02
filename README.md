@@ -536,6 +536,12 @@ uv build
 ls -lh dist/
 ```
 
+The source archive and wheel include the checkpoint manifest and all five
+bundled model files. Before shipping, build with `python -m build`, install
+the resulting wheel into a fresh environment, and run
+`python tools/check_installed_wheel.py` with that environment's interpreter.
+This checks package locations, checkpoint hashes, and real session inference.
+
 ### Publishing to PyPI
 
 ```bash
