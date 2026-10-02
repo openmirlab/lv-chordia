@@ -60,14 +60,8 @@ jobs:
           python -m venv /tmp/smoke-venv
           /tmp/smoke-venv/bin/pip install --upgrade pip
           /tmp/smoke-venv/bin/pip install dist/*.whl
-          /tmp/smoke-venv/bin/python -c "
-          import lv_chordia
-          from lv_chordia import __version__
-          from lv_chordia.chord_recognition import chord_recognition
-          print('lv_chordia', __version__, 'imported OK')
-          print('chord_recognition entry point:', chord_recognition)
-          "
-          /tmp/smoke-venv/bin/python tools/check_installed_wheel.py
+          cd "$RUNNER_TEMP"
+          /tmp/smoke-venv/bin/python "$GITHUB_WORKSPACE/tools/check_installed_wheel.py"
 
       - name: Confirm the wheel packages the expected lv_chordia/**/*.py files
         run: |
