@@ -19,6 +19,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
   close, and TOML-backed read-only bundled-checkpoint cache inspection.
 
 ### Removed
+- Dataset providers/storage, training augmentation/losses, DataPool and
+  evaluation adapters from the inference package, plus ten unused training-count
+  pickle files and the direct h5py/joblib requirements. Single-entry MIR helpers,
+  five bundled checkpoints, model architecture and inference behavior remain.
+  `ChordNet(None)`/`ChordNetCNN(None)` remain valid; training counter arguments
+  now raise explicitly. Exact CPU music/silence baselines cover every model head
+  and all four dictionary decoders in their recorded environment.
 - MPS device support (org decision 2026-09-14). `device="mps"` now raises
   `ValueError` unconditionally -- Apple MLX/MPS backends are permanently out
   of scope for this project (org canon art. 4b). This support was never

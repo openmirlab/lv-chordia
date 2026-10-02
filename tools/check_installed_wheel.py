@@ -5,6 +5,7 @@ The repository supplies only the tracked audio and expected discrete result.
 """
 
 import hashlib
+import importlib.metadata
 import json
 from pathlib import Path
 import sys
@@ -19,11 +20,18 @@ def main():
     package = Path(lv_chordia.__file__).resolve()
     assert repository not in package.parents, f"Source import: {package}"
     assert Path(sys.prefix).resolve() in package.parents, package
+    for name in ("data_provider", "data_storage", "data_decorator"):
+        assert not (package.parent / "mir/nn" / (name + ".py")).exists()
+    assert not list((package.parent / "data").glob("cross*_weight*.pkl"))
+    requirements = importlib.metadata.requires("lv-chordia")
+    assert not any(req.lower().startswith(("h5py", "joblib")) for req in requirements)
     root, entries = resolve_checkpoint_paths()
     assert len(entries) == 5
     assert Path(sys.prefix).resolve() in root.resolve().parents, root
+    reference = json.loads((repository / "tests/fixtures/inference_boundary_original/metadata.json").read_text())
     for entry in entries:
         assert entry["cached"], entry["path"]
+        assert entry["sha256"] == reference["checkpoints"][entry["name"]]["sha256"]
         assert hashlib.sha256(entry["path"].read_bytes()).hexdigest() == entry["sha256"]
     session = LVChordiaSession(device="cpu")
     session.load()

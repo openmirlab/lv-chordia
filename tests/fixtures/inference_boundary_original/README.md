@@ -5,7 +5,7 @@ Captured from unmodified current-port source
 This is a behavior-preservation reference, not upstream full-model validation.
 No model, preprocessing, decoder, dependency, or checkpoint was changed.
 
-The input is the already tracked `test_data/yellow.wav` (22.1977 seconds,
+The input is the already tracked `test_data/yellow.wav` (22.197 seconds,
 stereo 44100 Hz) and an equal-length exact-zero float32 signal. The original
 loader resamples both to mono 22050 Hz. The original five bundled checkpoints
 are verified against `config/checkpoints.toml`, in its original order.

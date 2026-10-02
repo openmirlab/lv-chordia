@@ -1,3 +1,11 @@
+"""Feature loading, serialization and visualization interfaces.
+
+These interfaces serve individual inference entries; evaluation adapters are
+outside the package boundary.
+
+Reads: nothing (standard-library helpers only).
+"""
+
 from abc import ABC,abstractmethod
 import pickle
 import os
@@ -56,12 +64,6 @@ class FeatureIO(ABC):
     # override iif it will save as other formats (e.g. wav)
     def get_visualize_extention_name(self):
         return "txt"
-
-    def file_to_evaluation_format(self, filename, entry):
-        raise Exception('Not supported by the io class')
-
-    def data_to_evaluation_format(self, data, entry):
-        raise Exception('Not supported by the io class')
 
 
 def pickle_read(self, filename):

@@ -1,3 +1,10 @@
+"""Small inference feature helpers for silence and frame counts.
+
+The former evaluation-expression harness is outside the shipped boundary.
+
+Reads: extractor_base.py
+"""
+
 from .extractor_base import *
 import librosa
 import numpy as np
@@ -20,37 +27,3 @@ class FrameCount(ExtractorBase):
     def extract(self,entry,**kwargs):
         # self.require(entry.prop.hop_length)
         return entry.dict[kwargs['source']].get(entry).shape[0]
-
-class Evaluate():
-
-    def __init__(self, io):
-        self.__io=io
-
-    def __call__(self, *args, **kwargs):
-        inner_instance=Evaluate.InnerEvaluate()
-        inner_instance.io=self.__io
-        return inner_instance
-
-    class InnerEvaluate(ExtractorBase):
-        def __init__(self):
-            self.io=None
-
-        def get_feature_class(self):
-            return self.io
-
-        class __ProxyReflector():
-
-            def __init__(self,entry):
-                self.__entry=entry
-
-            def __getattr__(self, item):
-                if(item in self.__entry.dict):
-                    print('Getting %s'%item)
-                    return self.__entry.dict[item].get(self.__entry)
-                else:
-                    raise AttributeError('No key \'%s\' found in entry %s'%(item,self.__entry.name))
-
-        def extract(self,entry,**kwargs):
-            eval_proxy_ref__=__class__.__ProxyReflector(entry)
-            expr=kwargs['expr'].replace('$','eval_proxy_ref__.')
-            return eval(expr)
