@@ -342,16 +342,16 @@ Audio File
 
 ## Dependencies
 
-All core dependencies are needed by the inference path (`lv_chordia.chord_recognition` / the CLI); none are training/eval-only.
+Core dependencies support recognition and the retained single-entry MIR IO helpers.
+HDF5 dataset storage and parallel dataset preparation are excluded; `h5py` and
+`joblib` are no longer direct dependencies (librosa may depend on joblib itself).
 
 ```
 torch>=2.13.0         # Deep learning framework
 librosa>=0.11.0       # Audio loading and CQT feature extraction
 numpy>=2.2.6          # Numerical computing
-h5py>=3.16.0          # HDF5 file format (model checkpoint storage backend)
 pydub>=0.23.1         # Audio file manipulation
 pretty_midi>=0.2.9    # MIDI file handling
-joblib>=1.5.3         # Parallel computing
 ```
 
 ```bash
@@ -536,6 +536,12 @@ uv build
 ls -lh dist/
 ```
 
+The source archive and wheel include the checkpoint manifest and all five
+bundled model files. Before shipping, build with `python -m build`, install
+the resulting wheel into a fresh environment, and run
+`python tools/check_installed_wheel.py` with that environment's interpreter.
+This checks package locations, checkpoint hashes, and real session inference.
+
 ### Publishing to PyPI
 
 ```bash
@@ -557,6 +563,16 @@ any training/eval module), unit tests for `audio_utils`, and a regression
 test that runs the CLI against the tracked `test_data/yellow.wav` fixture and
 asserts the chord-recognition JSON output is byte-identical to a golden
 fixture -- the accuracy gate for any refactor of the inference path.
+
+The original current-port CPU baseline in
+`tests/fixtures/inference_boundary_original/` additionally preserves music and
+exact silence through all five models' six probability heads, ensemble means,
+and all four dictionary decoders. Its float comparison is guarded by the
+recorded software/build/CPU environment; the existing chord-label regression
+runs independently. Dataset providers, training losses, and evaluation adapters
+are excluded from both imports and the built package. Existing `ChordNet(None)`
+and `ChordNetCNN(None)` inference calls remain valid; supplying training counters
+raises a clear error.
 
 ---
 

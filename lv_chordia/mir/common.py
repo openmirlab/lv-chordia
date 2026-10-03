@@ -1,3 +1,11 @@
+"""Resolve package resources and bundled inference checkpoints.
+
+Installed shared data precedes the development checkout's cache_data directory.
+No dataset-storage location is configured by the inference runtime.
+
+Reads: settings.py
+"""
+
 import os
 import sys
 from .settings import *
@@ -23,5 +31,3 @@ if hasattr(sys, 'prefix'):
         else:
             # Default to WORKING_PATH for backward compatibility
             CACHE_DATA_PATH = os.path.join(WORKING_PATH, 'cache_data')
-
-DEFAULT_DATA_STORAGE_PATH=DEFAULT_DATA_STORAGE_PATH.replace('$project_name$',os.path.basename(WORKING_PATH))
