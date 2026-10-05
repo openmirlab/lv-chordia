@@ -1,12 +1,14 @@
 # lv-chordia
 
+> **Current installation:** `pip install "lv-chordia @ git+https://github.com/openmirlab/lv-chordia.git"`
+> OpenMIRLab no longer publishes new versions to PyPI. Any existing PyPI releases are historical snapshots.
+
 **Large-Vocabulary Chord Transcription via Chord Structure Decomposition**
 
 [![Test](https://github.com/openmirlab/lv-chordia/actions/workflows/test.yml/badge.svg)](https://github.com/openmirlab/lv-chordia/actions/workflows/test.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.13+-ee4c2c.svg)](https://pytorch.org/)
-[![PyPI version](https://badge.fury.io/py/lv-chordia.svg)](https://pypi.org/project/lv-chordia/)
 
 A high-quality chord recognition system capable of transcribing complex chord progressions from audio recordings using deep learning.
 
@@ -99,7 +101,7 @@ download its weights at runtime. The pre-trained ensemble (`cache_data/*.sdict`,
 5 files, ~28MB total -- 5.5MB each) is committed directly to this git
 repository and shipped inside the built wheel/sdist via `pyproject.toml`'s
 `shared-data`/`sdist` configuration, so inference runs fully offline
-immediately after `pip install lv-chordia`, with no first-run download step.
+immediately after `pip install "lv-chordia @ git+https://github.com/openmirlab/lv-chordia.git"`, with no first-run download step.
 
 This is a deliberate, documented exception to the org's default weights
 contract (constitution article 4: weights are normally downloaded at
@@ -121,7 +123,7 @@ Acknowledgments.
 
 ## Install
 
-**Available on PyPI:** [https://pypi.org/project/lv-chordia/](https://pypi.org/project/lv-chordia/)
+**Historical PyPI release:** [https://pypi.org/project/lv-chordia/](https://pypi.org/project/lv-chordia/)
 
 lv-chordia supports both **UV** (recommended, faster) and **pip** (traditional) installation methods.
 
@@ -149,12 +151,12 @@ uv run python your_script.py
 
 ```bash
 # Install in current environment
-pip install lv-chordia
+pip install "lv-chordia @ git+https://github.com/openmirlab/lv-chordia.git"
 
 # Or create virtual environment first (recommended)
 python -m venv .venv
 source .venv/bin/activate  # On Windows: .venv\Scripts\activate
-pip install lv-chordia
+pip install "lv-chordia @ git+https://github.com/openmirlab/lv-chordia.git"
 ```
 
 ---
@@ -356,7 +358,7 @@ pretty_midi>=0.2.9    # MIDI file handling
 
 ```bash
 # For development
-pip install lv-chordia[dev]  # Adds: pytest, black, flake8, build, twine
+pip install "lv-chordia[dev] @ git+https://github.com/openmirlab/lv-chordia.git"  # Adds: pytest, black, flake8, build, twine
 ```
 
 ---
@@ -403,7 +405,7 @@ uv add lv-chordia
 uv run python your_script.py
 
 # With pip
-pip install lv-chordia
+pip install "lv-chordia @ git+https://github.com/openmirlab/lv-chordia.git"
 python -c "import lv_chordia; print('Success!')"
 ```
 
@@ -413,7 +415,7 @@ The package includes pre-trained model files. If you encounter model loading err
 
 ```bash
 pip uninstall lv-chordia
-pip install lv-chordia --no-cache-dir
+pip install "lv-chordia @ git+https://github.com/openmirlab/lv-chordia.git" --no-cache-dir
 
 # Or with UV
 uv pip uninstall lv-chordia
@@ -542,7 +544,7 @@ the resulting wheel into a fresh environment, and run
 `python tools/check_installed_wheel.py` with that environment's interpreter.
 This checks package locations, checkpoint hashes, and real session inference.
 
-### Publishing to PyPI
+### Building release artifacts
 
 ```bash
 uv add twine

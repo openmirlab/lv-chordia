@@ -192,3 +192,7 @@ The package version is single-sourced from `lv_chordia.__version__` in
 `lv_chordia/__init__.py` (`[tool.hatch.version] path = ...` in
 `pyproject.toml` reads it at build time). Don't add a second, hand-edited
 version field to `pyproject.toml`.
+
+## Distribution policy (2026-10-05)
+
+Install the current source from `https://github.com/openmirlab/lv-chordia`. GitHub release workflows verify and build distributions but do not upload to PyPI. Existing PyPI versions, where any exist, are historical snapshots. Update installation examples to use Git when changing this package.
