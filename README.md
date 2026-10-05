@@ -136,12 +136,12 @@ lv-chordia supports both **UV** (recommended, faster) and **pip** (traditional) 
 curl -LsSf https://astral.sh/uv/install.sh | sh
 
 # Add to existing project
-uv add lv-chordia
+uv add "lv-chordia @ git+https://github.com/openmirlab/lv-chordia.git"
 
 # Or create new project with lv-chordia
 uv init my-music-project
 cd my-music-project
-uv add lv-chordia
+uv add "lv-chordia @ git+https://github.com/openmirlab/lv-chordia.git"
 
 # Run Python with lv-chordia available
 uv run python your_script.py
@@ -401,7 +401,7 @@ results = chord_recognition("audio.mp3")
 
 ```bash
 # With UV
-uv add lv-chordia
+uv add "lv-chordia @ git+https://github.com/openmirlab/lv-chordia.git"
 uv run python your_script.py
 
 # With pip
@@ -419,7 +419,7 @@ pip install "lv-chordia @ git+https://github.com/openmirlab/lv-chordia.git" --no
 
 # Or with UV
 uv pip uninstall lv-chordia
-uv add lv-chordia --refresh
+uv add "lv-chordia @ git+https://github.com/openmirlab/lv-chordia.git" --refresh
 ```
 
 ### CUDA Out of Memory
@@ -543,15 +543,6 @@ bundled model files. Before shipping, build with `python -m build`, install
 the resulting wheel into a fresh environment, and run
 `python tools/check_installed_wheel.py` with that environment's interpreter.
 This checks package locations, checkpoint hashes, and real session inference.
-
-### Building release artifacts
-
-```bash
-uv add twine
-uv build
-twine upload dist/*
-# Or to TestPyPI first: twine upload --repository testpypi dist/*
-```
 
 ### Running Tests
 
