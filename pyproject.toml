@@ -87,7 +87,7 @@ path = "lv_chordia/__init__.py"
 
 [tool.hatch.build.targets.wheel]
 packages = ["lv_chordia"]
-shared-data = { "cache_data" = "share/lv-chordia/cache_data" }
+shared-data = { "weights" = "share/lv-chordia/weights" }
 include = [
     "lv_chordia/data/*",
     "lv_chordia/config/checkpoints.toml",
@@ -96,8 +96,9 @@ include = [
 [tool.hatch.build.targets.sdist]
 include = [
     "lv_chordia/**/*.py",
+    "lv_chordia/config/checkpoints.toml",
     "lv_chordia/data/*",
-    "cache_data/*.sdict",
+    "weights/*.sdict",
     "/README.md",
     "/LICENSE",
     "/pyproject.toml",

@@ -7,6 +7,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [Unreleased]
 
 ### Changed
+- Move bundled model checkpoints from `cache_data/` to `weights/` and test
+  audio from `test_data/` to `tests/fixtures/`. Update runtime resolution,
+  checkpoint metadata, and distribution paths; retain `load_path="cache_data"`
+  as an alias for advanced callers. Model bytes and recognition output stay
+  unchanged. Keep generated toolkit caches separate from model assets.
+- Include checkpoint TOML metadata in the source distribution so wheels built
+  from it can resolve the ensemble.
 - Explicit device requests now validate CPU and CUDA (including `cuda:N`)
   availability before loading; a requested CUDA index reaches model and
   tensor construction instead of silently using the current device.

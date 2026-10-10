@@ -18,7 +18,7 @@ doesn't belong in this package.
 
 Unlike most other openmirlab inference packages, this repo does **not**
 download its weights at runtime. The pre-trained ensemble
-(`cache_data/*.sdict`, 5 files, ~28MB total, 5.5MB each) is committed
+(`weights/*.sdict`, 5 files, ~28MB total, 5.5MB each) is committed
 directly to git and shipped inside the built wheel/sdist via
 `pyproject.toml`'s `shared-data`/`sdist` config -- this is the package's
 pre-existing, original design, not a recent regression.
@@ -34,7 +34,7 @@ instead of size, but the org-level precedent -- bundling is fine when the
 weight is genuinely small -- is the same one applied here). This is not a
 defect to migrate away from; do not treat it as a TODO.
 
-**Still do not delete or otherwise touch `cache_data/*.sdict` or any
+**Still do not delete or otherwise touch `weights/*.sdict` or any
 git-tracked weight file casually** -- if a future change genuinely needs to
 move to runtime download (e.g. the ensemble grows well past this size, or
 the org tightens the exception threshold), build the downloader, host the
@@ -43,6 +43,20 @@ verification, as in bs-roformer-infer/melband-roformer-infer), then update
 this note, `pyproject.toml`'s packaging config, and README's Scope section
 together -- but that is a deliberate future call, not a standing violation
 to clear.
+
+## Resource layout
+
+Bundled checkpoints live in `weights/`, installed through shared data at
+`<sys.prefix>/share/lv-chordia/weights/`. `mir/common.py` owns `WEIGHTS_PATH`;
+the loader and checkpoint inspection both consume it. The advanced loader still
+accepts `load_path="cache_data"` as an alias for bundled weights. The vendored
+toolkit's `CACHE_DATA_PATH` remains a separate, ignored location for generated
+cache files. Test audio and expected JSON live together in `tests/fixtures/` and
+are excluded from distribution artifacts.
+
+Verify layout changes with `pytest tests/ -v` and `python -m build` (which builds
+the wheel from the sdist). Install the resulting wheel outside the checkout and
+check that `LVChordiaSession(device="cpu").load()` loads all five checkpoints.
 
 ## Entry points and the live import graph
 
@@ -143,7 +157,7 @@ with:
 pytest tests/test_chord_recognition_regression.py -v
 ```
 
-This compares the CLI's output on the tracked `test_data/yellow.wav` against
+This compares the CLI's output on the tracked `tests/fixtures/yellow.wav` against
 `tests/fixtures/expected_chords_yellow.json`. If a change is expected to
 alter model output (e.g. retraining, a genuine bug fix in decoding), update
 the fixture deliberately and say so in the commit message -- don't let it
@@ -156,8 +170,8 @@ uv sync --extra dev   # or: pip install -e ".[dev]"
 pytest tests/ -v
 ```
 
-No network access or GPU is required; model weights (`cache_data/*.sdict`)
-and the test audio (`test_data/yellow.wav`) are tracked in the repo.
+No network access or GPU is required; model weights (`weights/*.sdict`)
+and the test audio (`tests/fixtures/yellow.wav`) are tracked in the repo.
 
 ## Versioning
 

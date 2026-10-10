@@ -42,7 +42,7 @@ def load_ensemble(use_gpu: Optional[bool] = None, *, device=None) -> List[Networ
     Load all five ChordNet ensemble members from their bundled checkpoints, once.
 
     This is the expensive part of the pipeline (five torch.load calls over
-    cache_data/*.sdict) and it is chord-dictionary independent: the chord dict
+    weights/*.sdict) and it is chord-dictionary independent: the chord dict
     only drives the HMM decoder built per call in recognize_with_ensemble().
     Callers that recognize chords repeatedly from a resident process should
     load the ensemble once (or hold an LVChordiaSession, which does exactly

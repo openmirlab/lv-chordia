@@ -1,3 +1,11 @@
+"""Load pretrained network state and run inference on the selected device.
+
+Bundled checkpoints resolve through the same weights directory as session
+inspection. Custom load paths remain relative to the project root.
+
+Reads: mir/common.py, torch, numpy
+"""
+
 import torch.nn as nn
 import torch.nn.functional as F
 import torch
@@ -37,8 +45,8 @@ class NetworkBehavior(nn.Module):
 
 class NetworkInterface:
 
-    def __init__(self, net, save_name, load_checkpoint=False, load_path='cache_data'):
-        from ..common import CACHE_DATA_PATH
+    def __init__(self, net, save_name, load_checkpoint=False, load_path='weights'):
+        from ..common import WEIGHTS_PATH
         self.net=net
         if(not isinstance(self.net,NetworkBehavior)):
             raise Exception('Invalid network type')
@@ -46,8 +54,8 @@ class NetworkInterface:
             self.net.use_data_parallel=True
         self.net.init_settings()
         self.save_name=save_name
-        # Use CACHE_DATA_PATH if load_path is 'cache_data', otherwise use WORKING_PATH
-        self.base_path = CACHE_DATA_PATH if load_path == 'cache_data' else os.path.join(WORKING_PATH, load_path)
+        # Keep the former default spelling as an alias for advanced callers.
+        self.base_path = WEIGHTS_PATH if load_path in ('weights', 'cache_data') else os.path.join(WORKING_PATH, load_path)
         save_path=os.path.join(self.base_path,'%s.sdict'%save_name)
         cp_save_path=os.path.join(self.base_path,'%s.cp.sdict'%save_name)
         self.finalized=False

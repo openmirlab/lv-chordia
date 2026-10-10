@@ -21,7 +21,7 @@ CUDA_VISIBLE_DEVICES path, since that's what's known to be
 byte-identical to the golden fixture.)
 
 The golden fixture (tests/fixtures/expected_chords_yellow.json) was captured
-against test_data/yellow.wav (already tracked in this repo) using the
+against tests/fixtures/yellow.wav (already tracked in this repo) using the
 "submission" chord dictionary. It was verified deterministic across two
 consecutive CPU runs and, separately, identical to a GPU run on the same
 clip (see the campaign's final report for the GPU comparison -- GPU-path
@@ -37,7 +37,7 @@ from pathlib import Path
 import pytest
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-TEST_AUDIO = REPO_ROOT / "test_data" / "yellow.wav"
+TEST_AUDIO = REPO_ROOT / "tests" / "fixtures" / "yellow.wav"
 FIXTURE = Path(__file__).resolve().parent / "fixtures" / "expected_chords_yellow.json"
 
 
@@ -63,13 +63,13 @@ def _run_cli_on_cpu(audio_path: str) -> list:
     return json.loads(result.stdout)
 
 
-@pytest.mark.skipif(not TEST_AUDIO.exists(), reason="test_data/yellow.wav not present")
+@pytest.mark.skipif(not TEST_AUDIO.exists(), reason="tests/fixtures/yellow.wav not present")
 def test_chord_recognition_matches_baseline_fixture(expected_chords):
     actual = _run_cli_on_cpu(str(TEST_AUDIO))
     assert actual == expected_chords
 
 
-@pytest.mark.skipif(not TEST_AUDIO.exists(), reason="test_data/yellow.wav not present")
+@pytest.mark.skipif(not TEST_AUDIO.exists(), reason="tests/fixtures/yellow.wav not present")
 def test_chord_recognition_is_deterministic_across_runs():
     run1 = _run_cli_on_cpu(str(TEST_AUDIO))
     run2 = _run_cli_on_cpu(str(TEST_AUDIO))

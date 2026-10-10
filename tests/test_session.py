@@ -5,7 +5,7 @@ identical to the one-shot chord_recognition() path, and honors the same
 fail-loudly device contract as everything else (test_device_selection.py).
 
 The inference-bearing tests run the real five-model ensemble on CPU against
-test_data/yellow.wav -- slow but honest, same tradeoff as
+tests/fixtures/yellow.wav -- slow but honest, same tradeoff as
 test_chord_recognition_regression.py.
 
 Reads: lv_chordia/session.py, lv_chordia/chord_recognition.py
@@ -21,9 +21,9 @@ from lv_chordia import LVChordiaSession
 from lv_chordia.chord_recognition import chord_recognition
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-TEST_AUDIO = REPO_ROOT / "test_data" / "yellow.wav"
+TEST_AUDIO = REPO_ROOT / "tests" / "fixtures" / "yellow.wav"
 
-needs_audio = pytest.mark.skipif(not TEST_AUDIO.exists(), reason="test_data/yellow.wav not present")
+needs_audio = pytest.mark.skipif(not TEST_AUDIO.exists(), reason="tests/fixtures/yellow.wav not present")
 
 
 @needs_audio
@@ -169,7 +169,7 @@ def test_checkpoint_path_resolver_and_cache_info_do_not_materialize_missing_root
     config = importlib.import_module("lv_chordia.config")
     common = importlib.import_module("lv_chordia.mir.common")
     missing_root = tmp_path / "not-created"
-    monkeypatch.setattr(common, "CACHE_DATA_PATH", str(missing_root))
+    monkeypatch.setattr(common, "WEIGHTS_PATH", str(missing_root))
 
     root, entries = config.resolve_checkpoint_paths()
     assert root == missing_root

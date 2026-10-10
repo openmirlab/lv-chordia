@@ -3,8 +3,9 @@ include LICENSE
 include MANIFEST.in
 include pyproject.toml
 recursive-include lv_chordia/data *
-recursive-include cache_data *.sdict
+recursive-include lv_chordia/config *.toml
+recursive-include weights *.sdict
 recursive-exclude * __pycache__
 recursive-exclude * *.py[co]
 recursive-exclude * .git*
-recursive-exclude * .venv* 
+recursive-exclude * .venv*

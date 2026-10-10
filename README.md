@@ -95,11 +95,16 @@ tooling.
 ### Model weights: bundled by design (documented size-based exception)
 
 Unlike most other openmirlab inference packages, lv-chordia does **not**
-download its weights at runtime. The pre-trained ensemble (`cache_data/*.sdict`,
+download its weights at runtime. The pre-trained ensemble (`weights/*.sdict`,
 5 files, ~28MB total -- 5.5MB each) is committed directly to this git
 repository and shipped inside the built wheel/sdist via `pyproject.toml`'s
 `shared-data`/`sdist` configuration, so inference runs fully offline
 immediately after `pip install lv-chordia`, with no first-run download step.
+
+The source checkout stores these required checkpoints in `weights/`; installed
+packages place them in `<sys.prefix>/share/lv-chordia/weights/`. They are model
+assets, not disposable cache files. Regression audio lives alongside its expected
+output in `tests/fixtures/` and is not included in the wheel or source distribution.
 
 This is a deliberate, documented exception to the org's default weights
 contract (constitution article 4: weights are normally downloaded at
@@ -554,7 +559,7 @@ pytest tests/ --cov=lv_chordia
 
 The test suite includes an import smoke test (the package must not depend on
 any training/eval module), unit tests for `audio_utils`, and a regression
-test that runs the CLI against the tracked `test_data/yellow.wav` fixture and
+test that runs the CLI against the tracked `tests/fixtures/yellow.wav` fixture and
 asserts the chord-recognition JSON output is byte-identical to a golden
 fixture -- the accuracy gate for any refactor of the inference path.
 

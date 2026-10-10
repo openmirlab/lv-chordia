@@ -55,23 +55,42 @@ jobs:
           python -m pip install --upgrade pip build
           python -m build
 
-      - name: Install wheel into a clean venv and touch public symbols
+      - name: Verify installed weights and inference outside the checkout
         run: |
           python -m venv /tmp/smoke-venv
           /tmp/smoke-venv/bin/pip install --upgrade pip
           /tmp/smoke-venv/bin/pip install dist/*.whl
-          /tmp/smoke-venv/bin/python -c "
+          /tmp/smoke-venv/bin/python -I - "$PWD" <<'PY'
+          import hashlib
+          import json
+          import os
+          import sys
+          from pathlib import Path
+
+          repo = Path(sys.argv[1])
+          os.chdir('/tmp')
           import lv_chordia
-          from lv_chordia import __version__
-          from lv_chordia.chord_recognition import chord_recognition
-          print('lv_chordia', __version__, 'imported OK')
-          print('chord_recognition entry point:', chord_recognition)
-          "
+          from lv_chordia import LVChordiaSession
+          from lv_chordia.config import resolve_checkpoint_paths
+
+          assert repo not in Path(lv_chordia.__file__).parents
+          root, entries = resolve_checkpoint_paths()
+          assert root == Path(sys.prefix) / 'share/lv-chordia/weights'
+          assert len(entries) == 5
+          for entry in entries:
+              assert entry['cached']
+              assert hashlib.sha256(entry['path'].read_bytes()).hexdigest() == entry['sha256']
+          with LVChordiaSession(device='cpu') as session:
+              actual = session.infer(repo / 'tests/fixtures/yellow.wav')
+          expected = json.loads((repo / 'tests/fixtures/expected_chords_yellow.json').read_text())
+          assert actual == expected
+          print('Installed wheel: five verified checkpoints and golden inference passed')
+          PY
 
       - name: Confirm the wheel packages the expected lv_chordia/**/*.py files
         run: |
           # lv-chordia's [tool.hatch.build.targets.wheel] has a `shared-data`
-          # entry for cache_data (the pretrained model weights, bundled by
+          # entry for weights (the pretrained model weights, bundled by
           # this repo's existing, pre-campaign design -- unlike some
           # openmirlab siblings, lv-chordia does not runtime-download
           # weights, so bundled .sdict files here are expected, not a bug).

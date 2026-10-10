@@ -1,4 +1,10 @@
-"""Runtime metadata and read-only resolver for bundled checkpoints."""
+"""Runtime metadata and read-only resolver for bundled checkpoints.
+
+Keep checkpoint inspection aligned with the model loader's weights directory.
+Inspection does not download artifacts or create missing directories.
+
+Reads: config/checkpoints.toml, mir/common.py
+"""
 
 import importlib.resources
 from pathlib import Path
@@ -23,9 +29,9 @@ def model_names() -> tuple[str, ...]:
 
 def resolve_checkpoint_paths() -> tuple[Path, tuple[dict, ...]]:
     """Resolve bundled checkpoint paths without downloading or creating paths."""
-    from ..mir.common import CACHE_DATA_PATH
+    from ..mir.common import WEIGHTS_PATH
 
-    root = Path(CACHE_DATA_PATH)
+    root = Path(WEIGHTS_PATH)
     entries = tuple(
         {**entry, "path": root / entry["name"], "cached": (root / entry["name"]).is_file()}
         for entry in checkpoint_entries()
