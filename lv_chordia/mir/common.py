@@ -24,5 +24,3 @@ def _resource_path(directory):
 WEIGHTS_PATH = _resource_path('weights')
 # Preserve the vendored toolkit's cache location; it contains no model weights.
 CACHE_DATA_PATH = _resource_path('cache_data')
-
-DEFAULT_DATA_STORAGE_PATH=DEFAULT_DATA_STORAGE_PATH.replace('$project_name$',os.path.basename(WORKING_PATH))

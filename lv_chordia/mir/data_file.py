@@ -1,11 +1,17 @@
+"""Single-entry audio and feature proxies for inference and visualization.
+
+DataEntry owns lazily loaded features and their properties. Dataset collection,
+sampling and parallel preparation are excluded from this inference package.
+
+Reads: common.py, io, cache.py
+"""
+
 from abc import ABC,abstractmethod
 from .common import SONIC_VISUALIZER_PATH,WORKING_PATH
 import subprocess
 import os
 import gc
 from . import io
-from joblib import Parallel,delayed
-import random
 from pydub.utils import mediainfo
 import time
 import datetime
@@ -327,186 +333,3 @@ class DataEntry():
             except:
                 print('[Warning] Temp file delete failed:',path)
         return return_code
-
-
-class DataPool:
-    def __init__(self,name,**default_properties):
-        self.entries=[]
-        self.dict={} # collections.OrderedDict()
-        self.name=name
-        self.antidict=[]
-        self.default_prop={}
-        for (k,v) in default_properties:
-            self.default_prop[k]=v
-
-    def __getitem__(self, key):
-        if(isinstance(key,slice)):
-            sub_indices=range(len(self.entries))[key]
-            sub_pool=DataPool(self.name)
-            for i in sub_indices:
-                sub_pool.__append_entry(self.entries[i],self.antidict[i])
-            return sub_pool
-        else:
-            if(isinstance(key,int)):
-                raise Exception('Use dataset.entries to iterate over its entries')
-            raise Exception('Unsupported slicing type:',key)
-
-    def __append_entry(self,entry,entry_name):
-        lower_entry_name=entry_name.lower()
-        if(lower_entry_name in self.dict):
-            print('Warning: entry `%s` overriding %s'%(entry.name,entry_name))
-        self.dict[lower_entry_name]=entry
-        self.antidict.append(lower_entry_name)
-        self.entries.append(entry)
-
-    def remove_entry(self,entry):
-        # todo: more situtations
-        if('/' in entry.name):
-            entry_name=entry.name[entry.name.index('/')+1:]
-        else:
-            entry_name=entry.name
-        lower_entry_name=entry_name.lower()
-        del self.dict[lower_entry_name]
-        self.antidict.remove(lower_entry_name)
-        self.entries.remove(entry)
-
-    def add_entry(self,entry):
-        filename=entry.name.split('/')[-1]
-        if(filename==''):
-            raise Exception('Cannot add entry whose name is empty')
-        if('&' in self.name):
-            print('Warning: You are adding an entry to a joint dataset. Don\'t do that!')
-        elif(entry.name.split('/')[0]!=self.name):
-            print('Warning: Inconsistent dataset name, %s expected, %s found'%(self.name,entry.name.split('/')[0]))
-        self.__append_entry(entry,filename)
-
-    def set_property(self,key,value):
-        self.default_prop[key]=value
-
-    def new_entry(self,filename):
-        if('&' in self.name):
-            print('Warning: You are creating an entry in a joint dataset. Don\'t do that!')
-        entry = DataEntry(self.name+'/'+filename)
-        lower_filename=filename.lower()
-        if(lower_filename in self.dict):
-            print('Warning: Entry name overwrite: %s'%filename)
-        for k in self.default_prop:
-            entry.prop.set(k, self.default_prop[k])
-        self.__append_entry(entry,filename)
-        return entry
-
-    def append_folder(self,folder_path,suffix,typename,output_name,recursive=False):
-        if(recursive):
-            files=[os.path.join(dp, f).replace('\\','/') for dp, dn, fn in os.walk(folder_path) for f in fn]
-        else:
-            files=[os.path.join(folder_path, f) for f in os.listdir(folder_path)]
-        # if it's run for the first time, create the dict
-        if(len(self.dict)==0):
-            for file in files:
-                if file.endswith(suffix):
-                    filename = os.path.basename(file)
-                    filename = filename[:len(filename) - len(suffix)]
-                    entry = DataEntry(self.name+'/'+filename)
-                    entry.append_file(file, typename, output_name=output_name, file_exist_check=False)
-                    for k in self.default_prop:
-                        entry.prop.set(k, self.default_prop[k])
-                    self.__append_entry(entry,filename)
-            # sorted order
-            # for (k,entry) in self.dict.items():
-            #     self.entries.append(entry)
-            if(len(self.dict)==0):
-                print('Warning: No data entry was created in "%s"'%folder_path)
-        else: # check the dict
-            mark={}
-            for file in files:
-                if file.endswith(suffix):
-                    filename=os.path.basename(file)
-                    filename=filename[:len(filename)-len(suffix)]
-                    lower_filename=filename.lower()
-                    if(lower_filename in self.dict):
-                        entry=self.dict[lower_filename]
-                        entry.append_file(file,typename,output_name=output_name,file_exist_check=False)
-                        mark[lower_filename]=True
-            delta=len(self.dict)-len(mark)
-            if(delta!=0):
-                print('Warning: %d entries not appended in "%s"'%(delta,folder_path))
-                if(delta>10):
-                    print('Some of them are:')
-                    delta=10
-                else:
-                    print('They are:')
-                for (k,v) in self.dict.items():
-                    if(k not in mark):
-                        print(k)
-                        delta-=1
-                        if(delta==0):
-                            break
-
-    def append_extractor(self,extractor_class,output_name,cache_enabled=True,io_override=None,**kwargs):
-        for entry in self.entries:
-            entry.append_extractor(extractor_class,output_name,cache_enabled=cache_enabled,io_override=io_override,**kwargs)
-
-    def activate_proxy(self,item,thread_number=1,timing=True,free=False):
-        entries_needs = [entry for entry in self.entries if not entry.dict[item].loaded]
-        total=len(entries_needs)
-        print('Total %s: %d entries to activate' % (item,total))
-        start_time=time.time() if timing else None
-        if(thread_number!=1):
-            random.shuffle(entries_needs)
-            Parallel(n_jobs=thread_number)(delayed(DataEntry.activate_proxy)(entries_needs[i],item,free,i,total,start_time) for i in range(len(entries_needs)))
-        else:
-            for i in range(len(entries_needs)):
-                entries_needs[i].activate_proxy(item,free,i,total,start_time)
-
-    def free(self, item='', gc_collect=True):
-        if(item==''):
-            for e in self.entries:
-                for del_item in e.dict:
-                    e.dict[del_item].unload(gc_collect=False)
-        else:
-            for e in self.entries:
-                e.dict[item].unload(gc_collect=False)
-        if(gc_collect):
-            gc.collect()
-
-    def subrange(self,*args):
-        subpool=DataPool(self.name)
-        for i in range(*args):
-            subpool.__append_entry(self.entries[i],self.antidict[i])
-        return subpool
-
-    def sublist(self,arg):
-        subpool=DataPool(self.name)
-        for i in arg:
-            subpool.__append_entry(self.entries[i],self.antidict[i])
-        return subpool
-
-
-    def find(self,name):
-        for entry in self.entries:
-            if(name.lower() in entry.name.lower()):
-                return entry
-        raise Exception('Cannot find %s in %s'%(name,self.name))
-
-    def where(self,name):
-        subpool=DataPool(self.name)
-        for i in range(len(self.entries)):
-            entry=self.entries[i]
-            if(name.lower() in entry.name.lower()):
-                subpool.__append_entry(entry,self.antidict[i])
-        return subpool
-
-    def random_choice(self,count=1):
-        import random
-        return self.sublist(random.sample(range(len(self.entries)),count))
-
-    def join(*args):
-        result_pool=DataPool(' & '.join([dataset.name for dataset in args]))
-        for dataset in args:
-            for i in range(len(dataset.entries)):
-                result_pool.__append_entry(dataset.entries[i],dataset.entries[i].name)
-                # For joint dataset, the keys in the look-up dictionary self.dict
-                # will be formatted as `original_dataset/entry_file_name` instead of
-                # `entry_file_name`
-        return result_pool
-

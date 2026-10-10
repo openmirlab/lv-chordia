@@ -91,18 +91,21 @@ file; `io_new/` no longer exists.)
 
 ## The `mir/` subpackage
 
-`lv_chordia/mir/` is a vendored, general-purpose MIR toolkit (has its own
-`README.MD` and `requirements.txt`) that predates this package. Only a
-fraction of it is used by the live inference path
-(`mir.io`, `mir.data_file.DataEntry`, `mir.nn.network`, `mir.nn.data_storage`,
-`mir.nn.data_decorator`, `mir.nn.data_provider`, `mir.extractors.ExtractorBase`).
-It is treated as a lower-churn vendored dependency rather than lv-chordia's
-own code: don't prune it opportunistically in an unrelated change. (A few
-files under `mir/extractors/` -- `misc.py`, `librosa_extractor.py`,
-`vamp_extractor.py` -- are themselves unreachable dead code left over from
-training tooling, but were left in place during the 2026-07 inference-only
-cleanup rather than touching the vendored subpackage; flagged here for a
-future, dedicated pass.)
+`lv_chordia/mir/` is a vendored MIR toolkit subset. The live inference path
+uses `mir.io`, `mir.data_file.DataEntry`, `mir.nn.network`, and
+`mir.extractors.ExtractorBase`. Single-entry proxies, TextureBuilder and
+inference/visualization helpers remain; do not prune these in unrelated work.
+
+The dedicated inference-boundary pass removed the three `mir.nn.data_*`
+modules, DataPool/export, evaluation adapters, training losses/augmentation,
+and dataset-storage configuration. No runtime imports of h5py/joblib remain;
+they are no longer direct dependencies (librosa may still bring joblib).
+Ten unused cross-fold count `.pkl` assets were removed, with names and hashes
+retained in `tests/fixtures/inference_boundary_original/removed_training_assets.json`.
+The five `.sdict` checkpoints were untouched. `ChordNet(None)` and
+`ChordNetCNN(None)` retain layers, RNG construction order, state-dict names,
+input slices and inference math; non-None training counters fail before model
+construction. NetworkInterface still accepts historical checkpoint metadata.
 
 `mir/nn/train.py` was renamed to `mir/nn/network.py` on 2026-07-19: despite
 its old name it held genuinely load-bearing inference code
@@ -114,12 +117,8 @@ implicitly false now, and `get_optimizer()`/the checkpoint's `opt` restore,
 which nothing downstream ever read). The dead pieces were deleted and the
 file renamed once its remaining content was honestly inference-only; the
 CSV cross-validation fold manifests in `data/train0{0-4}.csv` (unreferenced
-by any code, README, or CI) were deleted the same day. `chordnet_ismir_naive.py`'s
-`ChordNet.loss()`/`ChordNetCNN.loss()`/`ReweightedLoss` are the same
-category of training-only dead weight (verified: `chord_recognition.py`
-always constructs `ChordNet(None, ...)`, so `loss_reweight` is never even
-set) but were left untouched -- out of scope for this pass, flagged for a
-future, dedicated one.
+by any code, README, or CI) were deleted the same day. The later dedicated
+boundary pass removed the remaining model-specific losses as described above.
 
 ## Device handling -- do not touch casually
 
@@ -173,9 +172,41 @@ pytest tests/ -v
 No network access or GPU is required; model weights (`weights/*.sdict`)
 and the test audio (`tests/fixtures/yellow.wav`) are tracked in the repo.
 
+`tests/test_inference_boundary.py` establishes the import/capability boundary
+(13 failures before removal). `tests/test_inference_baseline.py` runs the guarded
+original-current-port CPU replay: 84 arrays and eight result lists, real music
+and exact silence, every ensemble member/head and all four dictionaries. The
+original capture was committed at `42a92c9` before production edits. Use:
+
+```bash
+CUDA_VISIBLE_DEVICES='' PYTHONDONTWRITEBYTECODE=1 OMP_NUM_THREADS=4 OPENBLAS_NUM_THREADS=4 \
+  python tests/fixtures/inference_boundary_original/capture.py --output /tmp/lv-chordia-replay
+```
+
+The fixture README records the measured environment and capture command. Exact
+float checks reject different software/build/native-library/CPU-dispatch
+fingerprints; do not regenerate or widen bounds to hide a mismatch. This is
+current-port CPU preservation, not upstream full-model or GPU validation.
+The public skills chord-recognition entry was checked: its bundled-weight
+installation guidance remains accurate and needs no edit.
+
+
 ## Versioning
+
+Packaging verification: `python -m build` must include
+`lv_chordia/config/checkpoints.toml` in the sdist as well as the wheel. Install
+the wheel into a fresh environment, then run that environment's Python on
+`tools/check_installed_wheel.py` from this checkout. It rejects source-tree
+imports, verifies all five installed checkpoint hashes, and runs the public
+CPU session against the existing Yellow JSON fixture. The original
+`aa6841b` wheel-from-sdist omitted the manifest and failed installed import;
+source-tree tests alone did not expose this.
 
 The package version is single-sourced from `lv_chordia.__version__` in
 `lv_chordia/__init__.py` (`[tool.hatch.version] path = ...` in
 `pyproject.toml` reads it at build time). Don't add a second, hand-edited
 version field to `pyproject.toml`.
+
+## Distribution policy (2026-10-05)
+
+Install the current source from `https://github.com/openmirlab/lv-chordia`. GitHub release workflows verify and build distributions but do not upload to PyPI. Existing PyPI versions, where any exist, are historical snapshots. Update installation examples to use Git when changing this package.

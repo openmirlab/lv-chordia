@@ -1,12 +1,14 @@
 # lv-chordia
 
+> **Current installation:** `pip install "lv-chordia @ git+https://github.com/openmirlab/lv-chordia.git"`
+> OpenMIRLab no longer publishes new versions to PyPI. Any existing PyPI releases are historical snapshots.
+
 **Large-Vocabulary Chord Transcription via Chord Structure Decomposition**
 
 [![Test](https://github.com/openmirlab/lv-chordia/actions/workflows/test.yml/badge.svg)](https://github.com/openmirlab/lv-chordia/actions/workflows/test.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.13+-ee4c2c.svg)](https://pytorch.org/)
-[![PyPI version](https://badge.fury.io/py/lv-chordia.svg)](https://pypi.org/project/lv-chordia/)
 
 A high-quality chord recognition system capable of transcribing complex chord progressions from audio recordings using deep learning.
 
@@ -99,7 +101,7 @@ download its weights at runtime. The pre-trained ensemble (`weights/*.sdict`,
 5 files, ~28MB total -- 5.5MB each) is committed directly to this git
 repository and shipped inside the built wheel/sdist via `pyproject.toml`'s
 `shared-data`/`sdist` configuration, so inference runs fully offline
-immediately after `pip install lv-chordia`, with no first-run download step.
+immediately after `pip install "lv-chordia @ git+https://github.com/openmirlab/lv-chordia.git"`, with no first-run download step.
 
 The source checkout stores these required checkpoints in `weights/`; installed
 packages place them in `<sys.prefix>/share/lv-chordia/weights/`. They are model
@@ -126,7 +128,7 @@ Acknowledgments.
 
 ## Install
 
-**Available on PyPI:** [https://pypi.org/project/lv-chordia/](https://pypi.org/project/lv-chordia/)
+**Historical PyPI release:** [https://pypi.org/project/lv-chordia/](https://pypi.org/project/lv-chordia/)
 
 lv-chordia supports both **UV** (recommended, faster) and **pip** (traditional) installation methods.
 
@@ -139,12 +141,12 @@ lv-chordia supports both **UV** (recommended, faster) and **pip** (traditional) 
 curl -LsSf https://astral.sh/uv/install.sh | sh
 
 # Add to existing project
-uv add lv-chordia
+uv add "lv-chordia @ git+https://github.com/openmirlab/lv-chordia.git"
 
 # Or create new project with lv-chordia
 uv init my-music-project
 cd my-music-project
-uv add lv-chordia
+uv add "lv-chordia @ git+https://github.com/openmirlab/lv-chordia.git"
 
 # Run Python with lv-chordia available
 uv run python your_script.py
@@ -154,12 +156,12 @@ uv run python your_script.py
 
 ```bash
 # Install in current environment
-pip install lv-chordia
+pip install "lv-chordia @ git+https://github.com/openmirlab/lv-chordia.git"
 
 # Or create virtual environment first (recommended)
 python -m venv .venv
 source .venv/bin/activate  # On Windows: .venv\Scripts\activate
-pip install lv-chordia
+pip install "lv-chordia @ git+https://github.com/openmirlab/lv-chordia.git"
 ```
 
 ---
@@ -347,21 +349,21 @@ Audio File
 
 ## Dependencies
 
-All core dependencies are needed by the inference path (`lv_chordia.chord_recognition` / the CLI); none are training/eval-only.
+Core dependencies support recognition and the retained single-entry MIR IO helpers.
+HDF5 dataset storage and parallel dataset preparation are excluded; `h5py` and
+`joblib` are no longer direct dependencies (librosa may depend on joblib itself).
 
 ```
 torch>=2.13.0         # Deep learning framework
 librosa>=0.11.0       # Audio loading and CQT feature extraction
 numpy>=2.2.6          # Numerical computing
-h5py>=3.16.0          # HDF5 file format (model checkpoint storage backend)
 pydub>=0.23.1         # Audio file manipulation
 pretty_midi>=0.2.9    # MIDI file handling
-joblib>=1.5.3         # Parallel computing
 ```
 
 ```bash
 # For development
-pip install lv-chordia[dev]  # Adds: pytest, black, flake8, build, twine
+pip install "lv-chordia[dev] @ git+https://github.com/openmirlab/lv-chordia.git"  # Adds: pytest, black, flake8, build, twine
 ```
 
 ---
@@ -404,11 +406,11 @@ results = chord_recognition("audio.mp3")
 
 ```bash
 # With UV
-uv add lv-chordia
+uv add "lv-chordia @ git+https://github.com/openmirlab/lv-chordia.git"
 uv run python your_script.py
 
 # With pip
-pip install lv-chordia
+pip install "lv-chordia @ git+https://github.com/openmirlab/lv-chordia.git"
 python -c "import lv_chordia; print('Success!')"
 ```
 
@@ -418,11 +420,11 @@ The package includes pre-trained model files. If you encounter model loading err
 
 ```bash
 pip uninstall lv-chordia
-pip install lv-chordia --no-cache-dir
+pip install "lv-chordia @ git+https://github.com/openmirlab/lv-chordia.git" --no-cache-dir
 
 # Or with UV
 uv pip uninstall lv-chordia
-uv add lv-chordia --refresh
+uv add "lv-chordia @ git+https://github.com/openmirlab/lv-chordia.git" --refresh
 ```
 
 ### CUDA Out of Memory
@@ -541,14 +543,11 @@ uv build
 ls -lh dist/
 ```
 
-### Publishing to PyPI
-
-```bash
-uv add twine
-uv build
-twine upload dist/*
-# Or to TestPyPI first: twine upload --repository testpypi dist/*
-```
+The source archive and wheel include the checkpoint manifest and all five
+bundled model files. Before shipping, build with `python -m build`, install
+the resulting wheel into a fresh environment, and run
+`python tools/check_installed_wheel.py` with that environment's interpreter.
+This checks package locations, checkpoint hashes, and real session inference.
 
 ### Running Tests
 
@@ -562,6 +561,16 @@ any training/eval module), unit tests for `audio_utils`, and a regression
 test that runs the CLI against the tracked `tests/fixtures/yellow.wav` fixture and
 asserts the chord-recognition JSON output is byte-identical to a golden
 fixture -- the accuracy gate for any refactor of the inference path.
+
+The original current-port CPU baseline in
+`tests/fixtures/inference_boundary_original/` additionally preserves music and
+exact silence through all five models' six probability heads, ensemble means,
+and all four dictionary decoders. Its float comparison is guarded by the
+recorded software/build/CPU environment; the existing chord-label regression
+runs independently. Dataset providers, training losses, and evaluation adapters
+are excluded from both imports and the built package. Existing `ChordNet(None)`
+and `ChordNetCNN(None)` inference calls remain valid; supplying training counters
+raises a clear error.
 
 ---
 

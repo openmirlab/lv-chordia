@@ -1,0 +1,567 @@
+{
+  "lv_chordia/data/cross_subpart_weight0.pkl": {
+    "bytes": 147,
+    "sha256": "6edc04fe4ae0e7bea3d3514506a0f4f50ae02a89a4558d945352a2e3765d31c4",
+    "pickle_globals": [],
+    "first_ops": [
+      [
+        "PROTO",
+        3
+      ],
+      [
+        "EMPTY_LIST",
+        null
+      ],
+      [
+        "BINPUT",
+        0
+      ],
+      [
+        "MARK",
+        null
+      ],
+      [
+        "EMPTY_LIST",
+        null
+      ],
+      [
+        "BINPUT",
+        1
+      ],
+      [
+        "MARK",
+        null
+      ],
+      [
+        "BININT",
+        3771816
+      ],
+      [
+        "BININT",
+        4465981
+      ],
+      [
+        "BININT",
+        1586913
+      ],
+      [
+        "BININT",
+        146527
+      ],
+      [
+        "BININT2",
+        20531
+      ]
+    ]
+  },
+  "lv_chordia/data/cross_subpart_weight1.pkl": {
+    "bytes": 147,
+    "sha256": "e79c64b51dbef1d99c46ae9f685039d263ebf67ae8948cdf6ac02a74695e1f7b",
+    "pickle_globals": [],
+    "first_ops": [
+      [
+        "PROTO",
+        3
+      ],
+      [
+        "EMPTY_LIST",
+        null
+      ],
+      [
+        "BINPUT",
+        0
+      ],
+      [
+        "MARK",
+        null
+      ],
+      [
+        "EMPTY_LIST",
+        null
+      ],
+      [
+        "BINPUT",
+        1
+      ],
+      [
+        "MARK",
+        null
+      ],
+      [
+        "BININT",
+        3763800
+      ],
+      [
+        "BININT",
+        4514079
+      ],
+      [
+        "BININT",
+        1494689
+      ],
+      [
+        "BININT",
+        153353
+      ],
+      [
+        "BININT2",
+        26854
+      ]
+    ]
+  },
+  "lv_chordia/data/cross_subpart_weight2.pkl": {
+    "bytes": 147,
+    "sha256": "7b3ae1a01db7c7d57aa32423c65516524200301f69d31dc3e10340d02232f9b4",
+    "pickle_globals": [],
+    "first_ops": [
+      [
+        "PROTO",
+        3
+      ],
+      [
+        "EMPTY_LIST",
+        null
+      ],
+      [
+        "BINPUT",
+        0
+      ],
+      [
+        "MARK",
+        null
+      ],
+      [
+        "EMPTY_LIST",
+        null
+      ],
+      [
+        "BINPUT",
+        1
+      ],
+      [
+        "MARK",
+        null
+      ],
+      [
+        "BININT",
+        4066164
+      ],
+      [
+        "BININT",
+        4500430
+      ],
+      [
+        "BININT",
+        1570641
+      ],
+      [
+        "BININT",
+        137354
+      ],
+      [
+        "BININT2",
+        25451
+      ]
+    ]
+  },
+  "lv_chordia/data/cross_subpart_weight3.pkl": {
+    "bytes": 147,
+    "sha256": "95ed9ad8ecea64728e927c92788be9b32a4cfba090657edc2006f988f82d6f0c",
+    "pickle_globals": [],
+    "first_ops": [
+      [
+        "PROTO",
+        3
+      ],
+      [
+        "EMPTY_LIST",
+        null
+      ],
+      [
+        "BINPUT",
+        0
+      ],
+      [
+        "MARK",
+        null
+      ],
+      [
+        "EMPTY_LIST",
+        null
+      ],
+      [
+        "BINPUT",
+        1
+      ],
+      [
+        "MARK",
+        null
+      ],
+      [
+        "BININT",
+        3835920
+      ],
+      [
+        "BININT",
+        4587200
+      ],
+      [
+        "BININT",
+        1510355
+      ],
+      [
+        "BININT",
+        166466
+      ],
+      [
+        "BININT2",
+        25897
+      ]
+    ]
+  },
+  "lv_chordia/data/cross_subpart_weight4.pkl": {
+    "bytes": 147,
+    "sha256": "cf4fee16b97d99b0301625864285dc6f39bf4e5c54e5247315c19c46a9a7f5ad",
+    "pickle_globals": [],
+    "first_ops": [
+      [
+        "PROTO",
+        3
+      ],
+      [
+        "EMPTY_LIST",
+        null
+      ],
+      [
+        "BINPUT",
+        0
+      ],
+      [
+        "MARK",
+        null
+      ],
+      [
+        "EMPTY_LIST",
+        null
+      ],
+      [
+        "BINPUT",
+        1
+      ],
+      [
+        "MARK",
+        null
+      ],
+      [
+        "BININT",
+        3723744
+      ],
+      [
+        "BININT",
+        4446813
+      ],
+      [
+        "BININT",
+        1556721
+      ],
+      [
+        "BININT",
+        165119
+      ],
+      [
+        "BININT2",
+        24456
+      ]
+    ]
+  },
+  "lv_chordia/data/cross_weight0.pkl": {
+    "bytes": 459332,
+    "sha256": "8e3e0dcc8bf43d857fa397949b19986d19734c41c2d94d134c1d0a547edbe9d3",
+    "pickle_globals": [
+      "numpy.core.multiarray scalar",
+      "numpy dtype"
+    ],
+    "first_ops": [
+      [
+        "PROTO",
+        3
+      ],
+      [
+        "EMPTY_DICT",
+        null
+      ],
+      [
+        "BINPUT",
+        0
+      ],
+      [
+        "MARK",
+        null
+      ],
+      [
+        "MARK",
+        null
+      ],
+      [
+        "GLOBAL",
+        "numpy.core.multiarray scalar"
+      ],
+      [
+        "BINPUT",
+        1
+      ],
+      [
+        "GLOBAL",
+        "numpy dtype"
+      ],
+      [
+        "BINPUT",
+        2
+      ],
+      [
+        "BINUNICODE",
+        "i4"
+      ],
+      [
+        "BINPUT",
+        3
+      ],
+      [
+        "BININT1",
+        0
+      ]
+    ]
+  },
+  "lv_chordia/data/cross_weight1.pkl": {
+    "bytes": 467552,
+    "sha256": "7c529ef344b48343f64aa8ea0c2a48fede798671504a4de21927779e3a8d867e",
+    "pickle_globals": [
+      "numpy.core.multiarray scalar",
+      "numpy dtype"
+    ],
+    "first_ops": [
+      [
+        "PROTO",
+        3
+      ],
+      [
+        "EMPTY_DICT",
+        null
+      ],
+      [
+        "BINPUT",
+        0
+      ],
+      [
+        "MARK",
+        null
+      ],
+      [
+        "MARK",
+        null
+      ],
+      [
+        "GLOBAL",
+        "numpy.core.multiarray scalar"
+      ],
+      [
+        "BINPUT",
+        1
+      ],
+      [
+        "GLOBAL",
+        "numpy dtype"
+      ],
+      [
+        "BINPUT",
+        2
+      ],
+      [
+        "BINUNICODE",
+        "i4"
+      ],
+      [
+        "BINPUT",
+        3
+      ],
+      [
+        "BININT1",
+        0
+      ]
+    ]
+  },
+  "lv_chordia/data/cross_weight2.pkl": {
+    "bytes": 465464,
+    "sha256": "34f58c7bc1dd18fa6368356c862cb698928614e640b811607c0da7ff544c1c75",
+    "pickle_globals": [
+      "numpy.core.multiarray scalar",
+      "numpy dtype"
+    ],
+    "first_ops": [
+      [
+        "PROTO",
+        3
+      ],
+      [
+        "EMPTY_DICT",
+        null
+      ],
+      [
+        "BINPUT",
+        0
+      ],
+      [
+        "MARK",
+        null
+      ],
+      [
+        "MARK",
+        null
+      ],
+      [
+        "GLOBAL",
+        "numpy.core.multiarray scalar"
+      ],
+      [
+        "BINPUT",
+        1
+      ],
+      [
+        "GLOBAL",
+        "numpy dtype"
+      ],
+      [
+        "BINPUT",
+        2
+      ],
+      [
+        "BINUNICODE",
+        "i4"
+      ],
+      [
+        "BINPUT",
+        3
+      ],
+      [
+        "BININT1",
+        0
+      ]
+    ]
+  },
+  "lv_chordia/data/cross_weight3.pkl": {
+    "bytes": 434612,
+    "sha256": "b730570c220f60f2b5b92e197917ef595cbeeb052c1b559d4ab8f1dae58dd584",
+    "pickle_globals": [
+      "numpy.core.multiarray scalar",
+      "numpy dtype"
+    ],
+    "first_ops": [
+      [
+        "PROTO",
+        3
+      ],
+      [
+        "EMPTY_DICT",
+        null
+      ],
+      [
+        "BINPUT",
+        0
+      ],
+      [
+        "MARK",
+        null
+      ],
+      [
+        "MARK",
+        null
+      ],
+      [
+        "GLOBAL",
+        "numpy.core.multiarray scalar"
+      ],
+      [
+        "BINPUT",
+        1
+      ],
+      [
+        "GLOBAL",
+        "numpy dtype"
+      ],
+      [
+        "BINPUT",
+        2
+      ],
+      [
+        "BINUNICODE",
+        "i4"
+      ],
+      [
+        "BINPUT",
+        3
+      ],
+      [
+        "BININT1",
+        0
+      ]
+    ]
+  },
+  "lv_chordia/data/cross_weight4.pkl": {
+    "bytes": 459296,
+    "sha256": "7bbc10ee974e9eefb9d492c1e19d274ebd012f3dfa8cc19130f594c07cc62d81",
+    "pickle_globals": [
+      "numpy.core.multiarray scalar",
+      "numpy dtype"
+    ],
+    "first_ops": [
+      [
+        "PROTO",
+        3
+      ],
+      [
+        "EMPTY_DICT",
+        null
+      ],
+      [
+        "BINPUT",
+        0
+      ],
+      [
+        "MARK",
+        null
+      ],
+      [
+        "MARK",
+        null
+      ],
+      [
+        "GLOBAL",
+        "numpy.core.multiarray scalar"
+      ],
+      [
+        "BINPUT",
+        1
+      ],
+      [
+        "GLOBAL",
+        "numpy dtype"
+      ],
+      [
+        "BINPUT",
+        2
+      ],
+      [
+        "BINUNICODE",
+        "i4"
+      ],
+      [
+        "BINPUT",
+        3
+      ],
+      [
+        "BININT1",
+        0
+      ]
+    ]
+  }
+}
